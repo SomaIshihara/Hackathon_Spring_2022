@@ -11,6 +11,7 @@
 
 // R.N.Lib
 #include "../3D/parts3D.h"
+#include "geometry.h"
 
 //****************************************
 // マクロ定義
@@ -96,9 +97,12 @@ typedef enum
 // 衝突情報構造体
 typedef struct
 {
-	bool bHit;	// 当たりフラグ
-	bool bColl;	// 衝突フラグ
-	bool bOvl;	// 範囲内フラグ
+	bool bColl;						// 衝突フラグ
+	bool aColl[HITDIRECTION_MAX];	// 方向毎の衝突フラグ
+	bool bOvl;						// 範囲内フラグ
+	bool aOvl[HITDIRECTION_MAX];	// 方向毎の範囲内フラグ
+	bool bHit;						// 当たりフラグ※物理的に接触している
+	bool aHit[HITDIRECTION_MAX];	// 方向毎の当たりフラグ
 }Collision;
 // 当たり判定の部品情報構造体
 typedef struct
@@ -145,6 +149,7 @@ typedef struct
 	Parts3DSet *pPartsSet;		// 部品設定情報
 	HitTest *pHitTest;			// 当たり判定の情報
 	COLLCHK_MODE mode;			// 衝突チェックのモード
+	float fScale;				// 拡大倍率
 }CollisionInfo;
 
 //****************************************
