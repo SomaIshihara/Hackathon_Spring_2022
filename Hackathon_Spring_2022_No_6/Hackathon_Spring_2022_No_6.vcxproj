@@ -42,14 +42,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -71,16 +71,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)</OutDir>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -88,7 +97,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -102,7 +111,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -118,8 +127,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,8 +146,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,6 +158,79 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="code\main.cpp" />
+    <ClCompile Include="code\Mode\md_game.cpp" />
+    <ClCompile Include="code\Mode\md_result.cpp" />
+    <ClCompile Include="code\Mode\md_title.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\camera2D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\fade.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\motion2D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\polygon2D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\text2D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\camera3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\draw3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\light.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\line3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\map-chip3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\map-generator3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\material.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\model-setup.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\model.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\motion3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\parts3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\polygon3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\text3D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Graphic\text.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Graphic\texture.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\chunk.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\color.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\file.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\geometry.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\input.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\matrix.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\physics.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\setting.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\sound.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\window.cpp" />
+    <ClCompile Include="code\_R.N.Lib\RNmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\main.h" />
+    <ClInclude Include="code\Mode\md_game.h" />
+    <ClInclude Include="code\Mode\md_result.h" />
+    <ClInclude Include="code\Mode\md_title.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\camera2D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\fade.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\motion2D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\polygon2D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\text2D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\camera3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\draw3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\light.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\line3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\map-chip3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\map-generator3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\material.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\model-setup.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\model.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\motion3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\parts3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\polygon3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\text3D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Graphic\text.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Graphic\texture.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\chunk.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\color.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\file.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\geometry.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\input.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\matrix.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\physics.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\setting.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\sound.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\window.h" />
+    <ClInclude Include="code\_R.N.Lib\R.N.Lib.h" />
+    <ClInclude Include="code\_R.N.Lib\RNmain.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

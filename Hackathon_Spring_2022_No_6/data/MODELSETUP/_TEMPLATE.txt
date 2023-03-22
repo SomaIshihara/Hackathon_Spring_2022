@@ -1,0 +1,48 @@
+PARTSSET	#ïîïiê›íËèÓïÒ
+	SCALE:	1.0
+	
+	PARTS	#00
+		MODEL_PATH:			data\\MODEL\\MapChip\\ÅZÅZ
+		PARENT:				-1
+		RELATIVE_POS:		0.0 0.0 0.0
+		RELATIVE_ROT:		0.0 0.0 0.0
+		ROT_RELATIVE_ROT:	0.0 0.0 0.0
+	PARTS_END
+	
+PARTSSET_END
+
+HITTESTSET	#ìñÇΩÇËîªíËê›íËèÓïÒ
+	
+	HITTEST	#00
+		
+		HITTEST_PARTS	#00
+			FORM:			1
+			PARENT:			0
+			WIDTH:			8.0
+			HEIGHT:			8.0
+			DEPTH:			8.0
+			RELATIVE_POS:	0.0 4.0 0.0
+			RELATIVE_ROT:	0.0 0.0 0.0
+			GHOST:			0 0 0 0 0 0
+		HITTEST_PARTS_END
+		
+	HITTEST_END
+	
+HITTESTSET_END
+
+MOTIONSET	#ÉÇÅ[ÉVÉáÉìê›íËèÓïÒ
+	
+	MOTION	#00
+		LOOP_TIME:	-1
+		LOOP:		0
+		
+		PARTS	#00
+			TIME 0 MOVE 0.0 0.0 0.0 0
+			TIME 0 SPIN 0.0 0.0 0.0 0
+		PARTS_END
+		
+	MOTION_END
+	
+MOTIONSET_END
+
+END

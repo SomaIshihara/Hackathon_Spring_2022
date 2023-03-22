@@ -13,5 +13,243 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\_R.N.Lib">
+      <UniqueIdentifier>{451ac304-d233-42f8-9d86-bade4925c34c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\_R.N.Lib\Basis">
+      <UniqueIdentifier>{5af143a8-40f7-418e-b5ca-57d5e9ac0b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\_R.N.Lib\Basis\2D">
+      <UniqueIdentifier>{f9a64970-e58b-45df-a8a8-ce80cd13c1bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\_R.N.Lib\Basis\3D">
+      <UniqueIdentifier>{96a93fdc-31fa-4373-9e3e-fb76c43a614f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\_R.N.Lib\Basis\Graphic">
+      <UniqueIdentifier>{9a25c30f-ca4d-48c5-b0b6-e797a05d23af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\_R.N.Lib\Basis\Other">
+      <UniqueIdentifier>{7f116f9f-e334-413a-928a-4a845823c200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Mode">
+      <UniqueIdentifier>{cd85ca1c-2f91-4ca5-bfb7-6388cb7ff137}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="code\main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\RNmain.cpp">
+      <Filter>ソース ファイル\_R.N.Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\chunk.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\color.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\file.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\geometry.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\input.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\matrix.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\physics.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\setting.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\sound.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Other\window.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Graphic\text.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\Graphic\texture.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\camera3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\draw3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\light.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\line3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\map-chip3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\map-generator3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\material.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\model.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\model-setup.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\motion3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\parts3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\polygon3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\3D\text3D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\camera2D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\fade.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\motion2D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\polygon2D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\text2D.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Mode\md_title.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Mode\md_game.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Mode\md_result.cpp">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\main.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\R.N.Lib.h">
+      <Filter>ソース ファイル\_R.N.Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\RNmain.h">
+      <Filter>ソース ファイル\_R.N.Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\chunk.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\color.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\file.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\geometry.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\input.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\matrix.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\physics.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\setting.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\sound.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Other\window.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Graphic\text.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\Graphic\texture.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\camera3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\draw3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\light.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\line3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\map-chip3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\map-generator3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\material.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\model.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\model-setup.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\motion3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\parts3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\polygon3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\3D\text3D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\camera2D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\fade.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\motion2D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\polygon2D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\text2D.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Mode\md_title.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Mode\md_game.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Mode\md_result.h">
+      <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
