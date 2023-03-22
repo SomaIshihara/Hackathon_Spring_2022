@@ -97,7 +97,7 @@ void SortDraw3D(void)
 		g_nDraw3DNum++;	// 描画数カウントを加算
 	}
 
-	if (g_nDraw3DNum == 0) 
+	if (g_nDraw3DNum == 0)
 	{// 描画数カウントが0の時、処理を終了
 		return;
 	}

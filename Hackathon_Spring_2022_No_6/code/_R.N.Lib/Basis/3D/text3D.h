@@ -28,6 +28,23 @@ typedef struct
 	bool bZtest = false;		// Zテストフラグ
 	bool bLighting = false;		// ライティングフラグ
 	bool bBillboard = false;	// ビルボードフラグ
+#if /* 設定フォーマット */0
+	// テキスト(3D)の設定処理
+	Text3DSet text3DSet;
+	/* 文字列のポインタ */text3DSet.*pString = ;
+	/* フォント番号		*/text3DSet.nFont = ;
+	/* 表示形式			*/text3DSet.disp = ;
+	/* 位置				*/text3DSet.pos = ;
+	/* 向き				*/text3DSet.rot = ;
+	/* 色				*/text3DSet.col = ;
+	/* 幅				*/text3DSet.fWidth = ;
+	/* 高さ				*/text3DSet.fHeight = ;
+	/* Zテスト			*/text3DSet.bZtest = ;
+	/* ライティング		*/text3DSet.bLighting = ;
+	/* ビルボード		*/text3DSet.bBillboard = ;
+	// テキスト(3D)の設定処理
+	SetText3D(text3DSet);
+#endif
 }Text3DSet;
 
 //****************************************
