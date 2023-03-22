@@ -34,6 +34,9 @@
     <Filter Include="ソース ファイル\Mode">
       <UniqueIdentifier>{cd85ca1c-2f91-4ca5-bfb7-6388cb7ff137}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UI">
+      <UniqueIdentifier>{fa985a81-50a7-4fcf-9d38-d97a3aed7262}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp">
