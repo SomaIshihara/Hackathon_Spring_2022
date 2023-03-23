@@ -52,7 +52,7 @@ static const float g_aTargetSpeed[TARGET_MAX] = {
 	0.35f,
 	0.5f,
 	1.05f,
-	0.3f,
+	0.325f,
 };
 
 // “GŽí—Þ
