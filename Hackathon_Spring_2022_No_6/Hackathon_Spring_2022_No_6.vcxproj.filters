@@ -34,8 +34,8 @@
     <Filter Include="ソース ファイル\Mode">
       <UniqueIdentifier>{cd85ca1c-2f91-4ca5-bfb7-6388cb7ff137}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\UI">
-      <UniqueIdentifier>{fa985a81-50a7-4fcf-9d38-d97a3aed7262}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Target">
+      <UniqueIdentifier>{4afea82e-5d41-401e-92cb-34c900d9376a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="code\Mode\md_result.cpp">
       <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="code\target.cpp">
+      <Filter>ソース ファイル\Target</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="code\Mode\md_result.h">
       <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="code\target.h">
+      <Filter>ソース ファイル\Target</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
