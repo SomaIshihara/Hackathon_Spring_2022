@@ -26,9 +26,9 @@
 // CHR:プレイヤーの移動量
 #define CHR_PLAYER_MOVE (1.0f)
 // CHR;プレイヤーの移動幅
-#define CHR_PLAYER_MOVEWIDTH (80.0f)
+#define CHR_PLAYER_MOVEWIDTH (56.0f)
 // CHR;プレイヤーの移動奥行き
-#define CHR_PLAYER_MOVEDEPTH (40.0f)
+#define CHR_PLAYER_MOVEDEPTH (8.0f)
 // CHR:プレイヤーの回転量
 #define CHR_PLAYER_SPIN (0.05f)
 // CHR:プレイヤーの奥行き
@@ -124,10 +124,20 @@ void UpdateChr_player(void)
 		pChr->partsInfo.pos.x += sinf(fAngle) * CHR_PLAYER_MOVE;
 		pChr->partsInfo.pos.z += cosf(fAngle) * CHR_PLAYER_MOVE;
 
+		// 移動制御
 		D3DXVECTOR3 *pPos = &pChr->partsInfo.pos;
-		if (pPos->x <= CHR_PLAYER_MOVEWIDTH)
-		{
+		if (pPos->x <= -CHR_PLAYER_MOVEWIDTH) {
+			pPos->x = -CHR_PLAYER_MOVEWIDTH;
+		}
+		else if (pPos->x >= CHR_PLAYER_MOVEWIDTH) {
 			pPos->x = CHR_PLAYER_MOVEWIDTH;
+		}
+
+		if (pPos->z <= -CHR_PLAYER_MOVEDEPTH) {
+			pPos->z = -CHR_PLAYER_MOVEDEPTH;
+		}
+		else if (pPos->z >= CHR_PLAYER_MOVEDEPTH) {
+			pPos->z = CHR_PLAYER_MOVEDEPTH;
 		}
 	}
 	else 
