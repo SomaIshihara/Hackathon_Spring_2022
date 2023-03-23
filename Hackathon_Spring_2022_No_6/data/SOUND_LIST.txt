@@ -9,5 +9,6 @@ SOUND data\SOUND\SE\hit10.wav		 0 1.0 1	#[005]当たったSE
 SOUND data\SOUND\SE\Catch00.wav		 0 1.0 1	#[006]キャッチSE
 SOUND data\SOUND\SE\break00.wav		 0 1.0 1	#[007]破壊SE
 SOUND data\SOUND\SE\tuckingUP.wav	 0 1.0 1	#[008]取りこぼしSE
+SOUND data\SOUND\SE\Bonus.wav	 	 0 1.0 1	#[009]ボーナスSE
 
 END
