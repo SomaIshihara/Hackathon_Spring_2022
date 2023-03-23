@@ -23,13 +23,13 @@ typedef struct
 #define CLOUD_WIDTH		(200.0f)//雲の横位置
 #define CLOUD_HEIGHT	(50.0f)	//雲の高度
 #define CLOUD_DEPTH		(270.0f)//雲の遠さ
-#define MAX_CLOUD		(12)	//雲の最大数
-#define NUM_CLOUD_TEX	(3)		//雲のテクスチャの種類
+#define MAX_CLOUD		(13)	//雲の最大数
+#define NUM_CLOUD_TEX	(2)		//雲のテクスチャの種類
 #define CLOUD_SIZE		(50.0f)	//雲のサイズ
 #define CLOUD_INTERVAL	(150.0f)//雲の間隔
 #define CLOUD_ROT		(D3DXVECTOR3(D3DX_PI* 0.25f, D3DX_PI, 0.0f))
-#define RETURN_WIDTH	(-300.0f)//折り返し地点
-#define REVIVAL_WIDTH	(300.0f)//復帰地点
+#define RETURN_WIDTH	(-325.0f)//折り返し地点
+#define REVIVAL_WIDTH	(325.0f)//復帰地点
 #define CLOUD_CLEAR		(150)	//雲の透明度
 
 //グローバル変数宣言
@@ -38,8 +38,7 @@ float fRot = 0.0f;
 
 // テクスチャパス
 char *c_aTextureCloudPath[NUM_CLOUD_TEX] ={
-	"data/TEXTURE/BG/Sky_layer03.png",
-	"data/TEXTURE/BG/Sky_layer03.png",
+	"data/TEXTURE/BG/Sky_layer02.png",
 	"data/TEXTURE/BG/Sky_layer03.png",
 };
 
@@ -57,7 +56,7 @@ void InitCloud(void)
 		pCloud->pos = D3DXVECTOR3(CLOUD_WIDTH + (nCntCloud * CLOUD_SIZE), CLOUD_HEIGHT, CLOUD_DEPTH);
 		pCloud->move = INITD3DXVECTOR3;
 		pCloud->bUse = false;
-		pCloud->nTexType = LoadTexture(c_aTextureCloudPath[nCntCloud % NUM_CLOUD_TEX]);
+		pCloud->nTexType = LoadTexture(c_aTextureCloudPath[rand() % EVENPARITY]);
 
 		// ポリゴン(3D)の設定情報
 		Polygon3DSet polygon3DSet;
