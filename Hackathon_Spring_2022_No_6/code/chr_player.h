@@ -25,6 +25,8 @@ typedef struct
 	int nBoomerang = MAX_USE_BOOMERANG;
 	// スコア
 	int nScore = 0;
+	// 投げカウンター
+	int nSlowCounter = 0;
 
 	// 部品関連
 	Parts3DInfo partsInfo;	// 部品管理
