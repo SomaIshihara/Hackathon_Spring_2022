@@ -15,8 +15,8 @@
 #define TIMER_ORIGIN_POS	(D3DXVECTOR3(0.0f, 60.0f, 0.0f))
 //制限時間のUIサイズ
 #define TIMER_UI_SIZE		(60.0f)
-#define TIMER_UI_WIDTH		(40.0f)
-#define TIMER_UI_HEIGHT		(60.0f)
+#define TIMER_UI_WIDTH		(16.0f)
+#define TIMER_UI_HEIGHT		(20.0f)
 
 //グローバル変数宣言
 int g_nGameTime = 0;	//制限時間
