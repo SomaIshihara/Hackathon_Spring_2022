@@ -236,6 +236,9 @@ void InitMd_game(void)
 	//制限時間設定
 	InitTimer();
 
+	//ブーメランの所持数UI初期化
+	InitBoomeUI();
+
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
 

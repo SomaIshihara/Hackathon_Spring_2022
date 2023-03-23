@@ -10,6 +10,7 @@
 #include "target.h"
 #include "chr_player.h"
 #include "_R.N.Lib\Basis\Other\sound.h"
+#include "_R.N.Lib\Basis\2D\boomeUI.h"
 
 //マクロ
 #define BOOMERANG_SETUP_NUM			(2)					//ブーメランセットアップ番号
@@ -22,21 +23,23 @@
 #define BOOMERANG_STRAIGHT_END		(30)				//直線移動終了時間
 #define BOOMERANG_DESTROY_LINE		(300.0f)			//ブーメランがどっか飛んでいく（消す）ライン
 
-#define COMBOTEXT_POP_TIME			(60)				//コンボ表示時間
-#define COMBOTEXT_DEJIT				(8)					//コンボの表示文字数
-#define COMBOTEXT_SIZE_DEFAULT		(16.0f)				//コンボの文字サイズ（最初）
-#define COMBOTEXT_SIZE_ADD			(0.5f)				//コンボの文字サイズ（拡大量）
+#define COMBOTEXT_POP_TIME			(30)				//コンボ表示時間
+#define COMBOTEXT_DEJIT				(9)					//コンボの表示文字数
+#define COMBOTEXT_SIZE_DEFAULT		(6.0f)				//コンボの文字サイズ（最初）
+#define COMBOTEXT_SIZE_ADD			(0.04f)				//コンボの文字サイズ（拡大量）
 
 #define FIX_ROT(x)				(fmodf(x + (D3DX_PI * 3), D3DX_PI * 2) - D3DX_PI)	//角度を-PI~PIに修正
 
 //コンボテキスト構造体
 typedef struct
 {
-	Text3DSet text3DSet;	//テキスト構造体
+	Text3DSet text3DSetCombo;	//テキスト構造体
 	char c_aComboText[COMBOTEXT_DEJIT];
+	Text3DSet text3DSetScore;	//テキスト構造体
+	char c_aScoreText[COMBOTEXT_DEJIT];
 	int nLife;				//表示時間
 	bool bUse;				//使用の有無
-} ComboText;
+} HitText;
 
 //プロト
 void CollisionBoomerangEnemy(int nBoomerangNum);
@@ -44,7 +47,7 @@ void CollisionBoomerangPlayer(int nBoomerangNum);
 
 //グローバル
 Boomerang g_aBoomerang[MAX_USE_BOOMERANG] = {};
-ComboText g_aComboText[MAX_TARGET] = {};
+HitText g_aHitText[MAX_TARGET] = {};
 
 //========================
 //初期化処理
@@ -159,6 +162,7 @@ void UpdateBoomerang(void)
 			if (fabs(g_aBoomerang[nCntBoomerang].pos.x) > BOOMERANG_DESTROY_LINE || g_aBoomerang[nCntBoomerang].pos.z < -BOOMERANG_DESTROY_LINE)
 			{
 				g_aBoomerang[nCntBoomerang].bUse = false;
+				LostBoomeUI();
 				PlaySound(8);
 			}
 			else
@@ -172,18 +176,20 @@ void UpdateBoomerang(void)
 	//コンボの処理
 	for (int nCntCombo = 0; nCntCombo < MAX_TARGET; nCntCombo++)
 	{
-		if (g_aComboText[nCntCombo].bUse == true)
+		if (g_aHitText[nCntCombo].bUse == true)
 		{
 			//時間減らす
-			g_aComboText[nCntCombo].nLife--;
+			g_aHitText[nCntCombo].nLife--;
 
-			//文字大きくする
-			//g_aComboText[nCntCombo].text3DSet.fWidth += COMBOTEXT_SIZE_ADD;
-			//g_aComboText[nCntCombo].text3DSet.fHeight += COMBOTEXT_SIZE_ADD;
+			//文字小さくする
+			g_aHitText[nCntCombo].text3DSetCombo.fWidth -= COMBOTEXT_SIZE_ADD;
+			g_aHitText[nCntCombo].text3DSetCombo.fHeight -= COMBOTEXT_SIZE_ADD;
+			g_aHitText[nCntCombo].text3DSetScore.fWidth -= COMBOTEXT_SIZE_ADD;
+			g_aHitText[nCntCombo].text3DSetScore.fHeight -= COMBOTEXT_SIZE_ADD;
 
-			if (g_aComboText[nCntCombo].nLife < 0)
+			if (g_aHitText[nCntCombo].nLife < 0)
 			{
-				g_aComboText[nCntCombo].bUse = false;
+				g_aHitText[nCntCombo].bUse = false;
 			}
 		}
 	}
@@ -205,9 +211,10 @@ void DrawBoomerang(void)
 {
 	for (int nCntCombo = 0; nCntCombo < MAX_TARGET; nCntCombo++)
 	{
-		if (g_aComboText[nCntCombo].bUse == true)
+		if (g_aHitText[nCntCombo].bUse == true)
 		{
-			SetText3D(g_aComboText[nCntCombo].text3DSet);
+			SetText3D(g_aHitText[nCntCombo].text3DSetCombo);
+			SetText3D(g_aHitText[nCntCombo].text3DSetScore);
 		}
 	}
 }
@@ -292,6 +299,7 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 				if (pTarget->type == TARGET_D)
 				{
 					g_aBoomerang[nBoomerangNum].bUse = false;
+					LostBoomeUI();
 					PlaySound(7);
 				}
 				else if(!pTarget->bDown)
@@ -307,26 +315,44 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 
 					for (int nCntTarget = 0; nCntTarget < MAX_TARGET; nCntTarget++)
 					{
-						if (g_aComboText[nCntTarget].bUse == false)
+						if (g_aHitText[nCntTarget].bUse == false)
 						{
 							//コンボ設定
 							/* 文字列のポインタ */
-							snprintf(g_aComboText[nCntTarget].c_aComboText,
+							snprintf(g_aHitText[nCntTarget].c_aComboText,
 								COMBOTEXT_DEJIT,
-								"%02dCOMBO", g_aBoomerang[nBoomerangNum].nCombo);
-							g_aComboText[nCntTarget].text3DSet.pString = &g_aComboText[nCntTarget].c_aComboText[0];
-							/* フォント番号		*/g_aComboText[nCntTarget].text3DSet.nFont = 0;
-							/* 表示形式			*/g_aComboText[nCntTarget].text3DSet.disp = TEXT_DISP_CENTER;
-							/* 位置				*/g_aComboText[nCntTarget].text3DSet.pos = pTarget->pos;
-							/* 向き				*/g_aComboText[nCntTarget].text3DSet.rot = D3DXVECTOR3(0.0f,D3DX_PI * -0.5f,0.0f);
-							/* 色				*/g_aComboText[nCntTarget].text3DSet.col = Color{ 255,255,255,255 };
-							/* 幅				*/g_aComboText[nCntTarget].text3DSet.fWidth = COMBOTEXT_SIZE_DEFAULT;
-							/* 高さ				*/g_aComboText[nCntTarget].text3DSet.fHeight = COMBOTEXT_SIZE_DEFAULT;
-							/* Zテスト			*/g_aComboText[nCntTarget].text3DSet.bZtest = false;
-							/* ライティング		*/g_aComboText[nCntTarget].text3DSet.bLighting = false;
-							/* ビルボード		*/g_aComboText[nCntTarget].text3DSet.bBillboard = true;
-							g_aComboText[nCntTarget].nLife = COMBOTEXT_POP_TIME;
-							g_aComboText[nCntTarget].bUse = true;
+								"%d COMBO", g_aBoomerang[nBoomerangNum].nCombo);
+							g_aHitText[nCntTarget].text3DSetCombo.pString = &g_aHitText[nCntTarget].c_aComboText[0];
+							/* フォント番号		*/g_aHitText[nCntTarget].text3DSetCombo.nFont = 0;
+							/* 表示形式			*/g_aHitText[nCntTarget].text3DSetCombo.disp = TEXT_DISP_CENTER;
+							/* 位置				*/g_aHitText[nCntTarget].text3DSetCombo.pos = pTarget->pos + D3DXVECTOR3(0.0f,10.0f,0.0f);
+							/* 向き				*/g_aHitText[nCntTarget].text3DSetCombo.rot = D3DXVECTOR3(D3DX_PI * -0.5f,0.0f,0.0f);
+							/* 色				*/g_aHitText[nCntTarget].text3DSetCombo.col = Color{ 255,200,0,255 };
+							/* 幅				*/g_aHitText[nCntTarget].text3DSetCombo.fWidth = COMBOTEXT_SIZE_DEFAULT;
+							/* 高さ				*/g_aHitText[nCntTarget].text3DSetCombo.fHeight = COMBOTEXT_SIZE_DEFAULT;
+							/* Zテスト			*/g_aHitText[nCntTarget].text3DSetCombo.bZtest = false;
+							/* ライティング		*/g_aHitText[nCntTarget].text3DSetCombo.bLighting = false;
+							/* ビルボード		*/g_aHitText[nCntTarget].text3DSetCombo.bBillboard = false;
+
+							//スコア設定
+							/* 文字列のポインタ */
+							snprintf(g_aHitText[nCntTarget].c_aScoreText,
+								COMBOTEXT_DEJIT,
+								"+%d", (GetTargetType() + pTarget->type)->nScore * g_aBoomerang[nBoomerangNum].nCombo);
+							g_aHitText[nCntTarget].text3DSetScore.pString = &g_aHitText[nCntTarget].c_aScoreText[0];
+							/* フォント番号		*/g_aHitText[nCntTarget].text3DSetScore.nFont = 0;
+							/* 表示形式			*/g_aHitText[nCntTarget].text3DSetScore.disp = TEXT_DISP_CENTER;
+							/* 位置				*/g_aHitText[nCntTarget].text3DSetScore.pos = pTarget->pos + D3DXVECTOR3(0.0f, 3.5f, 0.0f);
+							/* 向き				*/g_aHitText[nCntTarget].text3DSetScore.rot = D3DXVECTOR3(D3DX_PI * -0.5f, 0.0f, 0.0f);
+							/* 色				*/g_aHitText[nCntTarget].text3DSetScore.col = Color{ 255,255,255,255 };
+							/* 幅				*/g_aHitText[nCntTarget].text3DSetScore.fWidth = COMBOTEXT_SIZE_DEFAULT;
+							/* 高さ				*/g_aHitText[nCntTarget].text3DSetScore.fHeight = COMBOTEXT_SIZE_DEFAULT;
+							/* Zテスト			*/g_aHitText[nCntTarget].text3DSetScore.bZtest = false;
+							/* ライティング		*/g_aHitText[nCntTarget].text3DSetScore.bLighting = false;
+							/* ビルボード		*/g_aHitText[nCntTarget].text3DSetScore.bBillboard = false;
+
+							g_aHitText[nCntTarget].nLife = COMBOTEXT_POP_TIME;
+							g_aHitText[nCntTarget].bUse = true;
 							break;
 						}
 					}

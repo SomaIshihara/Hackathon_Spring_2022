@@ -81,7 +81,7 @@ void SetText3D(Text3DSet text3DSet)
 		/* •				*/polySet.fWidth = fWidth;
 		/* ‚‚³				*/polySet.fHeight = fHeight;
 		/* ˆÊ’u				*/polySet.pos = ConvMatrixToPos(resultMtx);
-		/* Œü‚«				*/polySet.rot = ConvMatrixToPos(resultMtx);
+		/* Œü‚«				*/polySet.rot = text3DSet.rot;
 		/* F				*/polySet.col = text3DSet.col;
 		// ƒ|ƒŠƒSƒ“(3D)‚ğİ’è
 		SetPolygon3D(polySet);

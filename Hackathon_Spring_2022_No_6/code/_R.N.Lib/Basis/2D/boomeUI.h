@@ -9,5 +9,7 @@
 
 //プロトタイプ宣言
 void SetBoomeUI(void);
+void InitBoomeUI(void);
+void LostBoomeUI(void);
 
 #endif
