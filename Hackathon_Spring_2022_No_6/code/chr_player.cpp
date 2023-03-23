@@ -12,6 +12,7 @@
 #include "Mode\md_game.h"
 #include "chr_player.h"	// CHR:プレイヤー
 #include "boomerang.h"
+#include "_R.N.Lib\Basis\Other\sound.h"
 // R.N.Lib
 #include "_R.N.Lib/R.N.Lib.h"
 
@@ -207,6 +208,8 @@ void UpdateChr_player(void)
 		SetBoomerang(pChr->partsInfo.pos, pChr->partsInfo.rot);
 		// ブーメラン数減算
 		pChr->nBoomerang--;
+		//投げる音再生
+		PlaySound(2);
 	}
 
 	// カメラ追従
