@@ -37,6 +37,12 @@
     <Filter Include="ソース ファイル\UserInterface">
       <UniqueIdentifier>{fa985a81-50a7-4fcf-9d38-d97a3aed7262}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Target">
+      <UniqueIdentifier>{4afea82e-5d41-401e-92cb-34c900d9376a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Boomerang">
+      <UniqueIdentifier>{3277d067-b05e-43b6-99b5-d5a4629ad184}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp">
@@ -144,11 +150,17 @@
     <ClCompile Include="code\Mode\md_result.cpp">
       <Filter>ソース ファイル\Mode</Filter>
     </ClCompile>
+    <ClCompile Include="code\target.cpp">
+      <Filter>ソース ファイル\Target</Filter>
+    </ClCompile>
     <ClCompile Include="code\UserInterface\ui_menu.cpp">
       <Filter>ソース ファイル\UserInterface</Filter>
     </ClCompile>
     <ClCompile Include="code\UserInterface\ui_title-logo.cpp">
       <Filter>ソース ファイル\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="code\boomerang.cpp">
+      <Filter>ソース ファイル\Boomerang</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,11 +272,17 @@
     <ClInclude Include="code\Mode\md_result.h">
       <Filter>ソース ファイル\Mode</Filter>
     </ClInclude>
+    <ClInclude Include="code\target.h">
+      <Filter>ソース ファイル\Target</Filter>
+    </ClInclude>
     <ClInclude Include="code\UserInterface\ui_menu.h">
       <Filter>ソース ファイル\UserInterface</Filter>
     </ClInclude>
     <ClInclude Include="code\UserInterface\ui_title-logo.h">
       <Filter>ソース ファイル\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="code\boomerang.h">
+      <Filter>ソース ファイル\Boomerang</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
