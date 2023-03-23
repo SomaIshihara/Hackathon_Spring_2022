@@ -9,14 +9,29 @@
 
 #include "main.h"
 
+//マクロ
+#define MAX_USE_BOOMERANG		(3)		//ブーメランの使用数（ヘッダに移してもいい）
+
+//ブーメラン状態
+typedef enum
+{
+	BOOMERANGSTAT_START = 0,
+	BOOMERANGSTAT_NORMAL,
+	BOOMERANGSTAT_MAX
+} BOOMERANGSTAT;
+
 //プレイヤー構造体
 struct Boomerang
 {
 	//位置類
 	D3DXVECTOR3 pos;		//位置
 	D3DXVECTOR3 posOld;		//前回の位置
-	D3DXVECTOR3 move;		//移動量
 	D3DXVECTOR3 rot;		//向き
+	D3DXVECTOR3 move;		//移動量
+
+	D3DXVECTOR3 posCenter;	//回転中心の位置
+
+	BOOMERANGSTAT stat;		//ブーメラン状態
 
 	//描画類
 	D3DXMATRIX mtxWorld;	//ワールドマトリ
@@ -30,7 +45,7 @@ void InitBoomerang(void);
 void UninitBoomerang(void);
 void UpdateBoomerang(void);
 void DrawBoomerang(void);
-void SetBoomerang(D3DXVECTOR3 pos);
+void SetBoomerang(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 Boomerang *GetBoomerang(void);
 
 #endif // !_BOOMERANG_H_
