@@ -262,7 +262,10 @@ void CollisionBoomerangPlayer(int nBoomerangNum)
 		//ブーメラン増やす
 		GetChr_player()->nBoomerang++;
 
-		//ブーメランバルス
+		//ブーメランキャッチ
 		g_aBoomerang[nBoomerangNum].bUse = false;
+
+		//キャッチサウンド再生
+		PlaySound(6);
 	}
 }
