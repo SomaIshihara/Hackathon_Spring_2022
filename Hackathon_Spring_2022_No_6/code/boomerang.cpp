@@ -5,9 +5,11 @@
 //
 //==========================================
 #include "main.h"
+#include "_R.N.Lib\R.N.Lib.h"
 #include "boomerang.h"
 
 //マクロ
+#define BOOMERANG_SETUP_NUM		(2)		//ブーメランセットアップ番号
 #define MAX_USE_BOOMERANG		(3)		//ブーメランの使用数（ヘッダに移してもいい）
 #define BOOMERANG_ONE_ROTATE	(15)	//ブーメランが1周するのにかかるフレーム数（2PIで割る）
 #define FIX_ROT(x)				(fmodf(x + (D3DX_PI * 3), D3DX_PI * 2) - D3DX_PI)	//角度を-PI~PIに修正
@@ -20,18 +22,19 @@ Boomerang g_aBoomerang[MAX_USE_BOOMERANG] = {};
 //========================
 void InitBoomerang(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();	//デバイスの取得
-
 	//変数初期化
 	for (int nCntBoomerang = 0; nCntBoomerang < MAX_USE_BOOMERANG; nCntBoomerang++)
 	{
 		//変数初期化
-		g_aBoomerang[nCntBoomerang].pos = c_aPosRot[nCntBoomerang][0];
-		g_aBoomerang[nCntBoomerang].posOld = g_aBoomerang[nCntBoomerang].pos;
-		g_aBoomerang[nCntBoomerang].move = ZERO_SET;
-		g_aBoomerang[nCntBoomerang].rot = c_aPosRot[nCntBoomerang][1];
-		
-		g_aBoomerang[nCntBoomerang].bUse = true;
+		g_aBoomerang[nCntBoomerang].posOld = g_aBoomerang[nCntBoomerang].pos = INITD3DXVECTOR3;
+		g_aBoomerang[nCntBoomerang].move = INITD3DXVECTOR3;
+		g_aBoomerang[nCntBoomerang].rot = INITD3DXVECTOR3;
+
+		// 部品(3D)の初期化処理
+		InitParts3DInfo(&g_aBoomerang[nCntBoomerang].partsInfo, BOOMERANG_SETUP_NUM);
+
+		//使用有無初期化
+		g_aBoomerang[nCntBoomerang].bUse = false;
 	}
 }
 
@@ -52,7 +55,25 @@ void UpdateBoomerang(void)
 	{
 		if (g_aBoomerang[nCntBoomerang].bUse == true)
 		{
+			//[内部]ブーメランとオブジェクトの当たり判定
+			CollisionInfo collInfo;
+			collInfo.pPos = &g_aBoomerang[nCntBoomerang].pos;
+			collInfo.posOld;
+			collInfo.pRot;
+			collInfo.rotOld;
+			collInfo.fScale = 1.0f;
+			collInfo.mode = COLLCHK_MODE_NORMAL;
+			collInfo.pMove = NULL;
+			collInfo.pHitTest = &GetModelSetUp(BOOMERANG_SETUP_NUM).hitTestSet.aHitTest[0];
+
+
+
+			//[見た目]ブーメランの回転処理
 			g_aBoomerang[nCntBoomerang].rot.y = FIX_ROT(g_aBoomerang[nCntBoomerang].rot.y + ((2 * D3DX_PI) / BOOMERANG_ONE_ROTATE));
+			g_aBoomerang[nCntBoomerang].partsInfo.rot.y = g_aBoomerang[nCntBoomerang].rot.y;
+
+			// 部品(3D)の更新処理
+			UpdateParts3DInfo(&g_aBoomerang[nCntBoomerang].partsInfo);
 		}
 	}
 }
@@ -62,169 +83,40 @@ void UpdateBoomerang(void)
 //========================
 void DrawBoomerang(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();	//デバイスの取得
-	D3DXMATRIX mtxRot, mtxTrans;	//計算用
-	D3DMATERIAL9 matDef;			//現在のマテリアル保存用
-	D3DXMATERIAL *pMat;				//マテリアルデータへのポインタ
+	
+}
 
-	//現在のマテリアル取得
-	pDevice->GetMaterial(&matDef);
-
-	//プレイヤーの数だけ繰り返す
-	for (int nCntBoomerang = 0; nCntBoomerang < MAX_USE_GAMEPAD; nCntBoomerang++)
+//========================
+//ブーメラン配置処理
+//========================
+void SetBoomerang(D3DXVECTOR3 pos)
+{
+	for (int nCntBoomerang = 0; nCntBoomerang < MAX_USE_BOOMERANG; nCntBoomerang++)
 	{
-		if (g_aBoomerang[nCntBoomerang].bUseBoomerang == true)
+		//使用されていないか確認
+		if (g_aBoomerang[nCntBoomerang].bUse == false)
 		{
-			//"プレイヤーの"ワールドマトリックス初期化
-			D3DXMatrixIdentity(&g_aBoomerang[nCntBoomerang].mtxWorld);
+			//変数初期化
+			g_aBoomerang[nCntBoomerang].posOld = g_aBoomerang[nCntBoomerang].pos = pos;
+			g_aBoomerang[nCntBoomerang].move = INITD3DXVECTOR3;
+			g_aBoomerang[nCntBoomerang].rot = INITD3DXVECTOR3;
 
-			//向きを反映
-			D3DXMatrixRotationYawPitchRoll(&mtxRot, g_aBoomerang[nCntBoomerang].rot.y, g_aBoomerang[nCntBoomerang].rot.x, g_aBoomerang[nCntBoomerang].rot.z);
-			D3DXMatrixMultiply(&g_aBoomerang[nCntBoomerang].mtxWorld, &g_aBoomerang[nCntBoomerang].mtxWorld, &mtxRot);
+			// 部品(3D)の初期化処理
+			InitParts3DInfo(&g_aBoomerang[nCntBoomerang].partsInfo, BOOMERANG_SETUP_NUM);
 
-			//位置反映
-			D3DXMatrixTranslation(&mtxTrans, g_aBoomerang[nCntBoomerang].pos.x, g_aBoomerang[nCntBoomerang].pos.y, g_aBoomerang[nCntBoomerang].pos.z);
-			D3DXMatrixMultiply(&g_aBoomerang[nCntBoomerang].mtxWorld, &g_aBoomerang[nCntBoomerang].mtxWorld, &mtxTrans);
+			//使用している状態にする
+			g_aBoomerang[nCntBoomerang].bUse = true;
 
-			// モデルの設定情報
-			ModelSet modelSet;
-			/* モデル番号	*/modelSet.nModelIdx = ;
-			/* マトリックス	*/modelSet.mtx = ;
-			/* 色			*/modelSet.col = ;
-			// モデルの設定
-			SetModel(modelSet);
-
-			//"プレイヤーの"ワールドマトリックス設定
-			pDevice->SetTransform(D3DTS_WORLD, &g_aBoomerang[nCntBoomerang].mtxWorld);
-
-#if 0
-			for (int nCntParts = 0; nCntParts < MAX_PARTS; nCntParts++)
-			{
-				if (useAnimal.aParts[nCntParts].bUse == true)
-				{
-					D3DXMATRIX mtxRotModel, mtxTransModel;	//計算用
-					D3DXMATRIX mtxParent;					//親のマトリ
-
-					//"モデルの"ワールドマトリックス初期化
-					D3DXMatrixIdentity(&g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld);
-
-					//向きを反映
-					D3DXMatrixRotationYawPitchRoll(&mtxRotModel, g_aBoomerang[nCntBoomerang].animalInst[nCntParts].rot.y, g_aBoomerang[nCntBoomerang].animalInst[nCntParts].rot.x, g_aBoomerang[nCntBoomerang].animalInst[nCntParts].rot.z);
-					D3DXMatrixMultiply(&g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld, &g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld, &mtxRotModel);
-
-					//位置反映
-					D3DXMatrixTranslation(&mtxTransModel, g_aBoomerang[nCntBoomerang].animalInst[nCntParts].pos.x, g_aBoomerang[nCntBoomerang].animalInst[nCntParts].pos.y, g_aBoomerang[nCntBoomerang].animalInst[nCntParts].pos.z);
-					D3DXMatrixMultiply(&g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld, &g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld, &mtxTransModel);
-
-					//パーツの親マトリ設定
-					if (useAnimal.aParts[nCntParts].mIdxModelParent != -1)
-					{
-						mtxParent = g_aBoomerang[nCntBoomerang].animalInst[useAnimal.aParts[nCntParts].mIdxModelParent].mtxWorld;
-					}
-					else
-					{
-						mtxParent = g_aBoomerang[nCntBoomerang].mtxWorld;
-					}
-
-					//パーツのマトリと親マトリをかけ合わせる
-					D3DXMatrixMultiply(&g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld, &g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld, &mtxParent);
-
-					//"モデルの"ワールドマトリックス設定
-					pDevice->SetTransform(D3DTS_WORLD, &g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld);
-
-					//マテリアルデータへのポインタ取得
-					pMat = (D3DXMATERIAL*)useAnimal.aParts[nCntParts].pBuffMat->GetBufferPointer();
-
-					for (int nCntMat = 0; nCntMat < (int)useAnimal.aParts[nCntParts].dwNumMatModel; nCntMat++)
-					{
-						//ゴースト用
-						D3DMATERIAL9 matChange = pMat[nCntMat].MatD3D;
-
-						//ゴースト状態なら消す
-						if (g_aBoomerang[nCntBoomerang].nGhostItemTime > 0)
-						{
-							//アルファテストを有効にする
-							pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-							pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-							pDevice->SetRenderState(D3DRS_ALPHAREF, 10);
-							matChange.Diffuse.a = 0.0f;
-						}
-						else if (nCntParts == MAX_PARTS - 1)
-						{//ゼッケンの時は色変更
-							matChange.Diffuse = c_aColBoomerang[nCntBoomerang];
-						}
-
-						//マテリアル設定
-						pDevice->SetMaterial(&matChange);
-
-						//テクスチャ設定
-						pDevice->SetTexture(0, useAnimal.aParts[nCntParts].apTexture[nCntMat]);
-
-						//モデル描画
-						useAnimal.aParts[nCntParts].pMesh->DrawSubset(nCntMat);
-					}
-
-					//アルファテストを無効にする
-					pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-					pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-					pDevice->SetRenderState(D3DRS_ALPHAREF, 10);
-
-					/*------------------------------------------------------------------
-					影の描画		Author:平澤詩苑 石原颯馬
-					--------------------------------------------------------------------*/
-					if (g_aBoomerang[nCntBoomerang].pos.y >= 0.0f)
-					{
-						D3DXMATRIX	mtxShadow;		//シャドウマトリックス
-						D3DLIGHT9	light;			//ライト情報
-						D3DXVECTOR4	posLight;		//ライトの位置
-						D3DXVECTOR3	pos, normal;	//平面上の任意の点、法線ベクトル
-						D3DXPLANE	plane;			//平面情報
-
-													//ライトの位置を設定
-						pDevice->GetLight(0, &light);
-						posLight = D3DXVECTOR4(-light.Direction.x, -light.Direction.y, -light.Direction.z, 0.0f);
-
-						//平面情報を生成
-						pos = ZERO_SET;
-						normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-						D3DXPlaneFromPointNormal(&plane, &pos, &normal);
-
-						//シャドウマトリックスの初期化
-						D3DXMatrixIdentity(&mtxShadow);
-
-						//シャドウマトリックスの作成
-						D3DXMatrixShadow(&mtxShadow, &posLight, &plane);
-						D3DXMatrixMultiply(&mtxShadow, &g_aBoomerang[nCntBoomerang].animalInst[nCntParts].mtxWorld, &mtxShadow);
-
-						//シャドウマトリックスの設定
-						pDevice->SetTransform(D3DTS_WORLD, &mtxShadow);
-
-						//マテリアルデータへのポインタを取得
-						pMat = (D3DXMATERIAL *)useAnimal.aParts[nCntParts].pBuffMat->GetBufferPointer();
-
-						for (int nCntMat = 0; nCntMat < (int)useAnimal.aParts[nCntParts].dwNumMatModel; nCntMat++)
-						{
-							D3DMATERIAL9 MatCopy = pMat[nCntMat].MatD3D;	//マテリアルデータ複製
-
-																			//黒色に設定						//自己発光を無くす
-							MatCopy.Diffuse = XCOL_BLACKSHADOW;	MatCopy.Emissive = XCOL_BLACK;
-
-							//マテリアル設定
-							pDevice->SetMaterial(&MatCopy);
-
-							//テクスチャ設定
-							pDevice->SetTexture(0, NULL);
-
-							//モデル描画
-							useAnimal.aParts[nCntParts].pMesh->DrawSubset(nCntMat);
-						}
-					}
-				}
-			}
-#endif
+			//配置終了
+			break;
 		}
 	}
+}
 
-	//マテリアルを戻す
-	pDevice->SetMaterial(&matDef);
+//========================
+//ブーメラン情報取得処理
+//========================
+Boomerang *GetBoomerang(void)
+{
+	return &g_aBoomerang[0];
 }

@@ -8,6 +8,8 @@
 //========================================
 #include "md_game.h"
 #include "../_R.N.Lib/R.N.Lib.h"
+#include "../boomerang.h"
+
 //****************************************
 // マクロ定義
 //****************************************
@@ -122,6 +124,16 @@ void InitMd_game(void)
 
 	// 初期状態を設定
 	SetStateMd_game(INIT_STATE);
+
+	//カメラ初期化
+	InitCamera3D();
+	GetCamera3D()->posV = D3DXVECTOR3(0.0f, 180.0f, -100.0f);
+
+	// ブーメラン初期化
+	InitBoomerang();
+
+	//[仮]ブーメラン配置
+	SetBoomerang(INITD3DXVECTOR3);
 }
 
 //========================================
@@ -141,6 +153,12 @@ void UpdateMd_game(void)
 {
 	// 状態に応じた更新処理
 	UpdateMd_gameState();
+
+	//カメラ更新処理
+	UpdateCamera3D();
+
+	// ブーメラン更新処理
+	UpdateBoomerang();
 }
 
 //========================================
@@ -149,7 +167,8 @@ void UpdateMd_game(void)
 //========================================
 void DrawMd_game(void)
 {
-
+	//カメラ設定
+	SetCamera3D();
 }
 
 //============================================================

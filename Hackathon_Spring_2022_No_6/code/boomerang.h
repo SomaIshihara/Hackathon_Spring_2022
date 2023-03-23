@@ -21,6 +21,8 @@ struct Boomerang
 	//描画類
 	D3DXMATRIX mtxWorld;	//ワールドマトリ
 	bool bUse;		//プレイヤー使用の有無
+
+	Parts3DInfo partsInfo;	// 部品(3D)の情報
 };
 
 //プロトタイプ宣言
@@ -28,6 +30,7 @@ void InitBoomerang(void);
 void UninitBoomerang(void);
 void UpdateBoomerang(void);
 void DrawBoomerang(void);
+void SetBoomerang(D3DXVECTOR3 pos);
 Boomerang *GetBoomerang(void);
 
 #endif // !_BOOMERANG_H_
