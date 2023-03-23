@@ -10,6 +10,7 @@
 #include "main.h"
 
 #include "chr_player.h"	// CHR:プレイヤー
+#include "boomerang.h"
 // R.N.Lib
 #include "_R.N.Lib/R.N.Lib.h"
 
@@ -30,6 +31,8 @@
 #define CHR_PLAYER_MOVEDEPTH (40.0f)
 // CHR:プレイヤーの回転量
 #define CHR_PLAYER_SPIN (0.05f)
+// CHR:プレイヤーの奥行き
+#define CHR_PLAYER_DEPTH (80.0f)
 
 //****************************************
 // 列挙型の定義
@@ -143,6 +146,17 @@ void UpdateChr_player(void)
 		// 向きを制御
 		ControlAngle(&pChr->partsInfo.rot.y);
 	}
+
+	if ((GetButtonTrigger(BUTTON_RIGHT_TRIGGER) || GetButtonTrigger(BUTTON_RIGHT_SHOULDER)) && (pChr->nBoomerang > 0))
+	{// ブーメラン投げ
+		SetBoomerang(pChr->partsInfo.pos, pChr->partsInfo.rot);
+		// ブーメラン数減算
+		pChr->nBoomerang--;
+	}
+
+	// カメラ追従
+	GetCamera3D()->posR = pChr->partsInfo.pos * 0.1f;
+	GetCamera3D()->posR.z += CHR_PLAYER_DEPTH;
 
 	// 衝突判定に必要な情報を作成
 	CollisionInfo myCollInfo =

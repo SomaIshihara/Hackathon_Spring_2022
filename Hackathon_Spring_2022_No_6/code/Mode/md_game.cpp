@@ -131,9 +131,8 @@ void InitMd_game(void)
 	//ƒJƒƒ‰‰Šú‰»
 	InitCamera3D();
 	{
-		int nDepth = 60;
-		GetCamera3D()->posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f + nDepth);
-		GetCamera3D()->posV = D3DXVECTOR3(0.0f, 140.0f, -140.0f + nDepth);
+		GetCamera3D()->posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		GetCamera3D()->posV = D3DXVECTOR3(0.0f, 140.0f, -140.0f);
 	}
 
 	// ƒu[ƒƒ‰ƒ“‰Šú‰»

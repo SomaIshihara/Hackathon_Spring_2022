@@ -245,6 +245,9 @@ void InitMd_title(void)
 
 	// ‰Šúó‘Ô‚ğİ’è
 	SetStateMd_title(INIT_STATE);
+
+	// ƒ}ƒbƒvî•ñ‚ğ“Ç‚İ‚İ
+	LoadMapData("data\\GAMEOBJECT\\3D\\MAP\\STAGE_000.txt");
 }
 
 //========================================
