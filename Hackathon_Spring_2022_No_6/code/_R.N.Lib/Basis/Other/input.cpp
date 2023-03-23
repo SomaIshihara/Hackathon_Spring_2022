@@ -379,7 +379,7 @@ void UpdateStick(void)
 			bAngle[nCntStick][nCntAngle] = false;
 		}
 
-		if (g_inputInfo.stick.aTplDiameter[nCntStick] > 0)
+		if (g_inputInfo.stick.aTplDiameter[nCntStick] > 0.01)
 		{// スティックが倒されている時、
 			// 動的なデバイスをコントローラーにする
 			g_activeInputType = ACTIVE_DEVICE_CONTROLLER;

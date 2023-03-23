@@ -9,6 +9,7 @@
 #include "md_game.h"
 #include "../_R.N.Lib/R.N.Lib.h"
 #include "../boomerang.h"
+#include "../_R.N.Lib/Basis/2D/boomeUI.h"
 #include "../target.h"
 #include "../chr_player.h"
 #include "../_R.N.Lib/Basis/2D/timer.h"
@@ -149,6 +150,9 @@ void InitMd_game(void)
 
 	//制限時間設定
 	InitTimer();
+
+	//ブーメランの所持数UI設定
+	SetBoomeUI();
 }
 
 //========================================
@@ -183,6 +187,9 @@ void UpdateMd_game(void)
 
 	//制限時間更新処理
 	UpdateTimer();
+
+	//ブーメランの所持数UI設定
+	SetBoomeUI();
 }
 
 //========================================

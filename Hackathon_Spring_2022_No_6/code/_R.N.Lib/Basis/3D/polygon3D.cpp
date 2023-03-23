@@ -198,7 +198,7 @@ void SetPolygon3D(Polygon3DSet polygon3DSet)
 		SetVertexColor3D(pVtx, polygon3DSet.col);
 
 		// テクスチャ座標の設定
-		SetTexturePos3D(pVtx, 0, 1, 1, NULL);
+		SetTexturePos3D(pVtx, polygon3DSet.nPtn, polygon3DSet.nPtnX, polygon3DSet.nPtnY, NULL);
 	}
 	// 頂点座標をアンロックする
 	g_pVtxBuffpolygon3D->Unlock();

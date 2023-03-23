@@ -15,7 +15,7 @@
 //最大桁数
 #define MAX_DEJIT_TIMER		(4)
 //制限時間の原点位置
-#define TIMER_ORIGIN_POS	(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 40.0f, 0.0f))
+#define TIMER_ORIGIN_POS	(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 30.0f, 0.0f))
 //制限時間のUIサイズ
 #define TIMER_UI_SIZE		(60.0f)
 
