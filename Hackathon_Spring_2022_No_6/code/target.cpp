@@ -42,10 +42,23 @@ char g_aTexturePath1[MAXTEX_TARGET_TYPE][TXT_MAX] =
 };
 
 // 移動速度
-static const float g_aItemSpeed[TARGET_MAX] = {
+static const float g_aTargetSpeed[TARGET_MAX] = {
 	0.35f,
-	0.4f,
+	0.25f,
 	0.6f,
+};
+
+// 大きさ
+static const float g_aTargetWidth[TARGET_MAX] = {
+	16,
+	16,
+	25,
+};
+
+static const float g_aTargetHeight[TARGET_MAX] = {
+	16,
+	16,
+	25,
 };
 
 // 敵種類
@@ -142,8 +155,8 @@ void UpdateTarget(void)
 			polygon3DSet.nPtn = g_aTarget[nCntTar].nPtn;
 			polygon3DSet.nPtnX = 2;
 			polygon3DSet.nPtnY = 1;
-			polygon3DSet.fWidth = 12;
-			polygon3DSet.fHeight = 12;
+			polygon3DSet.fWidth = g_aTargetWidth[g_aTarget[nCntTar].type];
+			polygon3DSet.fHeight = g_aTargetHeight[g_aTarget[nCntTar].type];
 			polygon3DSet.pos = g_aTarget[nCntTar].pos;
 			polygon3DSet.rot = g_aTarget[nCntTar].rot;
 			polygon3DSet.col = Color{ 255,255,255,255 };
@@ -173,7 +186,7 @@ void UpdateTarget(void)
 		{
 			if (g_nGameTime == g_Summon[nCntTar].nTime)
 			{
-				SetTarget(g_Summon[nCntTar].nPoint, g_Target[g_Summon[nCntTar].nType]);
+				SetTarget(g_Summon[nCntTar].nPoint, g_Target[g_Summon[nCntTar].nType], g_Summon[nCntTar].nMTyoe);
 				g_Summon[nCntTar].bUse = false;
 			}
 
@@ -184,7 +197,7 @@ void UpdateTarget(void)
 // SetTarget関数 - 標的の設定処理 -
 // Author:KEISUKE OOTONO
 //========================================
-void SetTarget(int nPos, TARGET_ITEM type)
+void SetTarget(int nPos, TARGET_ITEM type,int MType)
 {
 	for (int nCntTar = 0; nCntTar < MAX_TARGET; nCntTar++)
 	{
@@ -195,16 +208,17 @@ void SetTarget(int nPos, TARGET_ITEM type)
 			g_aTarget[nCntTar].bUse = true;								// 使用フラグ
 
 			// マップの中心から右の方で生成されると移動速度をマイナスに
-			if (g_aTarget[nCntTar].pos.x >= 0.0f)
+			if (MType == 0)
 			{
-				g_aTarget[nCntTar].move.x = -g_aItemSpeed[type];
+				g_aTarget[nCntTar].move.x = -g_aTargetSpeed[type];
 				g_aTarget[nCntTar].Tarpos = -g_aPoint[nPos].pos.x;
 				g_aTarget[nCntTar].bRot = false;
 			}
-			else
+			else if(MType == 1)
 			{
-				g_aTarget[nCntTar].move.x = g_aItemSpeed[type];
-				g_aTarget[nCntTar].Tarpos = -g_aPoint[nPos].pos.x;
+				g_aTarget[nCntTar].Tarpos = g_aPoint[nPos].pos.x;
+				g_aTarget[nCntTar].pos.x = -g_aPoint[nPos].pos.x;				// 位置
+				g_aTarget[nCntTar].move.x = g_aTargetSpeed[type];
 				g_aTarget[nCntTar].bRot = true;
 			}
 			break;
@@ -262,6 +276,7 @@ void LoadTarget(void)
 			case 1:	g_Summon[row].nType = atoi(aData);	break;	// 1列目：種類
 			case 2:	g_Summon[row].nPoint = atoi(aData);	break;	// 2列目：出現位置
 			case 3:	g_Summon[row].nTime = atoi(aData);	break;	// 3列目：出現時間
+			case 4:	g_Summon[row].nMTyoe = atoi(aData);	break;	// 4列目：移動方向
 			}
 			//バッファを初期化
 			memset(aData, 0, sizeof(aData));
