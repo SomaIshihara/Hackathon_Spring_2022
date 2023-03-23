@@ -8,6 +8,7 @@
 //========================================
 #include "target.h"
 #include "assert.h"
+#include "_R.N.Lib\Basis\2D\timer.h"
 #include "_R.N.Lib\R.N.Lib.h"
 
 //****************************************
@@ -15,7 +16,6 @@
 //****************************************
 #define MAXTEX_TARGET_TYPE	(TARGET_MAX)		// 標的の種類の最大数
 #define MAX_TEXTURE			(16)				// テクスチャの最大数
-#define GAME_TIME			(120)				// 制限時間
 //****************************************
 // プロトタイプ宣言
 //****************************************
@@ -40,13 +40,16 @@ char g_aTexturePath1[MAXTEX_TARGET_TYPE][TXT_MAX] =
 	"data//TEXTURE//Target//00.PNG",
 	"data//TEXTURE//Target//01.PNG",
 	"data//TEXTURE//Target//02.PNG",
+	"data//TEXTURE//Target//03.PNG",
+
 };
 
 // 移動速度
 static const float g_aTargetSpeed[TARGET_MAX] = {
 	0.35f,
-	0.25f,
+	0.5f,
 	1.05f,
+	0.3f,
 };
 
 // 敵種類
@@ -55,6 +58,7 @@ const TARGET_ITEM g_Target[TARGET_MAX] = {
 	{ TARGET_A },
 	{ TARGET_B },
 	{ TARGET_C },
+	{ TARGET_D },
 };
 
 //========== *** 標的の情報を取得 ***

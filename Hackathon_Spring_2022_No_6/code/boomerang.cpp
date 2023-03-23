@@ -7,18 +7,25 @@
 #include "main.h"
 #include "_R.N.Lib\R.N.Lib.h"
 #include "boomerang.h"
+#include "target.h"
+#include "chr_player.h"
 
 //マクロ
-#define BOOMERANG_SETUP_NUM			(2)		//ブーメランセットアップ番号
-#define BOOMERANG_ONE_ROTATE		(15)	//ブーメラン自体が1周するのにかかるフレーム数（2PIで割る）
-#define BOOMERANG_THROW_ROT			(0.10f * D3DX_PI)
-#define BOOMERANG_ROTTOTAL_MAX		(1.15f * D3DX_PI)
-#define BOOMERANG_MOVE_SPEED		(4.5f)	//ブーメランの移動速度
-#define BOOMERANG_ADDROTFORCE		(0.001f)	//回転力増加・減少量
-#define BOOMERANG_ROTFORCE_MAX		(0.1f)		//最大
-#define BOOMERANG_STRAIGHT_END		(30)	//直線移動終了時間
+#define BOOMERANG_SETUP_NUM			(2)					//ブーメランセットアップ番号
+#define BOOMERANG_ONE_ROTATE		(15)				//ブーメラン自体が1周するのにかかるフレーム数（2PIで割る）
+#define BOOMERANG_THROW_ROT			(0.10f * D3DX_PI)	//投げる角度
+#define BOOMERANG_ROTTOTAL_MAX		(1.15f * D3DX_PI)	//回転した量の合計の最大値
+#define BOOMERANG_MOVE_SPEED		(4.5f)				//ブーメランの移動速度
+#define BOOMERANG_ADDROTFORCE		(0.001f)			//回転力増加・減少量
+#define BOOMERANG_ROTFORCE_MAX		(0.1f)				//最大
+#define BOOMERANG_STRAIGHT_END		(30)				//直線移動終了時間
+#define BOOMERANG_DESTROY_LINE		(-300.0f)			//ブーメランがどっか飛んでいく（消す）ライン
 
 #define FIX_ROT(x)				(fmodf(x + (D3DX_PI * 3), D3DX_PI * 2) - D3DX_PI)	//角度を-PI~PIに修正
+
+//プロト
+void CollisionBoomerangEnemy(int nBoomerangNum);
+void CollisionBoomerangPlayer(int nBoomerangNum);
 
 //グローバル
 Boomerang g_aBoomerang[MAX_USE_BOOMERANG] = {};
@@ -118,25 +125,21 @@ void UpdateBoomerang(void)
 
 			g_aBoomerang[nCntBoomerang].pos += g_aBoomerang[nCntBoomerang].move;
 
-			//[内部]ブーメランとオブジェクトの当たり判定
-			CollisionInfo collInfo;
-			collInfo.pPos = &g_aBoomerang[nCntBoomerang].pos;
-			collInfo.posOld;
-			collInfo.pRot;
-			collInfo.rotOld;
-			collInfo.fScale = 1.0f;
-			collInfo.mode = COLLCHK_MODE_NORMAL;
-			collInfo.pMove = NULL;
-			collInfo.pHitTest = &GetModelSetUp(BOOMERANG_SETUP_NUM).hitTestSet.aHitTest[0];
-
-
+			//[内部]当たり判定
+			CollisionBoomerangEnemy(nCntBoomerang);
+			
+			//帰ってきている時だけ回収処理を行う
+			if (g_aBoomerang[nCntBoomerang].bReturn)
+			{
+				CollisionBoomerangPlayer(nCntBoomerang);
+			}
 
 			//[見た目]ブーメランの回転処理
 			g_aBoomerang[nCntBoomerang].partsInfo.pos = g_aBoomerang[nCntBoomerang].pos;
 			g_aBoomerang[nCntBoomerang].partsInfo.rot.y = FIX_ROT(g_aBoomerang[nCntBoomerang].partsInfo.rot.y + ((2 * D3DX_PI) / BOOMERANG_ONE_ROTATE));
 
 			//画面外に出たら消す
-			if (fabs(g_aBoomerang[nCntBoomerang].pos.x) > 450.0f || fabs(g_aBoomerang[nCntBoomerang].pos.z) > 450.0f)
+			if (g_aBoomerang[nCntBoomerang].pos.z < BOOMERANG_DESTROY_LINE)
 			{
 				g_aBoomerang[nCntBoomerang].bUse = false;
 			}
@@ -207,4 +210,48 @@ void SetBoomerang(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 Boomerang *GetBoomerang(void)
 {
 	return &g_aBoomerang[0];
+}
+
+//========================
+//ブーメランと敵の当たり判定
+//========================
+void CollisionBoomerangEnemy(int nBoomerangNum)
+{
+	Target* pTarget = GetTarget();
+
+	for (int nCntTarget = 0; nCntTarget < MAX_TARGET; nCntTarget++,pTarget++)
+	{
+		if (pTarget->bUse == true)
+		{
+			float fDistance = FindDistanceLookDown(pTarget->pos, g_aBoomerang[nBoomerangNum].pos);
+
+			if (fDistance < BOOMERANG_HIT_RADIUS + GetTargetType()->fWidth * 0.5f)
+			{//当たった
+				 //スコア足す
+				GetChr_player()->nScore += GetTargetType()->nScore;
+
+				//バルス
+				pTarget->bUse = false;
+			}
+		}
+	}
+}
+
+//========================
+//ブーメランとプレイヤーの当たり判定
+//========================
+void CollisionBoomerangPlayer(int nBoomerangNum)
+{
+	Chr_player *pPlayer = GetChr_player();
+
+	float fDistance = FindDistanceLookDown(pPlayer->partsInfo.pos, g_aBoomerang[nBoomerangNum].pos);
+
+	if (fDistance < BOOMERANG_HIT_RADIUS + PLAYER_HIT_RADIUS)
+	{//当たった
+		//ブーメラン増やす
+		GetChr_player()->nBoomerang++;
+
+		//ブーメランバルス
+		g_aBoomerang[nBoomerangNum].bUse = false;
+	}
 }
