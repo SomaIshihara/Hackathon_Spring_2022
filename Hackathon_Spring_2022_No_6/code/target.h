@@ -64,7 +64,6 @@ typedef struct
 
 	float fWidth;	// •
 	float fHeight;	// ‚‚³
-	float fSpeed;	// ˆÚ“®‘¬“x
 }TargetType;
 
 typedef struct
