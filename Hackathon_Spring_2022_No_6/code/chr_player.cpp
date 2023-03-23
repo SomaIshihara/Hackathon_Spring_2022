@@ -22,6 +22,26 @@
 #define CHR_PLAYER_RELATIVE_POS_R_MOVE_DIAMETER (0.25f)
 // CHR:プレイヤーのモデルのセットアップ番号
 #define CHR_PLAYER_MODEL_SETUP (3)
+// CHR:プレイヤーの移動量
+#define CHR_PLAYER_MOVE (1.0f)
+// CHR;プレイヤーの移動幅
+#define CHR_PLAYER_MOVEWIDTH (80.0f)
+// CHR;プレイヤーの移動奥行き
+#define CHR_PLAYER_MOVEDEPTH (40.0f)
+// CHR:プレイヤーの回転量
+#define CHR_PLAYER_SPIN (0.1f)
+
+//****************************************
+// 列挙型の定義
+//****************************************
+// モーション番号
+typedef enum 
+{
+	CHR_PLAYER_MOTION_WAIT,
+	CHR_PLAYER_MOTION_MOVE,
+	CHR_PLAYER_MOTION_SLOW,
+	CHR_PLAYER_MOTION_MAX,
+}CHR_PLAYER_MOTION;
 
 //****************************************
 // プロトタイプ宣言
@@ -87,6 +107,42 @@ void UpdateChr_player(void)
 
 	// 部品(3D)の更新処理
 	UpdateParts3DInfo(&pChr->partsInfo);
+
+	// 移動
+	if (GetStick().aTplDiameter[STICK_TYPE_LEFT] > 0.01f)
+	{
+		// モーションを移動に設定
+		pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_MOVE;
+
+		// 目標向きにスティックの角度を代入
+		float fAngle = -GetStick().aAngle[STICK_TYPE_LEFT] + D3DX_PI;
+
+		// 移動
+		pChr->partsInfo.pos.x += sinf(fAngle) * CHR_PLAYER_MOVE;
+		pChr->partsInfo.pos.z += cosf(fAngle) * CHR_PLAYER_MOVE;
+	}
+	else 
+	{
+		// モーションを待機に設定
+		pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_WAIT;
+	}
+
+	// 回転
+	float fTplDiameter = GetStick().aTplDiameter[STICK_TYPE_RIGHT];
+	if (fTplDiameter > 0.01f) 
+	{
+		if (GetStick().aAnglePress[STICK_TYPE_RIGHT][STICK_ANGLE_LEFT])
+		{
+			pChr->partsInfo.rot.y -= CHR_PLAYER_SPIN * fTplDiameter;
+		}
+		else if(GetStick().aAnglePress[STICK_TYPE_RIGHT][STICK_ANGLE_RIGHT])
+		{
+			pChr->partsInfo.rot.y += CHR_PLAYER_SPIN * fTplDiameter;
+		}
+
+		// 向きを制御
+		ControlAngle(&pChr->partsInfo.rot.y);
+	}
 
 	// 衝突判定に必要な情報を作成
 	CollisionInfo myCollInfo =
