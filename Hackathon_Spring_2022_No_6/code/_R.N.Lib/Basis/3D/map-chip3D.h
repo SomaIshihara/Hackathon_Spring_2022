@@ -84,5 +84,7 @@ void SetMapChip3D(D3DXVECTOR3 pos, D3DXVECTOR3 rot, int nType, int nSubType);
 //========== *** 状態 ***
 // マップチップ(3D)のクリア処理
 void ClearMapChip3D(void);
+// マップチップ(3D)との衝突判定処理
+int CollisionMapChip3D(VECTOR vector, Collision *pObjCollision, Collision *pCmnCollision, CollisionInfo myCollInfo);
 
 #endif
