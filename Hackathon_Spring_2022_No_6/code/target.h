@@ -40,11 +40,11 @@ typedef struct
 	TARGET_ITEM type;		// 種類
 
 	float fSpeed;			// 移動速度
+	float Tarpos;			// 目標位置
 
+	bool bRot;				// 方向フラグ
 	bool bUse;				// 使用フラグ
 
-	// 部品の情報
-	Parts3DInfo partsInfo;
 }Target;
 
 typedef struct

@@ -28,18 +28,12 @@ static Summon g_aSummon[MAX_SUMMON];		// 召喚の情報
 //****************************************
 // グローバル定数宣言
 //****************************************
-// モデルパス
-static char g_aModelPath[TARGET_MAX][TXT_MAX] = {
-	"data//MODEL//Item//cheese.x",
-	"data//MODEL//Item//cheese.x",
-	"data//MODEL//Item//cheese.x",
-};
 
 // 移動速度
 static const float g_aItemSpeed[TARGET_MAX] = {
-	5.0f,
-	2.5f,
-	1.0f,
+	0.35f,
+	0.4f,
+	0.6f,
 };
 
 //========== *** 標的の情報を取得 ***
@@ -74,12 +68,12 @@ void InitTarget(void)
 		for (int nCntTarget = 0; nCntTarget < MAX_TARGET; nCntTarget++)
 		{
 			g_aTarget[nCntTarget].pos = INITD3DXVECTOR3;
+			g_aTarget[nCntTarget].Tarpos = 0.0f;
 			g_aTarget[nCntTarget].rot = INITD3DXVECTOR3;
 			g_aTarget[nCntTarget].move = INITD3DXVECTOR3;
 			g_aTarget[nCntTarget].type = TARGET_A;
+			g_aTarget[nCntTarget].bRot = false;
 			g_aTarget[nCntTarget].bUse = false;
-
-			InitParts3DInfo(&g_aTarget[nCntTarget].partsInfo, g_aTarget[nCntTarget].type);
 		}
 
 		SetTarget(0, TARGET_A);
@@ -94,7 +88,7 @@ void InitTarget(void)
 		SetTarget(9, TARGET_A);
 		SetTarget(10, TARGET_A);
 		SetTarget(11, TARGET_A);
-		SetTarget(12, TARGET_C);
+		SetTarget(12, TARGET_A);
 		SetTarget(13, TARGET_A);
 		SetTarget(14, TARGET_A);
 		SetTarget(15, TARGET_A);
@@ -116,12 +110,24 @@ void UpdateTarget(void)
 		if (g_aTarget[nCntTar].bUse == true)
 		{
 			// 移動量を代入する
-			//g_aTarget[nCntTar].pos += g_aTarget[nCntTar].move;
+			if (g_aTarget[nCntTar].Tarpos <= g_aTarget[nCntTar].pos.x && g_aTarget[nCntTar].bRot == true)
+			{
+				g_aTarget[nCntTar].bUse = false;
+			}
+			else if (g_aTarget[nCntTar].Tarpos >= g_aTarget[nCntTar].pos.x && g_aTarget[nCntTar].bRot == false)
+			{
+				g_aTarget[nCntTar].bUse = false;
+			}
+			else
+			{
+				g_aTarget[nCntTar].pos += g_aTarget[nCntTar].move;
+			}
 
-			g_aTarget[nCntTar].partsInfo.pos = g_aTarget[nCntTar].pos;
-			g_aTarget[nCntTar].partsInfo.rot = g_aTarget[nCntTar].rot;
+			// 移動量を代入
 
-			UpdateParts3DInfo(&g_aTarget[nCntTar].partsInfo);
+			Polygon3DSet polygon3Dset;
+
+			polygon3Dset.pos = g_aTarget[nCntTar].pos;
 		}
 	}
 }
@@ -140,14 +146,18 @@ void SetTarget(int nPos, TARGET_ITEM type)
 			g_aTarget[nCntTar].bUse = true;								// 使用フラグ
 
 			// マップの中心から右の方で生成されると移動速度をマイナスに
-			/*if (g_aTarget[nCntTar].pos.x >= 640.0f)
+			if (g_aTarget[nCntTar].pos.x >= 0.0f)
 			{
 				g_aTarget[nCntTar].move.x = -g_aItemSpeed[type];
+				g_aTarget[nCntTar].Tarpos = -g_aSummon[nPos].pos.x;
+				g_aTarget[nCntTar].bRot = false;
 			}
 			else
 			{
 				g_aTarget[nCntTar].move.x = g_aItemSpeed[type];
-			}*/
+				g_aTarget[nCntTar].Tarpos = -g_aSummon[nPos].pos.x;
+				g_aTarget[nCntTar].bRot = true;
+			}
 			break;
 		}
 	}
