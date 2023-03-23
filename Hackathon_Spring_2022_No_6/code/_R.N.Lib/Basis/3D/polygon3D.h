@@ -32,6 +32,21 @@ typedef struct
 	D3DXVECTOR3 pos = INITD3DXVECTOR3;	// 位置
 	D3DXVECTOR3 rot = INITD3DXVECTOR3;	// 向き
 	Color col = INITCOLOR;	// 色
+#if /* 設定フォーマット */0
+	// ポリゴン(3D)の設定情報
+	Polygon3DSet polygon3DSet;
+	polygon3DSet.nTex = ;
+	polygon3DSet.nPtn = ;
+	polygon3DSet.nPtnX = ;
+	polygon3DSet.nPtnY = ;
+	polygon3DSet.fWidth = ;
+	polygon3DSet.fHeight = ;
+	polygon3DSet.pos = ;
+	polygon3DSet.rot = ;
+	polygon3DSet.col = ;
+	// ポリゴン(3D)の設定処理
+	SetPolygon3D(Polygon3DSet);
+#endif
 }Polygon3DSet;
 
 // ポリゴン(3D)の管理情報構造体
