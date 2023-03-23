@@ -309,24 +309,24 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 					{
 						if (g_aComboText[nCntTarget].bUse == false)
 						{
-							//コンボ設定
-							/* 文字列のポインタ */
-							snprintf(g_aComboText[nCntTarget].c_aComboText,
-								COMBOTEXT_DEJIT,
-								"%02dCOMBO", g_aBoomerang[nBoomerangNum].nCombo);
-							g_aComboText[nCntTarget].text3DSet.pString = &g_aComboText[nCntTarget].c_aComboText[0];
-							/* フォント番号		*/g_aComboText[nCntTarget].text3DSet.nFont = 0;
-							/* 表示形式			*/g_aComboText[nCntTarget].text3DSet.disp = TEXT_DISP_CENTER;
-							/* 位置				*/g_aComboText[nCntTarget].text3DSet.pos = pTarget->pos;
-							/* 向き				*/g_aComboText[nCntTarget].text3DSet.rot = D3DXVECTOR3(0.0f,D3DX_PI * -0.5f,0.0f);
-							/* 色				*/g_aComboText[nCntTarget].text3DSet.col = Color{ 255,255,255,255 };
-							/* 幅				*/g_aComboText[nCntTarget].text3DSet.fWidth = COMBOTEXT_SIZE_DEFAULT;
-							/* 高さ				*/g_aComboText[nCntTarget].text3DSet.fHeight = COMBOTEXT_SIZE_DEFAULT;
-							/* Zテスト			*/g_aComboText[nCntTarget].text3DSet.bZtest = false;
-							/* ライティング		*/g_aComboText[nCntTarget].text3DSet.bLighting = false;
-							/* ビルボード		*/g_aComboText[nCntTarget].text3DSet.bBillboard = true;
-							g_aComboText[nCntTarget].nLife = COMBOTEXT_POP_TIME;
-							g_aComboText[nCntTarget].bUse = true;
+							////コンボ設定
+							///* 文字列のポインタ */
+							//snprintf(g_aComboText[nCntTarget].c_aComboText,
+							//	COMBOTEXT_DEJIT,
+							//	"%02dCOMBO", g_aBoomerang[nBoomerangNum].nCombo);
+							//g_aComboText[nCntTarget].text3DSet.pString = &g_aComboText[nCntTarget].c_aComboText[0];
+							///* フォント番号		*/g_aComboText[nCntTarget].text3DSet.nFont = 0;
+							///* 表示形式			*/g_aComboText[nCntTarget].text3DSet.disp = TEXT_DISP_CENTER;
+							///* 位置				*/g_aComboText[nCntTarget].text3DSet.pos = pTarget->pos;
+							///* 向き				*/g_aComboText[nCntTarget].text3DSet.rot = D3DXVECTOR3(0.0f,D3DX_PI * -0.5f,0.0f);
+							///* 色				*/g_aComboText[nCntTarget].text3DSet.col = Color{ 255,255,255,255 };
+							///* 幅				*/g_aComboText[nCntTarget].text3DSet.fWidth = COMBOTEXT_SIZE_DEFAULT;
+							///* 高さ				*/g_aComboText[nCntTarget].text3DSet.fHeight = COMBOTEXT_SIZE_DEFAULT;
+							///* Zテスト			*/g_aComboText[nCntTarget].text3DSet.bZtest = false;
+							///* ライティング		*/g_aComboText[nCntTarget].text3DSet.bLighting = false;
+							///* ビルボード		*/g_aComboText[nCntTarget].text3DSet.bBillboard = true;
+							//g_aComboText[nCntTarget].nLife = COMBOTEXT_POP_TIME;
+							//g_aComboText[nCntTarget].bUse = true;
 							break;
 						}
 					}

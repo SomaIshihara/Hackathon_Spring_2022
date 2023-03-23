@@ -20,7 +20,7 @@
 #define SCORE_NAME_POS		(D3DXVECTOR3(1100.0f, 630.0f, 0.0f))
 #define SCORE_DEJIT_POS		(D3DXVECTOR3(1100.0f, 680.0f, 0.0f))
 //•\Ž¦‚·‚éUI‚Ì•¶Žš”
-#define SCORE_DEJIT_NUM_TXT	(5)
+#define SCORE_DEJIT_NUM_TXT	(6)
 
 //========================================
 // SetScoreUIŠÖ” - ŠŽƒu[ƒƒ‰ƒ“”‚ÌUIÝ’èˆ— -
