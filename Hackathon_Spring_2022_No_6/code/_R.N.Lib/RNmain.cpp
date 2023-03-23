@@ -23,6 +23,7 @@ void SetRenderStateRN(void);
 // グローバル変数宣言
 //****************************************
 RNmain g_RNmain;	// R.N.Libのメイン処理の情報
+static int g_nGroundTex;	// 地面のテクスチャ番号
 
 //================================================================================
 //----------|---------------------------------------------------------------------
@@ -127,6 +128,9 @@ void RNInit(HINSTANCE hInstance)
 	InitSound(		// サウンド
 		*GetWindowHandle());
 	InitSetting();	// 設定
+
+	// 地面テクスチャを読み込み
+	g_nGroundTex = LoadTexture("data\\TEXTURE\\BG\\ground.png");
 }
 
 //========================================
@@ -171,6 +175,20 @@ void RNUpdate(void)
 	UpdateWindowRN();	// ウィンドウ
 	DrawHitTestSetUp();	// 当たり判定の描画準備処理
 	HitTestSignOut();	// 当たり判定の登録解除処理
+
+	// ポリゴン(3D)の設定情報
+	Polygon3DSet polygon3DSet;
+	polygon3DSet.nTex = g_nGroundTex;
+	polygon3DSet.nPtn = 0;
+	polygon3DSet.nPtnX = 1;
+	polygon3DSet.nPtnY = 1;
+	polygon3DSet.fWidth = 400.0f;
+	polygon3DSet.fHeight = 400.0f;
+	polygon3DSet.pos = D3DXVECTOR3(0.0f,-80.0f,80.0f);
+	polygon3DSet.rot = INITD3DXVECTOR3;
+	polygon3DSet.col = INITCOLOR;
+	// ポリゴン(3D)の設定処理
+	SetPolygon3D(polygon3DSet);
 }
 
 //========================================

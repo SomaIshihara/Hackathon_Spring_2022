@@ -45,7 +45,7 @@ typedef struct
 	polygon3DSet.rot = ;
 	polygon3DSet.col = ;
 	// ƒ|ƒŠƒSƒ“(3D)‚Ìİ’èˆ—
-	SetPolygon3D(Polygon3DSet);
+	SetPolygon3D(polygon3DSet);
 #endif
 }Polygon3DSet;
 
