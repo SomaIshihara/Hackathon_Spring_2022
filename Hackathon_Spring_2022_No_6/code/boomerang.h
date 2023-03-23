@@ -36,6 +36,9 @@ struct Boomerang
 	bool bReturn;			//跳ね返りフラグ
 	THROWTYPE throwType;	//投げ方向
 
+	//パラメーター
+	int nCombo;				//コンボ数
+
 	//描画類
 	D3DXMATRIX mtxWorld;	//ワールドマトリ
 	bool bUse;				//ブーメラン使用の有無
