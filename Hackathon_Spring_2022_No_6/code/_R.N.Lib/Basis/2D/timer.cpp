@@ -105,7 +105,7 @@ void SetTimer(void)
 	char cGameTimer[MAX_DEJIT_TIMER];
 
 	//制限時間を文字列に置き換え
-	snprintf(cGameTimer, nCntDejit, "%d", g_nGameTime);
+	snprintf(cGameTimer, nCntDejit, "TIME %d", g_nGameTime);
 
 	// テキスト(2D)の設定処理
 	Text2DSet text2DSet;

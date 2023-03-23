@@ -232,7 +232,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR IpCmdLine
 		WINDOW_NAME,	// ウィンドウの名前
 		SCREEN_WIDTH,	// ウィンドウの幅
 		SCREEN_HEIGHT,	// ウィンドウの高さ
-		true,			// ウィンドウモード
+		false,			// ウィンドウモード
 	};
 	CreateWindowRN(cwi);
 
