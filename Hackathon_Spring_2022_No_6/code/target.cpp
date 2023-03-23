@@ -79,16 +79,13 @@ void InitTarget(void)
 			g_aTarget[nCntTarget].type = TARGET_A;
 			g_aTarget[nCntTarget].bUse = false;
 
-			InitParts3DInfo(&g_aTarget[nCntTarget].partsInfo, 0);
+			InitParts3DInfo(&g_aTarget[nCntTarget].partsInfo, g_aTarget[nCntTarget].type);
 		}
-}
-//========================================
-// UninitTarget関数 - 標的の終了処理 -
-// Author:KEISUKE OOTONO
-//========================================
-void UninitTarget(void)
-{
 
+		SetTarget(0, TARGET_A);
+		SetTarget(1, TARGET_A);
+		SetTarget(2, TARGET_A);
+		SetTarget(3, TARGET_A);
 }
 //========================================
 // UpdateTarget関数 - 標的の更新処理 -
@@ -108,14 +105,6 @@ void UpdateTarget(void)
 			UpdateParts3DInfo(&g_aTarget[nCntTar].partsInfo);
 		}
 	}
-}
-//========================================
-// DrawTarget関数 - 標的の描画処理 -
-// Author:KEISUKE OOTONO
-//========================================
-void DrawTarget(void)
-{
-	
 }
 //========================================
 // SetTarget関数 - 標的の設定処理 -
