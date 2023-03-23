@@ -10,6 +10,7 @@
 #define _CHR_PLAYER_H_	// 二重インクルード防止のマクロを定義する
 
 #include "_R.N.Lib/R.N.Lib.h"
+#include "boomerang.h"
 
 //****************************************
 // 構造体の定義
@@ -18,9 +19,9 @@
 typedef struct
 {
 	// ブーメラン所持数
-	int nBoomerang = 3;
+	int nBoomerang = MAX_USE_BOOMERANG;
 	// スコア
-	int nScore = 1000;
+	int nScore = 0;
 
 	// 部品関連
 	Parts3DInfo partsInfo;	// 部品管理
