@@ -186,7 +186,7 @@
     <ClCompile Include="code\_R.N.Lib\Basis\2D\timer.cpp">
       <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClCompile>
-    <ClCompile Include="cloud.cpp">
+    <ClCompile Include="code\cloud.cpp">
       <Filter>ソース ファイル\Cloud</Filter>
     </ClCompile>
   </ItemGroup>
@@ -329,7 +329,7 @@
     <ClInclude Include="code\_R.N.Lib\Basis\2D\score.h">
       <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClInclude>
-    <ClInclude Include="cloud.h">
+    <ClInclude Include="code\cloud.h">
       <Filter>ソース ファイル\Cloud</Filter>
     </ClInclude>
   </ItemGroup>
