@@ -12,11 +12,21 @@
 //****************************************
 // 列挙型の定義
 //****************************************
+// タイトル画面[00] のメインメニュー
+typedef enum
+{
+	MD_TITLE_MAIN_MENU_START,		// 開始
+	MD_TITLE_MAIN_MENU_RANKING,		// ランキング
+	MD_TITLE_MAIN_MENU_EXIT,		// 終了
+	MD_TITLE_MAIN_MENU_MAX,
+}MD_TITLE_MAIN_MENU;
+
 // MD:タイトルの状態
 typedef enum
 {
-	MD_TITLE_STATE_NONE,	// 無し
-	MD_TITLE_STATE_NORMAL,	// 通常
+	MD_TITLE_STATE_NONE,		// 無し
+	MD_TITLE_STATE_NORMAL,		// 通常
+	MD_TITLE_STATE_RANKING,	// ランキング
 	MD_TITLE_STATE_MAX,
 }MD_TITLE_STATE;
 
@@ -28,6 +38,7 @@ typedef struct
 {
 	// 状態関連
 	MD_TITLE_STATE state;	// MD:タイトル画面[00] の状態
+	int					nCounterState;		// 状態のカウンター
 }Md_title;
 
 //****************************************

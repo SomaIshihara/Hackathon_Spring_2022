@@ -31,7 +31,9 @@ typedef struct
 	D3DXVECTOR3 rot = INITD3DXVECTOR3;	// 向き
 	Color col = INITCOLOR;	// 色
 	bool bMatchCamera = false;	// カメラに位置合わせフラグ
-#if /* 設定フォーマット */0 
+#if /* 設定フォーマット */0
+	// ポリゴン(2D)の設定情報
+	Polygon2DSet polySet;
 	/* テクスチャ番号	*/polySet.nTex = ;
 	/* パターン番号		*/polySet.nPtn = ;
 	/* パターン上限X	*/polySet.nPtnX = ;
@@ -42,6 +44,8 @@ typedef struct
 	/* 向き				*/polySet.rot = ;
 	/* 色				*/polySet.col = ;
 	/* カメラ合わせ		*/polySet.bMatchCamera = ;
+	// ポリゴン(2D)の設定処理
+	SetPolygon2D(polySet);
 #endif
 }Polygon2DSet;
 
