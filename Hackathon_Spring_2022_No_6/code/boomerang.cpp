@@ -151,6 +151,15 @@ void UpdateBoomerang(void)
 			}
 		}
 	}
+
+	//全てのブーメランが使われていない
+	if (!g_aBoomerang[0].bUse &&
+		!g_aBoomerang[1].bUse &&
+		!g_aBoomerang[2].bUse)
+	{
+		//ブーメランが投げられている音を停止する
+		StopSound(2);
+	}
 }
 
 //========================
@@ -196,6 +205,15 @@ void SetBoomerang(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 
 			// 部品(3D)の初期化処理
 			InitParts3DInfo(&g_aBoomerang[nCntBoomerang].partsInfo, BOOMERANG_SETUP_NUM);
+
+			//全てのブーメランが使われていない
+			if (!g_aBoomerang[0].bUse &&
+				!g_aBoomerang[1].bUse &&
+				!g_aBoomerang[2].bUse)
+			{
+				//ブーメランが投げられている音を再生する
+				PlaySound(2);
+			}
 
 			//使用している状態にする
 			g_aBoomerang[nCntBoomerang].bUse = true;

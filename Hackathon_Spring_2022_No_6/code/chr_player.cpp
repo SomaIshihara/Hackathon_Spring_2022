@@ -219,7 +219,6 @@ void UpdateChr_player(void)
 		pChr->nBoomerang--;
 		pChr->nSlowCounter = 10;
 		pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_SLOW;
-		PlaySound(2);
 	}
 
 	// ƒJƒƒ‰’Ç]
