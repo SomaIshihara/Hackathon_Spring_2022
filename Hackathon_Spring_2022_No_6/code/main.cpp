@@ -25,7 +25,7 @@
 // 初期のモード
 #define INIT_MODE (MODE_TITLE)
 // 背景色
-#define BGCOLOR Color{90,90,90,255}
+#define BGCOLOR Color{113,145,79,60}
 
 //****************************************
 // プロトタイプ宣言
