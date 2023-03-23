@@ -27,12 +27,6 @@
 #define INSIDE_SCREEN_LEFTMOST (960)
 // 内側スクリーンの右端
 #define INSIDE_SCREEN_RIGHTMOST (720)
-// D3DXVECTOR3の初期化値
-#define INITD3DXVECTOR3	D3DXVECTOR3(0.0f,0.0f,0.0f)
-// D3DXCOLORの初期値
-#define INITD3DXCOLOR	D3DXCOLOR(1,1,1,1)
-// Colorの初期化値
-#define INITCOLOR		Color{255,255,255,255}
 //****************************************
 // 列挙型の定義
 //****************************************
