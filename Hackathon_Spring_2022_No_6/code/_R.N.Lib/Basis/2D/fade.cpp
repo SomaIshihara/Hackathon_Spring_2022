@@ -39,9 +39,6 @@ void InitFade(void)
 {
 	g_fade = FADE_IN;				// フェードイン状態に
 	g_colorFade = { 0,0,0,255 };	// 黒いポリゴン(不透明)にする
-	
-	// BGMの音量を変更する
-	SoundTypeVolumeChange(SOUND_TYPE_BGM, 0.0f);
 }
 
 //========================================

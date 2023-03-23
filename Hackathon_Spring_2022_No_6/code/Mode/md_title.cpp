@@ -11,6 +11,7 @@
 #include "../_R.N.Lib/R.N.Lib.h"
 #include "../UserInterface/ui_menu.h"
 #include "../UserInterface/ui_title-logo.h"
+#include "../../code/_R.N.Lib/Basis/Other/sound.h"
 
 //****************************************
 // マクロ定義
@@ -248,6 +249,9 @@ void InitMd_title(void)
 
 	// マップ情報を読み込み
 	LoadMapData("data\\GAMEOBJECT\\3D\\MAP\\STAGE_000.txt");
+
+	//タイトルBGM再生
+	PlaySound(0);
 }
 
 //========================================

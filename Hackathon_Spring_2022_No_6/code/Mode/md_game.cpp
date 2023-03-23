@@ -14,6 +14,7 @@
 #include "../chr_player.h"
 #include "../_R.N.Lib/Basis/2D/timer.h"
 #include "../_R.N.Lib/Basis/2D/score.h"
+#include "../../code/_R.N.Lib/Basis/Other/sound.h"
 
 //****************************************
 // マクロ定義
@@ -154,6 +155,9 @@ void InitMd_game(void)
 
 	//スコアUI設定
 	SetScoreUI();
+
+	//ゲームBGM再生
+	PlaySound(1);
 }
 
 //========================================
