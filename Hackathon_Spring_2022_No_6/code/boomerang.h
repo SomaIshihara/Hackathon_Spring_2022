@@ -20,6 +20,9 @@ struct Boomerang
 	D3DXVECTOR3 posOld;		//前回の位置
 	D3DXVECTOR3 rot;		//向き
 	D3DXVECTOR3 move;		//移動量
+	float fRotForce;		//回転力
+	int nThrowTime;			//投げてからの時間
+	int nDecreTime;			//回転力減少までの時間（乱数設定）
 
 	//描画類
 	D3DXMATRIX mtxWorld;	//ワールドマトリ
