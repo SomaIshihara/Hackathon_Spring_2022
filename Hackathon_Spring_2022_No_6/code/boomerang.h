@@ -12,6 +12,14 @@
 //マクロ
 #define MAX_USE_BOOMERANG		(3)		//ブーメランの使用数（ヘッダに移してもいい）
 
+//投げ方向列挙
+typedef enum
+{
+	THROWTYPE_LEFT = 0,
+	THROWTYPE_RIGHT,
+	THROWTYPE_MAX
+} THROWTYPE;
+
 //プレイヤー構造体
 struct Boomerang
 {
@@ -19,11 +27,13 @@ struct Boomerang
 	D3DXVECTOR3 pos;		//位置
 	D3DXVECTOR3 posOld;		//前回の位置
 	D3DXVECTOR3 rot;		//向き
+	float fRotTotal;		//回転した量
 	D3DXVECTOR3 move;		//移動量
 	int nCounterStraight;	//直線移動時間カウンタ
 	float fRotForce;		//回転力
-	bool bEndForce;			//回転力をかけるのを終了するか
+	bool bEndRotate;		//回転力をかけるのを終了するか
 	bool bReturn;			//跳ね返りフラグ
+	THROWTYPE throwType;	//投げ方向
 
 	//描画類
 	D3DXMATRIX mtxWorld;	//ワールドマトリ

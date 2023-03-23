@@ -11,11 +11,12 @@
 //マクロ
 #define BOOMERANG_SETUP_NUM			(2)		//ブーメランセットアップ番号
 #define BOOMERANG_ONE_ROTATE		(15)	//ブーメラン自体が1周するのにかかるフレーム数（2PIで割る）
-#define BOOMERANG_MOVE_ROT			((1.0f / 60) * D3DX_PI)	//ブーメランの移動の回転速度
-#define BOOMERANG_MOVE_SPEED		(8.0f)	//ブーメランの移動速度
-#define BOOMERANG_ADDROTFORCE		(0.02f)	//回転力増加・減少量
-#define BOOMERANG_ROTFORCE_MAX		(0.25f)		//最大
-#define BOOMERANG_STRAIGHT_END		(40)	//直線移動終了時間
+#define BOOMERANG_THROW_ROT			(0.10f * D3DX_PI)
+#define BOOMERANG_ROTTOTAL_MAX		(1.15f * D3DX_PI)
+#define BOOMERANG_MOVE_SPEED		(4.5f)	//ブーメランの移動速度
+#define BOOMERANG_ADDROTFORCE		(0.001f)	//回転力増加・減少量
+#define BOOMERANG_ROTFORCE_MAX		(0.1f)		//最大
+#define BOOMERANG_STRAIGHT_END		(30)	//直線移動終了時間
 
 #define FIX_ROT(x)				(fmodf(x + (D3DX_PI * 3), D3DX_PI * 2) - D3DX_PI)	//角度を-PI~PIに修正
 
@@ -35,7 +36,7 @@ void InitBoomerang(void)
 		g_aBoomerang[nCntBoomerang].move = INITD3DXVECTOR3;
 		g_aBoomerang[nCntBoomerang].rot = INITD3DXVECTOR3;
 		g_aBoomerang[nCntBoomerang].fRotForce = 0.0f;
-		g_aBoomerang[nCntBoomerang].bEndForce = false;
+		g_aBoomerang[nCntBoomerang].bEndRotate = false;
 
 		// 部品(3D)の初期化処理
 		InitParts3DInfo(&g_aBoomerang[nCntBoomerang].partsInfo, BOOMERANG_SETUP_NUM);
@@ -67,28 +68,46 @@ void UpdateBoomerang(void)
 
 			if (g_aBoomerang[nCntBoomerang].nCounterStraight > BOOMERANG_STRAIGHT_END)
 			{
-				if (!g_aBoomerang[nCntBoomerang].bReturn) 
+				if (g_aBoomerang[nCntBoomerang].throwType == THROWTYPE_LEFT)
 				{
 					g_aBoomerang[nCntBoomerang].fRotForce += BOOMERANG_ADDROTFORCE;
-				}
-				else 
-				{
-					g_aBoomerang[nCntBoomerang].fRotForce -= BOOMERANG_ADDROTFORCE;
 
-					if (g_aBoomerang[nCntBoomerang].fRotForce < 0.0f) 
+					//最大値を過ぎたら減らす
+					if (g_aBoomerang[nCntBoomerang].fRotForce > BOOMERANG_ROTFORCE_MAX)
 					{
-						g_aBoomerang[nCntBoomerang].fRotForce = 0.0f;
+						g_aBoomerang[nCntBoomerang].bReturn = true;
+					}
+
+					if (!g_aBoomerang[nCntBoomerang].bEndRotate)
+					{
+						g_aBoomerang[nCntBoomerang].rot.y += g_aBoomerang[nCntBoomerang].fRotForce;
+						g_aBoomerang[nCntBoomerang].fRotTotal += g_aBoomerang[nCntBoomerang].fRotForce;
+						if (g_aBoomerang[nCntBoomerang].fRotTotal >= BOOMERANG_ROTTOTAL_MAX)
+						{
+							g_aBoomerang[nCntBoomerang].bEndRotate = true;
+						}
 					}
 				}
-
-				//最大値を過ぎたら減らす
-				if (g_aBoomerang[nCntBoomerang].fRotForce > BOOMERANG_ROTFORCE_MAX)
+				else
 				{
-					g_aBoomerang[nCntBoomerang].bReturn = true;
+					g_aBoomerang[nCntBoomerang].fRotForce += BOOMERANG_ADDROTFORCE;
+
+					//最大値を過ぎたら減らす
+					if (g_aBoomerang[nCntBoomerang].fRotForce > BOOMERANG_ROTFORCE_MAX)
+					{
+						g_aBoomerang[nCntBoomerang].bReturn = true;
+					}
+
+					if (!g_aBoomerang[nCntBoomerang].bEndRotate)
+					{
+						g_aBoomerang[nCntBoomerang].rot.y -= g_aBoomerang[nCntBoomerang].fRotForce;
+						g_aBoomerang[nCntBoomerang].fRotTotal += g_aBoomerang[nCntBoomerang].fRotForce;
+						if (g_aBoomerang[nCntBoomerang].fRotTotal >= BOOMERANG_ROTTOTAL_MAX)
+						{
+							g_aBoomerang[nCntBoomerang].bEndRotate = true;
+						}
+					}
 				}
-
-				g_aBoomerang[nCntBoomerang].rot.y += g_aBoomerang[nCntBoomerang].fRotForce;
-
 				g_aBoomerang[nCntBoomerang].rot.y = FIX_ROT(g_aBoomerang[nCntBoomerang].rot.y);
 			}
 
@@ -152,11 +171,23 @@ void SetBoomerang(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 			g_aBoomerang[nCntBoomerang].posOld = g_aBoomerang[nCntBoomerang].pos = pos;
 			g_aBoomerang[nCntBoomerang].rot = rot;
 			g_aBoomerang[nCntBoomerang].rot.y *= -1;
+			g_aBoomerang[nCntBoomerang].rot.y -= BOOMERANG_THROW_ROT;
 			g_aBoomerang[nCntBoomerang].move = INITD3DXVECTOR3;
 			g_aBoomerang[nCntBoomerang].nCounterStraight = 0;
 			g_aBoomerang[nCntBoomerang].fRotForce = 0.0f;
-			g_aBoomerang[nCntBoomerang].bEndForce = false;
+			g_aBoomerang[nCntBoomerang].fRotTotal = 0.0f;
+			g_aBoomerang[nCntBoomerang].bEndRotate = false;
 			g_aBoomerang[nCntBoomerang].bReturn = false;
+			
+			//角度に応じて投げ方向設定
+			if (rot.y >= 0.0f)
+			{
+				g_aBoomerang[nCntBoomerang].throwType = THROWTYPE_LEFT;
+			}
+			else
+			{
+				g_aBoomerang[nCntBoomerang].throwType = THROWTYPE_RIGHT;
+			}
 
 			// 部品(3D)の初期化処理
 			InitParts3DInfo(&g_aBoomerang[nCntBoomerang].partsInfo, BOOMERANG_SETUP_NUM);
