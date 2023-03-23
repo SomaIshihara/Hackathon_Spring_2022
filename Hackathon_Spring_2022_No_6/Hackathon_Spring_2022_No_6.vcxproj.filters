@@ -163,7 +163,7 @@
       <Filter>ソース ファイル\Boomerang</Filter>
     </ClCompile>
     <ClCompile Include="timer.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -288,7 +288,7 @@
       <Filter>ソース ファイル\Boomerang</Filter>
     </ClInclude>
     <ClInclude Include="timer.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

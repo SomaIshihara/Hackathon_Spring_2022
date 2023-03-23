@@ -351,3 +351,52 @@ void ClearMapChip3D(void)
 		InitParameterMapChip3D(pMapChip);
 	}
 }
+
+//========================================
+// CollisionMapChip3D関数 - オブジェクト3Dとの当たり判定処理 -
+// Author:RIKU NISHIMURA
+//========================================
+int CollisionMapChip3D(VECTOR vector, Collision *pObjCollision, Collision *pCmnCollision, CollisionInfo myCollInfo)
+{
+	bool bHitTemp = pObjCollision->bHit;	// 当たりフラグを保存
+	MapChip3D *pObj = g_aMapChip3D;	// オブジェクト3Dの情報のポインタ
+	int nIndex = -1;						// CHR:敵の返しの番号
+
+	for (int nCntObj = 0; nCntObj < MAPCHIP3D_MAX; nCntObj++, pObj++)
+	{
+		if (!pObj->bUse)
+		{// 使用されていない状態の時、
+		 // 処理を折り返す
+			continue;
+		}
+
+		CollisionInfo collInfo;
+		collInfo.pPos = &pObj->partsInfo.pos;
+		collInfo.posOld = pObj->partsInfo.pos;
+		collInfo.pRot = &pObj->partsInfo.rot;
+		collInfo.rotOld = pObj->partsInfo.rot;
+		collInfo.pHitTest = &GetModelSetUp(g_aMapChip3DType[pObj->nType][pObj->nSubType].nSetUp).hitTestSet.aHitTest[0];
+		collInfo.fScale = 1.0f;
+		collInfo.mode = COLLCHK_MODE_NORMAL;
+
+		// 衝突判定に必要な情報
+		CollisionCheck(
+			vector,
+			pObjCollision,
+			myCollInfo,
+			collInfo,
+			COLLCHK_MODE_NORMAL);
+
+		if ((pObjCollision->bHit) && (!bHitTemp))
+		{// 当たりフラグが真の時、
+			nIndex = nCntObj;	// 返しの番号を設定
+			bHitTemp = true;	// 当たりフラグの保存を真にする
+		}
+	}
+
+	// 共通の衝突情報を上書き
+	CollisionOverwrite(pCmnCollision, *pObjCollision);
+
+	// 番号を返す
+	return nIndex;
+}
