@@ -77,7 +77,7 @@ static int g_nTex;
 //========================================
 void InitUi_titleLogo(void)
 {
-	g_nTex = LoadTexture("data\\TEXTURE\\UserInterface\\ui_title-logo.png");
+	g_nTex = LoadTexture("data\\TEXTURE\\UserInterface\\title.png");
 }
 
 //========================================
@@ -102,7 +102,7 @@ void UpdateUi_titleLogo(void)
 	/* 幅				*/polySet.fWidth = PIXEL * 256;
 	/* 高さ				*/polySet.fHeight = PIXEL * 128;
 	/* 位置				*/polySet.pos = UI_TITLELOGO_POS;
-	/* 向き				*/polySet.rot = INITD3DXVECTOR3;
+	/* 向き				*/polySet.rot = D3DXVECTOR3(0.0f, 0.0f, D3DX_PI);
 	/* 色				*/polySet.col = INITCOLOR;
 	/* カメラ合わせ		*/polySet.bMatchCamera = false;
 	// ポリゴン(2D)の設定処理

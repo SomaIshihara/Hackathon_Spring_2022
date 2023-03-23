@@ -283,6 +283,11 @@ void InitUi_menu(void)
 {
 	InitParameterUi_menuControl();		// 管理情報のパラメーター初期化
 	InitParameterUi_menuReservation();	// 予約情報のパラメーター初期化
+
+	for (int nCntTex = 0; nCntTex < UI_MENU_TYPE_MAX; nCntTex++) 
+	{
+		g_aTex[nCntTex] = LoadTexture(g_aTexturePath[nCntTex]);
+	}
 }
 
 //========================================
@@ -323,11 +328,25 @@ void UpdateUi_menu(void)
 		/* 幅				*/polySet.fWidth = UI_MENU_WIDTH * pUiCtl->scale.fWidth;
 		/* 高さ				*/polySet.fHeight = UI_MENU_HEIGHT * pUiCtl->scale.fHeight;
 		/* 位置				*/polySet.pos = pUi->pos;
-		/* 向き				*/polySet.rot = INITD3DXVECTOR3;
+		/* 向き				*/polySet.rot = D3DXVECTOR3(0.0f, 0.0f, D3DX_PI);
 		/* 色				*/polySet.col = nCntUi == g_ui_menuControl.nSelect ? UI_MENU_SELECT_COLOR : Color{ 255,255,255,255 };
 		/* カメラ合わせ		*/polySet.bMatchCamera = false;
 		// ポリゴン(2D)の設定処理
 		SetPolygon2D(polySet);
+
+		// テキスト(2D)の設定処理
+		Text2DSet text2DSet;
+		/* 文字列のポインタ */text2DSet.pString = pUi->aString;
+		/* フォント番号		*/text2DSet.nFont = 0;
+		/* 表示形式			*/text2DSet.disp = TEXT_DISP_CENTER;
+		/* 位置				*/text2DSet.pos = pUi->pos;
+		/* 向き				*/text2DSet.rot = D3DXVECTOR3(0.0f,0.0f,0.0f);
+		/* 色				*/text2DSet.col = INITCOLOR;
+		/* 幅				*/text2DSet.fWidth = pUiCtl->scale.fWidth * 8 * PIXEL;
+		/* 高さ				*/text2DSet.fHeight = pUiCtl->scale.fHeight * 8 * PIXEL;
+		/* カメラ合わせ		*/text2DSet.bMatchCamera = false;
+		// テキスト(2D)の設定処理
+		SetText2D(text2DSet);
 	}
 }
 

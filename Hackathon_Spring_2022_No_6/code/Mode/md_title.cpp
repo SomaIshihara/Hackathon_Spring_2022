@@ -171,6 +171,11 @@ void UpdateMd_titleState(void)
 		}
 		}
 
+		if (GetFadeSwap()) 
+		{// フェードの切り替えを取得した時、
+			SetMode(MODE_GAME);
+		}
+
 		//if (GetUi_rankingFrame()->state == UI_RANKINGFRAME_STATE_POP)
 		//{// UI:ランキングフレーム[00] の状態が出現の時、
 		//	SetMd_titleState(MD_TITLE_STATE_RANKING);	// 状態をランキングにする
@@ -235,11 +240,11 @@ void InitMd_title(void)
 	// パラメーター初期化
 	InitParameterMd_title(pMd);
 
-	// 初期状態を設定
-	SetStateMd_title(INIT_STATE);
-
 	InitUi_menu();
 	InitUi_titleLogo();
+
+	// 初期状態を設定
+	SetStateMd_title(INIT_STATE);
 }
 
 //========================================
