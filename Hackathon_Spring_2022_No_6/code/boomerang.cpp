@@ -233,7 +233,7 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 				{
 					g_aBoomerang[nBoomerangNum].bUse = false;
 				}
-				else
+				else if(!pTarget->bDown)
 				{
 					//コンボ増やす
 					g_aBoomerang[nBoomerangNum].nCombo++;
@@ -242,7 +242,7 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 					GetChr_player()->nScore += GetTargetType()->nScore * g_aBoomerang[nBoomerangNum].nCombo;
 
 					//バルス
-					pTarget->bUse = false;
+					pTarget->bDown = true;
 
 					//ヒットサウンド再生
 					PlaySound(5);

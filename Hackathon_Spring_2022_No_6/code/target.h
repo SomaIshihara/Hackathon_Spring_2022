@@ -55,6 +55,14 @@ typedef struct
 	bool bRot;				// 方向フラグ
 	bool bUse;				// 使用フラグ
 
+	bool bDown;			// ダウン
+	int nDownCounter;	// ダウンカウンター
+
+	bool bPop;			// 出現
+	int nPopCounter;	// 出現カウンター
+
+	bool bHide;			// 出現
+	int nHideCounter;	// 出現カウンター
 }Target;
 
 // targetの情報構造体
