@@ -202,6 +202,15 @@ void InitMd_game(void)
 	// MD:ゲーム画面の情報のポインタ
 	Md_game *pMd = &g_md_game;
 
+	// 敵の出現位置の読み込み処理
+	LoadSummon();
+
+	// 敵の出現情報の読み込み処理
+	LoadTarget();
+
+	// 敵の情報の読み込み処理
+	LoadTargetType();
+
 	// パラメーター初期化
 	InitParameterMd_game(pMd);
 
@@ -233,6 +242,7 @@ void InitMd_game(void)
 	InitUi_menu();			// メニュー
 	InitUi_rankingFrame();	// ランキング(UI)
 	InitSys_ranking();		// ランキング
+
 	//スコアUI設定
 	SetScoreUI();
 
@@ -272,20 +282,20 @@ void UpdateMd_game(void)
 	// 敵 更新処理
 	UpdateTarget();
 
-	if (GetMd_game()->state == MD_GAME_STATE_NORMAL) 
-	{
-		//制限時間更新処理
-		UpdateTimer();
-
-		SetScoreUI();	// スコアUI
-	}
-
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
 
 	UpdateUi_menu();			// メニュー
 	UpdateUi_rankingFrame();	// ランキング(UI)
 	UpdateSys_ranking();		// ランキング
+
+	if (GetMd_game()->state == MD_GAME_STATE_NORMAL)
+	{
+		//制限時間更新処理
+		UpdateTimer();
+
+		SetScoreUI();	// スコアUI
+	}
 }
 
 //========================================

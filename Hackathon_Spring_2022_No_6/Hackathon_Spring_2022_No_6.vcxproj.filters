@@ -46,6 +46,9 @@
     <Filter Include="ソース ファイル\System">
       <UniqueIdentifier>{c0f4483f-e3dc-4052-bf7b-21b9f5d40b19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Cloud">
+      <UniqueIdentifier>{01e17b37-6bc6-4a79-905a-f3d4cabbd95b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp">
@@ -182,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="code\_R.N.Lib\Basis\2D\timer.cpp">
       <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\cloud.cpp">
+      <Filter>ソース ファイル\Cloud</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="code\_R.N.Lib\Basis\2D\score.h">
       <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\cloud.h">
+      <Filter>ソース ファイル\Cloud</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

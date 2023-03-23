@@ -12,6 +12,7 @@
 #include "Mode\md_game.h"
 #include "chr_player.h"	// CHR:プレイヤー
 #include "boomerang.h"
+#include "_R.N.Lib\Basis\Other\sound.h"
 // R.N.Lib
 #include "_R.N.Lib/R.N.Lib.h"
 
@@ -76,6 +77,10 @@ Chr_player g_chr_player;
 //========================================
 void InitParameterChr_player(Chr_player *pChr)
 {
+	pChr->nBoomerang = MAX_USE_BOOMERANG;
+	pChr->nScore = 0;
+	pChr->nSlowCounter = 0;
+
 	// 部品管理のパラメーター初期化
 	InitParts3DInfo(&pChr->partsInfo, CHR_PLAYER_MODEL_SETUP);
 }
@@ -116,6 +121,7 @@ void UpdateChr_player(void)
 
 	if (GetMd_game()->state == MD_GAME_STATE_RANKING || GetMd_game()->state == MD_GAME_STATE_RESULT)
 	{
+		pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_WAIT;
 		return;
 	}
 
@@ -138,39 +144,46 @@ void UpdateChr_player(void)
 		}
 	}
 
-	// 移動
-	if (GetStick().aTplDiameter[STICK_TYPE_LEFT] > 0.01f)
+	if (pChr->nSlowCounter == 0)
 	{
-		// モーションを移動に設定
-		pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_MOVE;
-
-		// 目標向きにスティックの角度を代入
-		float fAngle = -GetStick().aAngle[STICK_TYPE_LEFT] + D3DX_PI;
-
 		// 移動
-		pChr->partsInfo.pos.x += sinf(fAngle) * CHR_PLAYER_MOVE;
-		pChr->partsInfo.pos.z += cosf(fAngle) * CHR_PLAYER_MOVE;
+		if (GetStick().aTplDiameter[STICK_TYPE_LEFT] > 0.01f)
+		{
+			// モーションを移動に設定
+			pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_MOVE;
 
-		// 移動制御
-		D3DXVECTOR3 *pPos = &pChr->partsInfo.pos;
-		if (pPos->x <= -CHR_PLAYER_MOVEWIDTH) {
-			pPos->x = -CHR_PLAYER_MOVEWIDTH;
-		}
-		else if (pPos->x >= CHR_PLAYER_MOVEWIDTH) {
-			pPos->x = CHR_PLAYER_MOVEWIDTH;
-		}
+			// 目標向きにスティックの角度を代入
+			float fAngle = -GetStick().aAngle[STICK_TYPE_LEFT] + D3DX_PI;
 
-		if (pPos->z <= -CHR_PLAYER_MOVEDEPTH) {
-			pPos->z = -CHR_PLAYER_MOVEDEPTH;
+			// 移動
+			pChr->partsInfo.pos.x += sinf(fAngle) * CHR_PLAYER_MOVE;
+			pChr->partsInfo.pos.z += cosf(fAngle) * CHR_PLAYER_MOVE;
+
+			// 移動制御
+			D3DXVECTOR3 *pPos = &pChr->partsInfo.pos;
+			if (pPos->x <= -CHR_PLAYER_MOVEWIDTH) {
+				pPos->x = -CHR_PLAYER_MOVEWIDTH;
+			}
+			else if (pPos->x >= CHR_PLAYER_MOVEWIDTH) {
+				pPos->x = CHR_PLAYER_MOVEWIDTH;
+			}
+
+			if (pPos->z <= -CHR_PLAYER_MOVEDEPTH) {
+				pPos->z = -CHR_PLAYER_MOVEDEPTH;
+			}
+			else if (pPos->z >= CHR_PLAYER_MOVEDEPTH) {
+				pPos->z = CHR_PLAYER_MOVEDEPTH;
+			}
 		}
-		else if (pPos->z >= CHR_PLAYER_MOVEDEPTH) {
-			pPos->z = CHR_PLAYER_MOVEDEPTH;
+		else
+		{
+			// モーションを待機に設定
+			pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_WAIT;
 		}
 	}
 	else 
 	{
-		// モーションを待機に設定
-		pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_WAIT;
+		pChr->nSlowCounter--;
 	}
 
 	// 回転
@@ -204,6 +217,8 @@ void UpdateChr_player(void)
 		SetBoomerang(pChr->partsInfo.pos, pChr->partsInfo.rot);
 		// ブーメラン数減算
 		pChr->nBoomerang--;
+		pChr->nSlowCounter = 10;
+		pChr->partsInfo.nMotion = CHR_PLAYER_MOTION_SLOW;
 	}
 
 	// カメラ追従

@@ -19,6 +19,9 @@
 //****************************************
 // プロトタイプ宣言
 //****************************************
+#define POP_TIME (20)
+#define HIDE_TIME (20)
+#define DOWN_TIME (60)
 
 //****************************************
 // グローバル変数宣言
@@ -167,14 +170,14 @@ void UpdateTarget(void)
 			}
 
 
-			// 移動量を代入する
+			// 画面外にいくまで移動する処理
 			if (g_aTarget[nCntTar].Tarpos <= g_aTarget[nCntTar].pos.x && g_aTarget[nCntTar].bRot == true)
 			{
-				g_aTarget[nCntTar].bUse = false;
+				g_aTarget[nCntTar].bHide = true;
 			}
 			else if (g_aTarget[nCntTar].Tarpos >= g_aTarget[nCntTar].pos.x && g_aTarget[nCntTar].bRot == false)
 			{
-				g_aTarget[nCntTar].bUse = false;
+				g_aTarget[nCntTar].bHide = true;
 			}
 			else
 			{
@@ -187,6 +190,47 @@ void UpdateTarget(void)
 
 			polygon3Dset.pos = g_aTarget[nCntTar].pos;
 
+			Color col = Color{ 255,255,255,255 };
+
+			if (g_aTarget[nCntTar].bPop)
+			{
+				g_aTarget[nCntTar].nPopCounter++;
+
+				col = { 255,255,255,(int)(255 * g_aTarget[nCntTar].nPopCounter / (float)POP_TIME) };
+
+				if (g_aTarget[nCntTar].nPopCounter == POP_TIME)
+				{
+					g_aTarget[nCntTar].bPop = false;
+				}
+			}
+
+			if (g_aTarget[nCntTar].bHide)
+			{
+				g_aTarget[nCntTar].nHideCounter++;
+
+				col = { 255,255,255,(int)(255 * (1.0f - (g_aTarget[nCntTar].nHideCounter / (float)HIDE_TIME))) };
+
+				if (g_aTarget[nCntTar].nHideCounter == HIDE_TIME)
+				{
+					g_aTarget[nCntTar].bHide = false;
+					g_aTarget[nCntTar].bUse = false;
+				}
+			}
+
+			if (g_aTarget[nCntTar].bDown)
+			{
+				g_aTarget[nCntTar].nDownCounter++;
+				float fRate = (g_aTarget[nCntTar].nDownCounter / (float)DOWN_TIME);
+
+				col = { 255,(int)(255 * fRate),(int)(255 * fRate),(int)(255 * (1.0f - fRate)) };
+
+				if (g_aTarget[nCntTar].nDownCounter == DOWN_TIME)
+				{
+					g_aTarget[nCntTar].bDown = false;
+					g_aTarget[nCntTar].bUse = false;
+				}
+			}
+
 			// ポリゴン(3D)の設定情報
 			Polygon3DSet polygon3DSet;
 			polygon3DSet.nTex = g_aTex1[g_aTarget[nCntTar].type];
@@ -197,7 +241,7 @@ void UpdateTarget(void)
 			polygon3DSet.fHeight = g_TargetType[g_aTarget[nCntTar].type].fHeight;
 			polygon3DSet.pos = g_aTarget[nCntTar].pos;
 			polygon3DSet.rot = g_aTarget[nCntTar].rot;
-			polygon3DSet.col = Color{ 255,255,255,255 };
+			polygon3DSet.col = col;
 
 			// ポリゴン(3D)の設定処理
 			SetPolygon3D(polygon3DSet);
@@ -214,7 +258,6 @@ void UpdateTarget(void)
 					g_aTarget[nCntTar].nPtn = 0;
 				}
 			}
-
 		}
 	}
 
@@ -244,6 +287,12 @@ void SetTarget(int nPos, TARGET_ITEM type,int MType)
 			g_aTarget[nCntTar].pos = g_aPoint[nPos].pos;				// 位置
 			g_aTarget[nCntTar].type = type;								// 種類の設定
 			g_aTarget[nCntTar].bUse = true;								// 使用フラグ
+			g_aTarget[nCntTar].bPop = true;
+			g_aTarget[nCntTar].nPopCounter = 0;
+			g_aTarget[nCntTar].bHide = false;
+			g_aTarget[nCntTar].nHideCounter = 0;
+			g_aTarget[nCntTar].bDown = false;
+			g_aTarget[nCntTar].nDownCounter = 0;
 
 			// マップの中心から右の方で生成されると移動速度をマイナスに
 			if (MType == 0)

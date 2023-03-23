@@ -187,6 +187,15 @@ void UpdateBoomerang(void)
 			}
 		}
 	}
+
+	//全てのブーメランが使われていない
+	if (!g_aBoomerang[0].bUse &&
+		!g_aBoomerang[1].bUse &&
+		!g_aBoomerang[2].bUse)
+	{
+		//ブーメランが投げられている音を停止する
+		StopSound(2);
+	}
 }
 
 //========================
@@ -239,6 +248,15 @@ void SetBoomerang(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 			// 部品(3D)の初期化処理
 			InitParts3DInfo(&g_aBoomerang[nCntBoomerang].partsInfo, BOOMERANG_SETUP_NUM);
 
+			//全てのブーメランが使われていない
+			if (!g_aBoomerang[0].bUse &&
+				!g_aBoomerang[1].bUse &&
+				!g_aBoomerang[2].bUse)
+			{
+				//ブーメランが投げられている音を再生する
+				PlaySound(2);
+			}
+
 			//使用している状態にする
 			g_aBoomerang[nCntBoomerang].bUse = true;
 
@@ -276,7 +294,7 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 					g_aBoomerang[nBoomerangNum].bUse = false;
 					PlaySound(7);
 				}
-				else
+				else if(!pTarget->bDown)
 				{
 					//コンボ増やす
 					g_aBoomerang[nBoomerangNum].nCombo++;
@@ -285,7 +303,7 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 					GetChr_player()->nScore += (GetTargetType() + pTarget->type)->nScore * g_aBoomerang[nBoomerangNum].nCombo;
 
 					//バルス
-					pTarget->bUse = false;
+					pTarget->bDown = true;
 
 					for (int nCntTarget = 0; nCntTarget < MAX_TARGET; nCntTarget++)
 					{
