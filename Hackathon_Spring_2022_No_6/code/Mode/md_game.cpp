@@ -11,6 +11,7 @@
 #include "../boomerang.h"
 #include "../target.h"
 #include "../chr_player.h"
+#include "../_R.N.Lib/Basis/2D/timer.h"
 
 //****************************************
 // マクロ定義
@@ -146,6 +147,9 @@ void InitMd_game(void)
 
 	//[仮]ブーメラン配置
 	SetBoomerang(INITD3DXVECTOR3);
+
+	//制限時間設定
+	InitTimer();
 }
 
 //========================================
@@ -177,6 +181,9 @@ void UpdateMd_game(void)
 
 	// 敵 更新処理
 	UpdateTarget();
+
+	//制限時間更新処理
+	UpdateTimer();
 }
 
 //========================================
