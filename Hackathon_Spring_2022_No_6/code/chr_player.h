@@ -19,6 +19,8 @@ typedef struct
 {
 	// ブーメラン所持数
 	int nBoomerang = 3;
+	// スコア
+	int nScore = 1000;
 
 	// 部品関連
 	Parts3DInfo partsInfo;	// 部品管理

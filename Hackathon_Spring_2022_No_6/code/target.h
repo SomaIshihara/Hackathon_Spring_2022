@@ -14,8 +14,9 @@
 //****************************************
 // マクロ定義
 //****************************************
-#define MAX_TARGET		(64)						// 標的の最大数
-#define MAX_SUMMON		(64)						// 出現位置の最大数
+#define MAX_TARGET		(64)	// 標的の最大数
+#define MAX_SUMMON		(640)	// 召喚の最大数
+#define MAX_POINT		(64)	// 出現位置の最大数
 //****************************************
 // 列挙型の定義
 //****************************************
@@ -39,6 +40,9 @@ typedef struct
 	D3DXMATRIX mtxWorld;	// ワールドマトリックス
 	TARGET_ITEM type;		// 種類
 
+	int nCntFlame;			// フレーム数
+	int nPtn;				// パターン番号
+
 	float fSpeed;			// 移動速度
 	float Tarpos;			// 目標位置
 
@@ -49,16 +53,26 @@ typedef struct
 
 typedef struct
 {
-	D3DXVECTOR3 pos;		// 位置
+	int nType; // 種類
+	int nPoint;// 出現位置
+	int nTime; // 出現時間
+	int nMTyoe;// 移動方向
+
+	bool bUse; // 使用フラグ
 }Summon;
+
+typedef struct
+{
+	D3DXVECTOR3 pos;		// 位置
+}Point;
 //****************************************
 // プロトタイプ宣言
 //****************************************
-// アイテムの読み込み処理
 void InitTarget(void);
 void UpdateTarget(void);
 void LoadSummon(void);
-void SetTarget(int nPos, TARGET_ITEM type);
+void LoadTarget(void);
+void SetTarget(int nPos, TARGET_ITEM type, int mType);
 
 Target *GetTarget(void);
 #endif

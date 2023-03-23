@@ -167,11 +167,14 @@
     <ClCompile Include="code\UserInterface\ui_menu.cpp" />
     <ClCompile Include="code\UserInterface\ui_title-logo.cpp" />
     <ClCompile Include="code\target.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\boomeUI.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\camera2D.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\fade.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\motion2D.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\polygon2D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\score.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\text2D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\timer.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\3D\camera3D.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\3D\draw3D.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\3D\light.cpp" />
@@ -198,7 +201,6 @@
     <ClCompile Include="code\_R.N.Lib\Basis\Other\sound.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\Other\window.cpp" />
     <ClCompile Include="code\_R.N.Lib\RNmain.cpp" />
-    <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\boomerang.h" />
@@ -210,10 +212,12 @@
     <ClInclude Include="code\target.h" />
     <ClInclude Include="code\UserInterface\ui_menu.h" />
     <ClInclude Include="code\UserInterface\ui_title-logo.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\boomeUI.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\camera2D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\fade.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\motion2D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\polygon2D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\score.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\text2D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\timer.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\3D\camera3D.h" />
