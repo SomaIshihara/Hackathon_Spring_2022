@@ -180,6 +180,7 @@ void SetBoomerang(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 			g_aBoomerang[nCntBoomerang].nCounterStraight = 0;
 			g_aBoomerang[nCntBoomerang].fRotForce = 0.0f;
 			g_aBoomerang[nCntBoomerang].fRotTotal = 0.0f;
+			g_aBoomerang[nCntBoomerang].nCombo = 0;
 			g_aBoomerang[nCntBoomerang].bEndRotate = false;
 			g_aBoomerang[nCntBoomerang].bReturn = false;
 			
@@ -230,12 +231,15 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 			{//当たった
 				if (pTarget->type == TARGET_D)
 				{
-					g_aBoomerang[nCntTarget].bUse = false;
+					g_aBoomerang[nBoomerangNum].bUse = false;
 				}
 				else if(!pTarget->bDown)
 				{
+					//コンボ増やす
+					g_aBoomerang[nBoomerangNum].nCombo++;
+
 					//スコア足す
-					GetChr_player()->nScore += GetTargetType()->nScore;
+					GetChr_player()->nScore += GetTargetType()->nScore * g_aBoomerang[nBoomerangNum].nCombo;
 
 					//バルス
 					pTarget->bDown = true;
@@ -262,7 +266,10 @@ void CollisionBoomerangPlayer(int nBoomerangNum)
 		//ブーメラン増やす
 		GetChr_player()->nBoomerang++;
 
-		//ブーメランバルス
+		//ブーメランキャッチ
 		g_aBoomerang[nBoomerangNum].bUse = false;
+
+		//キャッチサウンド再生
+		PlaySound(6);
 	}
 }

@@ -5,6 +5,9 @@ SOUND data\SOUND\BGM\GAMEbgm.wav  	-1 1.0 0	#[001] GAME_BGM
 SOUND data\SOUND\SE\boomerang.wav 	 0 1.0 1	#[002]ブーメランSE
 SOUND data\SOUND\SE\Choice00.wav	 0 1.0 1	#[003]選択音SE
 SOUND data\SOUND\SE\Decide00.wav	 0 1.0 1	#[004]決定音SE
-SOUND data\SOUND\SE\hit10.wav	 0 1.0 1	#[005]当たったSE
+SOUND data\SOUND\SE\hit10.wav		 0 1.0 1	#[005]当たったSE
+SOUND data\SOUND\SE\Catch00.wav		 0 1.0 1	#[006]キャッチSE
+SOUND data\SOUND\SE\break00.wav		 0 1.0 1	#[007]破壊SE
+SOUND data\SOUND\SE\tuckingUP.wav	 0 1.0 1	#[008]取りこぼしSE
 
 END
