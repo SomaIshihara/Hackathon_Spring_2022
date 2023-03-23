@@ -23,9 +23,10 @@
 // Itemの種類
 typedef enum
 {
-	TARGET_A = 0,	// 
-	TARGET_B,		// 
-	TARGET_C,		// 
+	TARGET_A = 0,	// ポチ
+	TARGET_B,		// クー
+	TARGET_C,		// 鷹
+	TARGET_D,		// 棘 
 	TARGET_MAX
 }TARGET_ITEM;
 //****************************************
