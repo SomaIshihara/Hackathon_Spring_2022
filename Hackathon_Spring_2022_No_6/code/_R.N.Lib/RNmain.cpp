@@ -23,6 +23,7 @@ void SetRenderStateRN(void);
 // グローバル変数宣言
 //****************************************
 RNmain g_RNmain;	// R.N.Libのメイン処理の情報
+static int g_nGroundTex;	// 地面のテクスチャ番号
 
 //================================================================================
 //----------|---------------------------------------------------------------------
@@ -127,6 +128,9 @@ void RNInit(HINSTANCE hInstance)
 	InitSound(		// サウンド
 		*GetWindowHandle());
 	InitSetting();	// 設定
+
+	// 地面テクスチャを読み込み
+	g_nGroundTex = LoadTexture("data\\TEXTURE\\BG\\ground.png");
 }
 
 //========================================
@@ -171,6 +175,27 @@ void RNUpdate(void)
 	UpdateWindowRN();	// ウィンドウ
 	DrawHitTestSetUp();	// 当たり判定の描画準備処理
 	HitTestSignOut();	// 当たり判定の登録解除処理
+
+	float fSize = 680.0f;
+	// ポリゴン(3D)の設定情報
+	Polygon3DSet polygon3DSet;
+	polygon3DSet.nTex = g_nGroundTex;
+	polygon3DSet.nPtn = 0;
+	polygon3DSet.nPtnX = 1;
+	polygon3DSet.nPtnY = 1;
+	polygon3DSet.fWidth = fSize;
+	polygon3DSet.fHeight = fSize;
+	polygon3DSet.pos = D3DXVECTOR3(0.0f,-80.0f,320.0f);
+	polygon3DSet.rot = D3DXVECTOR3(-0.25f,0.0f,0.0f);
+	polygon3DSet.col = INITCOLOR;
+	// ポリゴン(3D)の設定処理
+	SetPolygon3D(polygon3DSet);
+	polygon3DSet.pos = D3DXVECTOR3(-fSize, -80.0f, 320.0f);
+	// ポリゴン(3D)の設定処理
+	SetPolygon3D(polygon3DSet);
+	polygon3DSet.pos = D3DXVECTOR3(fSize, -80.0f, 320.0f);
+	// ポリゴン(3D)の設定処理
+	SetPolygon3D(polygon3DSet);
 }
 
 //========================================
@@ -195,6 +220,7 @@ void RNDraw(void)
 		SetCamera3D();		// カメラ(3D)の設定処理
 		DrawMapChip3D();	// マップチップ(3D)
 		Draw3D();			// 3Dオブジェクト全般
+
 		// 2D
 		DrawPolygon2D();	// ポリゴン(2D)
 		DrawLine3D();		// 線(3D)

@@ -131,9 +131,8 @@ void InitMd_game(void)
 	//カメラ初期化
 	InitCamera3D();
 	{
-		int nDepth = 60;
-		GetCamera3D()->posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f + nDepth);
-		GetCamera3D()->posV = D3DXVECTOR3(0.0f, 140.0f, -140.0f + nDepth);
+		GetCamera3D()->posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		GetCamera3D()->posV = D3DXVECTOR3(0.0f, 140.0f, -140.0f);
 	}
 
 	// ブーメラン初期化
@@ -146,7 +145,7 @@ void InitMd_game(void)
 	InitChr_player();
 
 	//[仮]ブーメラン配置
-	SetBoomerang(INITD3DXVECTOR3,INITD3DXVECTOR3);
+	SetBoomerang(INITD3DXVECTOR3, D3DXVECTOR3(0.0f, 0.25f * D3DX_PI, 0.0f));
 
 	//制限時間設定
 	InitTimer();

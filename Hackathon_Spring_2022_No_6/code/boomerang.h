@@ -12,14 +12,6 @@
 //マクロ
 #define MAX_USE_BOOMERANG		(3)		//ブーメランの使用数（ヘッダに移してもいい）
 
-//ブーメラン状態
-typedef enum
-{
-	BOOMERANGSTAT_START = 0,
-	BOOMERANGSTAT_NORMAL,
-	BOOMERANGSTAT_MAX
-} BOOMERANGSTAT;
-
 //プレイヤー構造体
 struct Boomerang
 {
@@ -28,10 +20,9 @@ struct Boomerang
 	D3DXVECTOR3 posOld;		//前回の位置
 	D3DXVECTOR3 rot;		//向き
 	D3DXVECTOR3 move;		//移動量
-
-	D3DXVECTOR3 posCenter;	//回転中心の位置
-
-	BOOMERANGSTAT stat;		//ブーメラン状態
+	float fRotForce;		//回転力
+	int nThrowTime;			//投げてからの時間
+	int nDecreTime;			//回転力減少までの時間（乱数設定）
 
 	//描画類
 	D3DXMATRIX mtxWorld;	//ワールドマトリ
