@@ -11,6 +11,7 @@
 #include <string.h>
 #include <time.h>
 #include "../_R.N.Lib/R.N.Lib.h"
+#include "../_R.N.Lib/Basis/Other/sound.h"
 
 #include "ui_menu.h"	// UI:メニュー
 
@@ -386,7 +387,7 @@ int Ui_menuInput(UI_MENU_INPUT_MODE mode)
 			&& (mode == UI_MENU_INPUT_MODE_LEFT_AND_RIGHT)))
 		{// 上入力時、
 			g_ui_menuControl.nSelect--;	// 現在の選択番号を減算
-			bInput = true;					// 入力フラグを真にする
+			bInput = true;				// 入力フラグを真にする
 		}
 		else if (
 			(((GetKeyboardRepeat(DIK_DOWN))
@@ -402,12 +403,12 @@ int Ui_menuInput(UI_MENU_INPUT_MODE mode)
 			&& (mode == UI_MENU_INPUT_MODE_LEFT_AND_RIGHT)))
 		{// 下/右入力時、
 			g_ui_menuControl.nSelect++;	// 現在の選択番号を加算
-			bInput = true;					// 入力フラグを真にする
+			bInput = true;				// 入力フラグを真にする
 		}
 
 		if ((g_ui_menuReservation.nNum != 1) && (bInput))
 		{// メニューの数が1で無い & 入力フラグが真の時、
-			//PlaySound(UI_MENU_SELECT_SE);	// 選択SEを再生
+			PlaySound(3);	// 選択SEを再生
 		}
 	}
 
@@ -427,7 +428,6 @@ int Ui_menuInput(UI_MENU_INPUT_MODE mode)
 			|| (GetButtonRepeat(BUTTON_RIGHT)))
 		{// 左/右入力時、
 			nSelected = g_ui_menuControl.nSelect;	// 選択した番号に現在の選択番号を代入
-			//PlaySound(UI_MENU_SELECT_SE);			// 選択SEを再生
 		}
 	}
 	else if ((GetKeyboardTrigger(DIK_RETURN)) || (GetButtonTrigger(BUTTON_A)))
@@ -435,10 +435,7 @@ int Ui_menuInput(UI_MENU_INPUT_MODE mode)
 		nSelected = g_ui_menuControl.nSelect;					// 選択した番号に現在の選択番号を代入
 		g_ui_menuControl.state = UI_MENU_STATE_IN_CLEAR;		// 消え中にする
 		g_ui_menuControl.nCounterState = UI_MENU_CLEAR_TIME;	// 状態カウンターを設定する
-		if (g_ui_menuReservation.pSet[nSelected].bDecisionSE)
-		{// 決定SEフラグが真の時、決定SEを再生
-			//PlaySound(UI_MENU_DETERMINATION_SE);
-		}
+		PlaySound(4);
 	}
 	
 	// 選択した番号を返す
