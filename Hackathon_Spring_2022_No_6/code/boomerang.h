@@ -10,7 +10,8 @@
 #include "main.h"
 
 //マクロ
-#define MAX_USE_BOOMERANG		(3)		//ブーメランの使用数（ヘッダに移してもいい）
+#define MAX_USE_BOOMERANG		(3)		//ブーメランの使用数
+#define BOOMERANG_HIT_RADIUS	(4.0f)	//ブーメランの当たり判定の半径
 
 //投げ方向列挙
 typedef enum
@@ -40,6 +41,7 @@ struct Boomerang
 	bool bUse;		//プレイヤー使用の有無
 
 	Parts3DInfo partsInfo;	// 部品(3D)の情報
+	Collision coll;			// 当たり判定の結果
 };
 
 //プロトタイプ宣言
