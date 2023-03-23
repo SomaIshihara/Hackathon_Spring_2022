@@ -14,7 +14,7 @@
 // マクロ定義
 //****************************************
 //最大桁数
-#define MAX_DEJIT_TIMER		(4)
+#define MAX_DEJIT_TIMER		(256)
 //制限時間の原点位置
 #define TIMER_ORIGIN_POS	(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 30.0f, 0.0f))
 //制限時間のUIサイズ
@@ -105,7 +105,7 @@ void SetTimer(void)
 	char cGameTimer[MAX_DEJIT_TIMER];
 
 	//制限時間を文字列に置き換え
-	snprintf(cGameTimer, nCntDejit, "TIME %d", g_nGameTime);
+	sprintf(cGameTimer, "TIME %d", g_nGameTime);
 
 	// テキスト(2D)の設定処理
 	Text2DSet text2DSet;

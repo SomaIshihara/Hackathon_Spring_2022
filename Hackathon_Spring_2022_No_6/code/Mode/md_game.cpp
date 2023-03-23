@@ -301,7 +301,7 @@ void UpdateMd_game(void)
 	UpdateTarget();
 
 	//雲の更新処理
-	UpdateCloud();
+	//UpdateCloud();
 
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
