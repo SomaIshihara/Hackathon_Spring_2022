@@ -32,7 +32,7 @@
 // CHR:プレイヤーの回転量
 #define CHR_PLAYER_SPIN (0.05f)
 // CHR:プレイヤーの奥行き
-#define CHR_PLAYER_DEPTH (60.0f)
+#define CHR_PLAYER_DEPTH (80.0f)
 
 //****************************************
 // 列挙型の定義
@@ -147,9 +147,11 @@ void UpdateChr_player(void)
 		ControlAngle(&pChr->partsInfo.rot.y);
 	}
 
-	if (GetButtonTrigger(BUTTON_RIGHT_TRIGGER) || GetButtonTrigger(BUTTON_RIGHT_SHOULDER))
+	if ((GetButtonTrigger(BUTTON_RIGHT_TRIGGER) || GetButtonTrigger(BUTTON_RIGHT_SHOULDER)) && (pChr->nBoomerang > 0))
 	{// ブーメラン投げ
 		SetBoomerang(pChr->partsInfo.pos, pChr->partsInfo.rot);
+		// ブーメラン数減算
+		pChr->nBoomerang--;
 	}
 
 	// カメラ追従
