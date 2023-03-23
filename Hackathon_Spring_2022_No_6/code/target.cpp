@@ -102,7 +102,6 @@ void InitTarget(void)
 			g_aTarget[nCntTarget].rot = INITD3DXVECTOR3;
 			g_aTarget[nCntTarget].move = INITD3DXVECTOR3;
 			g_aTarget[nCntTarget].type = TARGET_A;
-			g_aTarget[nCntTarget].nSummon = 0;
 			g_aTarget[nCntTarget].bUse = false;
 		}
 }
