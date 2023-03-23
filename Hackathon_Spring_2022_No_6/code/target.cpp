@@ -167,7 +167,7 @@ void UpdateTarget(void)
 			}
 
 
-			// ˆÚ“®—Ê‚ğ‘ã“ü‚·‚é
+			// ‰æ–ÊŠO‚É‚¢‚­‚Ü‚ÅˆÚ“®‚·‚éˆ—
 			if (g_aTarget[nCntTar].Tarpos <= g_aTarget[nCntTar].pos.x && g_aTarget[nCntTar].bRot == true)
 			{
 				g_aTarget[nCntTar].bUse = false;
