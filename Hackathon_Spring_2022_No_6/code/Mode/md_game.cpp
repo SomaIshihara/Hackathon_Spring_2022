@@ -19,6 +19,7 @@
 #include "../System/sys_ranking.h"
 #include "../_R.N.Lib/Basis/2D/score.h"
 #include "../../code/_R.N.Lib/Basis/Other/sound.h"
+#include "../cloud.h"
 
 //****************************************
 // マクロ定義
@@ -246,6 +247,9 @@ void InitMd_game(void)
 	//スコアUI設定
 	SetScoreUI();
 
+	//雲設定
+	InitCloud();
+
 	//ゲームBGM再生
 	PlaySound(1);
 }
@@ -281,6 +285,9 @@ void UpdateMd_game(void)
 
 	// 敵 更新処理
 	UpdateTarget();
+
+	//雲の更新処理
+	UpdateCloud();
 
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
