@@ -9,6 +9,7 @@
 #include "md_game.h"
 #include "../_R.N.Lib/R.N.Lib.h"
 #include "../boomerang.h"
+#include "../target.h"
 
 //****************************************
 // マクロ定義
@@ -132,6 +133,9 @@ void InitMd_game(void)
 	// ブーメラン初期化
 	InitBoomerang();
 
+	// 敵初期化
+	InitTarget();
+
 	//[仮]ブーメラン配置
 	SetBoomerang(INITD3DXVECTOR3);
 }
@@ -159,6 +163,9 @@ void UpdateMd_game(void)
 
 	// ブーメラン更新処理
 	UpdateBoomerang();
+
+	// 敵 更新処理
+	UpdateTarget();
 }
 
 //========================================
