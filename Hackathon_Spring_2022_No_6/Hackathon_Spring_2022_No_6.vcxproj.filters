@@ -165,9 +165,6 @@
     <ClCompile Include="code\boomerang.cpp">
       <Filter>ソース ファイル\Boomerang</Filter>
     </ClCompile>
-    <ClCompile Include="timer.cpp">
-      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
-    </ClCompile>
     <ClCompile Include="code\chr_player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -179,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="code\System\sys_ranking.cpp">
       <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\score.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\timer.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="code\System\sys_ranking.h">
       <Filter>ソース ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\score.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

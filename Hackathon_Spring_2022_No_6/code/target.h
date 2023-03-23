@@ -43,19 +43,35 @@ typedef struct
 	int nCntFlame;			// フレーム数
 	int nPtn;				// パターン番号
 
+	int nCntMFLame;			// 移動用のフレーム数
+	int nCntMove;			// 移動時間
+	int nCntSwit;			// 切り替え回数
+
 	float fSpeed;			// 移動速度
 	float Tarpos;			// 目標位置
 
+	bool bMove;				// 移動フラグ
 	bool bRot;				// 方向フラグ
 	bool bUse;				// 使用フラグ
 
 }Target;
+
+// targetの情報構造体
+typedef struct
+{
+	int nLife;		// 寿命
+	int nScore;		// スコア
+
+	float fWidth;	// 幅
+	float fHeight;	// 高さ
+}TargetType;
 
 typedef struct
 {
 	int nType; // 種類
 	int nPoint;// 出現位置
 	int nTime; // 出現時間
+	int nMTyoe;// 移動方向
 
 	bool bUse; // 使用フラグ
 }Summon;
@@ -71,7 +87,9 @@ void InitTarget(void);
 void UpdateTarget(void);
 void LoadSummon(void);
 void LoadTarget(void);
-void SetTarget(int nPos, TARGET_ITEM type);
+void LoadTargetType(void);
+void SetTarget(int nPos, TARGET_ITEM type, int mType);
 
 Target *GetTarget(void);
+TargetType *GetTargetType(void);
 #endif
