@@ -43,6 +43,9 @@
     <Filter Include="ソース ファイル\Boomerang">
       <UniqueIdentifier>{3277d067-b05e-43b6-99b5-d5a4629ad184}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Character">
+      <UniqueIdentifier>{9d60dfed-ef87-468d-aade-92d2e7e9fc37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp">
@@ -163,7 +166,10 @@
       <Filter>ソース ファイル\Boomerang</Filter>
     </ClCompile>
     <ClCompile Include="timer.cpp">
-      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="code\chr_player.cpp">
+      <Filter>ソース ファイル\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -288,7 +294,10 @@
       <Filter>ソース ファイル\Boomerang</Filter>
     </ClInclude>
     <ClInclude Include="timer.h">
-      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="code\chr_player.h">
+      <Filter>ソース ファイル\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,0 +1,188 @@
+PARTSSET	#ïîïiê›íËèÓïÒ
+	SCALE:	1.0
+	
+	PARTS	#00ëÃ
+		MODEL_PATH:			data\\MODEL\\Character\\girl_000\\body.x
+		PARENT:				-1
+		RELATIVE_POS:		0.0 3.0 0.0
+		RELATIVE_ROT:		0.0 0.0 0.0
+		ROT_RELATIVE_ROT:	0.0 0.0 0.0
+	PARTS_END
+	
+	PARTS	#01ì™
+		MODEL_PATH:			data\\MODEL\\Character\\girl_000\\head.x
+		PARENT:				0
+		RELATIVE_POS:		0.0 4.0 0.0
+		RELATIVE_ROT:		0.0 0.0 0.0
+		ROT_RELATIVE_ROT:	0.0 0.0 0.0
+	PARTS_END
+	
+	PARTS	#02ç∂òr
+		MODEL_PATH:			data\\MODEL\\Character\\girl_000\\arm.x
+		PARENT:				0
+		RELATIVE_POS:		-2.0 3.0 0.0
+		RELATIVE_ROT:		0.0 0.0 0.0
+		ROT_RELATIVE_ROT:	0.0 0.0 0.0
+	PARTS_END
+	
+	PARTS	#03âEòr
+		MODEL_PATH:			data\\MODEL\\Character\\girl_000\\arm.x
+		PARENT:				0
+		RELATIVE_POS:		2.0 3.0 0.0
+		RELATIVE_ROT:		0.0 0.0 0.0
+		ROT_RELATIVE_ROT:	0.0 0.0 0.0
+	PARTS_END
+	
+	PARTS	#04ç∂ãr
+		MODEL_PATH:			data\\MODEL\\Character\\girl_000\\leg.x
+		PARENT:				0
+		RELATIVE_POS:		-1.0 0.0 0.0
+		RELATIVE_ROT:		0.0 0.0 0.0
+		ROT_RELATIVE_ROT:	0.0 0.0 0.0
+	PARTS_END
+	
+	PARTS	#05ç∂ãr
+		MODEL_PATH:			data\\MODEL\\Character\\girl_000\\leg.x
+		PARENT:				0
+		RELATIVE_POS:		1.0 0.0 0.0
+		RELATIVE_ROT:		0.0 0.0 0.0
+		ROT_RELATIVE_ROT:	0.0 0.0 0.0
+	PARTS_END
+	
+PARTSSET_END
+
+HITTESTSET	#ìñÇΩÇËîªíËê›íËèÓïÒ
+	
+	HITTEST	#00
+		
+		HITTEST_PARTS	#00
+			FORM:			2
+			PARENT:			-1
+			WIDTH:			8.0
+			HEIGHT:			10.0
+			DEPTH:			8.0
+			RELATIVE_POS:	0.0 5.0 0.0
+			RELATIVE_ROT:	0.0 0.0 0.0
+			GHOST:			0 0 0 0 0 0
+		HITTEST_PARTS_END
+		
+	HITTEST_END
+	
+HITTESTSET_END
+
+MOTIONSET	#ÉÇÅ[ÉVÉáÉìê›íËèÓïÒ
+	
+	MOTION	#00ë“ã@
+		LOOP_TIME:	40
+		LOOP:		0
+		
+		PARTS	#00ëÃ
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#01ì™
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#02ç∂òr
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#03âEòr
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#04ç∂ãr
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#05ç∂ãr
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+	MOTION_END
+	
+	MOTION	#01à⁄ìÆ
+		LOOP_TIME:	20
+		LOOP:		1
+		
+		PARTS	#00ëÃ
+			TIME 0 SPIN 0.0 0.0 0.0 10
+			
+			TIME 0  MOVE 0.0 -0.2 0.0 0
+			TIME 0  MOVE 0.0 0.0 0.0 10
+			TIME 10 MOVE 0.0 -0.2 0.0 0
+			TIME 10 MOVE 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#01ì™
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#02ç∂òr
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#03âEòr
+			TIME 0 MOVE 0.0 0.0 0.0 10
+			TIME 0 SPIN 0.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#04ç∂ãr
+			TIME 0  MOVE 0.0 0.0 0.0 10
+			
+			TIME 0  SPIN 1.0 0.0 0.0 10
+			TIME 10 SPIN -1.0 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#05ç∂ãr
+			TIME 0  MOVE 0.0 0.0 0.0 10
+			
+			TIME 0  SPIN -1.0 0.0 0.0 10
+			TIME 10 SPIN 1.0 0.0 0.0 10
+		PARTS_END
+		
+	MOTION_END
+	
+	MOTION	#02ìäÇ∞
+		LOOP_TIME:	40
+		LOOP:		0
+		
+		PARTS	#00ëÃ
+			TIME 0 SPIN 0.25 -0.325 0.0 10
+		PARTS_END
+		
+		PARTS	#01ì™
+			
+		PARTS_END
+		
+		PARTS	#02ç∂òr
+			TIME 0 SPIN 0.5 -0.25 -0.2 10
+		PARTS_END
+		
+		PARTS	#03âEòr
+			TIME 0 SPIN -2.0 -0.25 0.0 5
+			TIME 5 SPIN -0.5 -0.25 0.0 5
+		PARTS_END
+		
+		PARTS	#04ç∂ãr
+			TIME 0 SPIN -0.5 0.0 0.0 10
+		PARTS_END
+		
+		PARTS	#05ç∂ãr
+			TIME 0 SPIN 0.75 0.0 0.0 10
+		PARTS_END
+		
+	MOTION_END
+	
+MOTIONSET_END
+
+END
