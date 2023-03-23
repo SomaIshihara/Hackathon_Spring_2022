@@ -202,6 +202,15 @@ void InitMd_game(void)
 	// MD:ゲーム画面の情報のポインタ
 	Md_game *pMd = &g_md_game;
 
+	// 敵の出現位置の読み込み処理
+	LoadSummon();
+
+	// 敵の出現情報の読み込み処理
+	LoadTarget();
+
+	// 敵の情報の読み込み処理
+	LoadTargetType();
+
 	// パラメーター初期化
 	InitParameterMd_game(pMd);
 
