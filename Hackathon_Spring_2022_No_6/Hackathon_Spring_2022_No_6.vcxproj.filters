@@ -34,7 +34,7 @@
     <Filter Include="ソース ファイル\Mode">
       <UniqueIdentifier>{cd85ca1c-2f91-4ca5-bfb7-6388cb7ff137}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\UI">
+    <Filter Include="ソース ファイル\UserInterface">
       <UniqueIdentifier>{fa985a81-50a7-4fcf-9d38-d97a3aed7262}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -143,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="code\Mode\md_result.cpp">
       <Filter>ソース ファイル\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="code\UserInterface\ui_menu.cpp">
+      <Filter>ソース ファイル\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="code\UserInterface\ui_title-logo.cpp">
+      <Filter>ソース ファイル\UserInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +259,12 @@
     </ClInclude>
     <ClInclude Include="code\Mode\md_result.h">
       <Filter>ソース ファイル\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="code\UserInterface\ui_menu.h">
+      <Filter>ソース ファイル\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="code\UserInterface\ui_title-logo.h">
+      <Filter>ソース ファイル\UserInterface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -162,6 +162,8 @@
     <ClCompile Include="code\Mode\md_game.cpp" />
     <ClCompile Include="code\Mode\md_result.cpp" />
     <ClCompile Include="code\Mode\md_title.cpp" />
+    <ClCompile Include="code\UserInterface\ui_menu.cpp" />
+    <ClCompile Include="code\UserInterface\ui_title-logo.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\camera2D.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\fade.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\motion2D.cpp" />
@@ -199,6 +201,8 @@
     <ClInclude Include="code\Mode\md_game.h" />
     <ClInclude Include="code\Mode\md_result.h" />
     <ClInclude Include="code\Mode\md_title.h" />
+    <ClInclude Include="code\UserInterface\ui_menu.h" />
+    <ClInclude Include="code\UserInterface\ui_title-logo.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\camera2D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\fade.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\motion2D.h" />
