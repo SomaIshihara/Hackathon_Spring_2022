@@ -86,6 +86,24 @@ void InitTarget(void)
 		SetTarget(1, TARGET_A);
 		SetTarget(2, TARGET_A);
 		SetTarget(3, TARGET_A);
+		SetTarget(4, TARGET_A);
+		SetTarget(5, TARGET_A);
+		SetTarget(6, TARGET_A);
+		SetTarget(7, TARGET_A);
+		SetTarget(8, TARGET_A);
+		SetTarget(9, TARGET_A);
+		SetTarget(10, TARGET_A);
+		SetTarget(11, TARGET_A);
+		SetTarget(12, TARGET_C);
+		SetTarget(13, TARGET_A);
+		SetTarget(14, TARGET_A);
+		SetTarget(15, TARGET_A);
+		SetTarget(16, TARGET_A);
+		SetTarget(17, TARGET_A);
+		SetTarget(18, TARGET_A);
+		SetTarget(19, TARGET_A);
+		SetTarget(20, TARGET_A);
+		SetTarget(21, TARGET_A);
 }
 //========================================
 // UpdateTarget関数 - 標的の更新処理 -
@@ -98,10 +116,11 @@ void UpdateTarget(void)
 		if (g_aTarget[nCntTar].bUse == true)
 		{
 			// 移動量を代入する
-			g_aTarget[nCntTar].pos = g_aTarget[nCntTar].move;
+			//g_aTarget[nCntTar].pos += g_aTarget[nCntTar].move;
 
 			g_aTarget[nCntTar].partsInfo.pos = g_aTarget[nCntTar].pos;
 			g_aTarget[nCntTar].partsInfo.rot = g_aTarget[nCntTar].rot;
+
 			UpdateParts3DInfo(&g_aTarget[nCntTar].partsInfo);
 		}
 	}
@@ -121,14 +140,14 @@ void SetTarget(int nPos, TARGET_ITEM type)
 			g_aTarget[nCntTar].bUse = true;								// 使用フラグ
 
 			// マップの中心から右の方で生成されると移動速度をマイナスに
-			if (g_aTarget[nCntTar].pos.x >= 640.0f)
+			/*if (g_aTarget[nCntTar].pos.x >= 640.0f)
 			{
 				g_aTarget[nCntTar].move.x = -g_aItemSpeed[type];
 			}
 			else
 			{
 				g_aTarget[nCntTar].move.x = g_aItemSpeed[type];
-			}
+			}*/
 			break;
 		}
 	}

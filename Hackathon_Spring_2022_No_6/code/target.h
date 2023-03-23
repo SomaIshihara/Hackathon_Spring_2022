@@ -56,9 +56,7 @@ typedef struct
 //****************************************
 // ƒAƒCƒeƒ€‚Ì“Ç‚İ‚İˆ—
 void InitTarget(void);
-void UninitTarget(void);
 void UpdateTarget(void);
-void DrawTarget(void);
 void LoadSummon(void);
 void SetTarget(int nPos, TARGET_ITEM type);
 

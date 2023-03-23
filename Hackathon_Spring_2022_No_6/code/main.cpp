@@ -8,6 +8,8 @@
 //========================================
 #include "main.h"
 #include "_R.N.Lib/RNmain.h"
+// Target
+#include "target.h"
 // Mode
 #include "Mode\md_title.h"
 #include "Mode\md_game.h"
@@ -183,6 +185,9 @@ void Load(void)
 {
 	// R.N.Lib‚Ì“Ç‚İ‚İˆ—
 	RNLoad();
+
+	// “G‚ÌoŒ»ˆÊ’u‚Ì“Ç‚İ‚İˆ—
+	LoadSummon();
 }
 
 //========================================

@@ -1735,7 +1735,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "230323-3.png";
+    "data\\TEXTURE\\Material\\pallet0.png";
    }
   }
   Material {

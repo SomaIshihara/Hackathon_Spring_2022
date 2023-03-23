@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="code\boomerang.cpp" />
+    <ClCompile Include="code\chr_player.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\Mode\md_game.cpp" />
     <ClCompile Include="code\Mode\md_result.cpp" />
@@ -201,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\boomerang.h" />
+    <ClInclude Include="code\chr_player.h" />
     <ClInclude Include="code\main.h" />
     <ClInclude Include="code\Mode\md_game.h" />
     <ClInclude Include="code\Mode\md_result.h" />
