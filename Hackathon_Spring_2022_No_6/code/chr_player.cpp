@@ -29,7 +29,7 @@
 // CHR;プレイヤーの移動奥行き
 #define CHR_PLAYER_MOVEDEPTH (40.0f)
 // CHR:プレイヤーの回転量
-#define CHR_PLAYER_SPIN (0.1f)
+#define CHR_PLAYER_SPIN (0.05f)
 
 //****************************************
 // 列挙型の定義
