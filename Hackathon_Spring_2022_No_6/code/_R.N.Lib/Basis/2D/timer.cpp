@@ -102,8 +102,8 @@ void SetTimer(void)
 	/* 位置				*/text2DSet.pos = TIMER_ORIGIN_POS;
 	/* 向き				*/text2DSet.rot = INITD3DXVECTOR3;
 	/* 色				*/text2DSet.col = INITCOLOR;
-	/* 幅				*/text2DSet.fWidth =
-		/* 高さ				*/text2DSet.fHeight = TIMER_UI_SIZE;
+	/* 幅				*/text2DSet.fWidth = TIMER_UI_SIZE;
+	/* 高さ				*/text2DSet.fHeight = TIMER_UI_SIZE;
 	/* カメラ合わせ		*/text2DSet.bMatchCamera = false;
 	// テキスト(2D)の設定処理
 	SetText2D(text2DSet);
