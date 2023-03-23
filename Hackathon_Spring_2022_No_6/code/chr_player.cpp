@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "main.h"
 
+#include "Mode\md_game.h"
 #include "chr_player.h"	// CHR:プレイヤー
 #include "boomerang.h"
 // R.N.Lib
@@ -110,6 +111,11 @@ void UpdateChr_player(void)
 
 	// 部品(3D)の更新処理
 	UpdateParts3DInfo(&pChr->partsInfo);
+
+	if (GetMd_game()->state == MD_GAME_STATE_RANKING || GetMd_game()->state == MD_GAME_STATE_RESULT)
+	{
+		return;
+	}
 
 	// 移動
 	if (GetStick().aTplDiameter[STICK_TYPE_LEFT] > 0.01f)

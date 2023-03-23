@@ -8,7 +8,7 @@
 #define _TIMER_H_	// 二重インクルード防止のマクロを定義する
 
 //ゲーム時間
-#define GAME_TIME	(120)
+#define GAME_TIME	(60)
 
 //プロトタイプ宣言
 void InitTimer(void);

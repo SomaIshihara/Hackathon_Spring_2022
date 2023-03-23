@@ -164,7 +164,9 @@
     <ClCompile Include="code\Mode\md_game.cpp" />
     <ClCompile Include="code\Mode\md_result.cpp" />
     <ClCompile Include="code\Mode\md_title.cpp" />
+    <ClCompile Include="code\System\sys_ranking.cpp" />
     <ClCompile Include="code\UserInterface\ui_menu.cpp" />
+    <ClCompile Include="code\UserInterface\ui_ranking-frame.cpp" />
     <ClCompile Include="code\UserInterface\ui_title-logo.cpp" />
     <ClCompile Include="code\target.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\boomeUI.cpp" />
@@ -208,8 +210,10 @@
     <ClInclude Include="code\Mode\md_game.h" />
     <ClInclude Include="code\Mode\md_result.h" />
     <ClInclude Include="code\Mode\md_title.h" />
+    <ClInclude Include="code\System\sys_ranking.h" />
     <ClInclude Include="code\target.h" />
     <ClInclude Include="code\UserInterface\ui_menu.h" />
+    <ClInclude Include="code\UserInterface\ui_ranking-frame.h" />
     <ClInclude Include="code\UserInterface\ui_title-logo.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\boomeUI.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\camera2D.h" />
