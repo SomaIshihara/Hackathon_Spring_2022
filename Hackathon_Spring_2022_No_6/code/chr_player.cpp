@@ -163,7 +163,7 @@ void UpdateChr_player(void)
 		ControlAngle(&pChr->partsInfo.rot.y);
 	}
 
-	if ((GetButtonTrigger(BUTTON_RIGHT_TRIGGER) || GetButtonTrigger(BUTTON_RIGHT_SHOULDER)) && (pChr->nBoomerang > 0))
+	if ((GetButtonTrigger(BUTTON_RIGHT_TRIGGER) || GetButtonTrigger(BUTTON_RIGHT_SHOULDER)))// && (pChr->nBoomerang > 0)
 	{// ブーメラン投げ
 		SetBoomerang(pChr->partsInfo.pos, pChr->partsInfo.rot);
 		// ブーメラン数減算

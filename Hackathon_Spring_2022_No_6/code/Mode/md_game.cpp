@@ -146,9 +146,6 @@ void InitMd_game(void)
 	// プレイヤー初期化
 	InitChr_player();
 
-	//[仮]ブーメラン配置
-	SetBoomerang(INITD3DXVECTOR3, D3DXVECTOR3(0.0f, 0.25f * D3DX_PI, 0.0f));
-
 	//制限時間設定
 	InitTimer();
 
