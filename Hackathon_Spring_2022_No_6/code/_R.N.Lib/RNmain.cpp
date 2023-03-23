@@ -277,6 +277,7 @@ void RNLoad(void)
 	LoadFont();				// フォント
 	LoadMapChip3DList();		// マップチップ(3D)リスト
 	LoadModelSetUpList();	// モデルのセットアップリスト
+	LoadSound();			// サウンド
 }
 
 //========================================

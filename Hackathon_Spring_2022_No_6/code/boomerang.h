@@ -1,6 +1,6 @@
 //==========================================
 //
-//プレイヤープログラムのヘッダ[player.h]
+//ブーメランプログラムのヘッダ[player.h]
 //Author:石原颯馬
 //
 //==========================================
@@ -38,7 +38,7 @@ struct Boomerang
 
 	//描画類
 	D3DXMATRIX mtxWorld;	//ワールドマトリ
-	bool bUse;		//プレイヤー使用の有無
+	bool bUse;				//ブーメラン使用の有無
 
 	Parts3DInfo partsInfo;	// 部品(3D)の情報
 	Collision coll;			// 当たり判定の結果

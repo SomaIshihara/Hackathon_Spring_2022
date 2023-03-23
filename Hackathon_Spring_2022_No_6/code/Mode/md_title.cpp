@@ -11,6 +11,7 @@
 #include "../_R.N.Lib/R.N.Lib.h"
 #include "../UserInterface/ui_menu.h"
 #include "../UserInterface/ui_title-logo.h"
+#include "../../code/_R.N.Lib/Basis/Other/sound.h"
 
 //****************************************
 // マクロ定義
@@ -254,6 +255,9 @@ void InitMd_title(void)
 		GetCamera3D()->posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		GetCamera3D()->posV = D3DXVECTOR3(0.0f, 140.0f, -140.0f);
 	}
+
+	//タイトルBGM再生
+	PlaySound(0);
 }
 
 //========================================

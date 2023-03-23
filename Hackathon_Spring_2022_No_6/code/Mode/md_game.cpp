@@ -18,6 +18,7 @@
 #include "../UserInterface/ui_ranking-frame.h"
 #include "../System/sys_ranking.h"
 #include "../_R.N.Lib/Basis/2D/score.h"
+#include "../../code/_R.N.Lib/Basis/Other/sound.h"
 
 //****************************************
 // マクロ定義
@@ -232,6 +233,11 @@ void InitMd_game(void)
 	InitUi_menu();			// メニュー
 	InitUi_rankingFrame();	// ランキング(UI)
 	InitSys_ranking();		// ランキング
+	//スコアUI設定
+	SetScoreUI();
+
+	//ゲームBGM再生
+	PlaySound(1);
 }
 
 //========================================
