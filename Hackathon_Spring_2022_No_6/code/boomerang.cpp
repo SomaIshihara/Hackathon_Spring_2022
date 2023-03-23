@@ -9,6 +9,7 @@
 #include "boomerang.h"
 #include "target.h"
 #include "chr_player.h"
+#include "_R.N.Lib\Basis\Other\sound.h"
 
 //マクロ
 #define BOOMERANG_SETUP_NUM			(2)					//ブーメランセットアップ番号
@@ -242,6 +243,9 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 
 					//バルス
 					pTarget->bUse = false;
+
+					//ヒットサウンド再生
+					PlaySound(5);
 				}
 			}
 		}
