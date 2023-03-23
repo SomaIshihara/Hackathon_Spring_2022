@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="code\boomerang.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\Mode\md_game.cpp" />
     <ClCompile Include="code\Mode\md_result.cpp" />
@@ -196,8 +197,10 @@
     <ClCompile Include="code\_R.N.Lib\Basis\Other\sound.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\Other\window.cpp" />
     <ClCompile Include="code\_R.N.Lib\RNmain.cpp" />
+    <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="code\boomerang.h" />
     <ClInclude Include="code\main.h" />
     <ClInclude Include="code\Mode\md_game.h" />
     <ClInclude Include="code\Mode\md_result.h" />
@@ -237,6 +240,7 @@
     <ClInclude Include="code\_R.N.Lib\Basis\Other\window.h" />
     <ClInclude Include="code\_R.N.Lib\R.N.Lib.h" />
     <ClInclude Include="code\_R.N.Lib\RNmain.h" />
+    <ClInclude Include="timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
