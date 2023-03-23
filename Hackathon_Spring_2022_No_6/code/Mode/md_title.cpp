@@ -12,6 +12,7 @@
 #include "../UserInterface/ui_menu.h"
 #include "../UserInterface/ui_title-logo.h"
 #include "../../code/_R.N.Lib/Basis/Other/sound.h"
+#include "../_R.N.Lib/Basis/2D/text2D.h"
 
 //****************************************
 // マクロ定義
@@ -258,6 +259,21 @@ void InitMd_title(void)
 
 	//タイトルBGM再生
 	PlaySound(0);
+
+	// テキスト(2D)の設定処理
+	Text2DSet text2DSet;
+	/* 文字列のポインタ */text2DSet.pString = "(C)TENK IPPIN -2022-";
+	/* フォント番号		*/text2DSet.nFont = 0;
+	/* 表示形式			*/text2DSet.disp = TEXT_DISP_CENTER;
+	/* 位置				*/text2DSet.pos = D3DXVECTOR3(SCREEN_CENTER_X, 650.0f, 0.0f);
+	/* 向き				*/text2DSet.rot = INITD3DXVECTOR3;
+	/* 色				*/text2DSet.col = INITCOLOR;
+	/* 幅				*/text2DSet.fWidth = 30.0f;
+	/* 高さ				*/text2DSet.fHeight = 30.0f;
+	/* カメラ合わせ		*/text2DSet.bMatchCamera = false;
+	// テキスト(2D)の設定処理
+	SetText2D(text2DSet);
+
 }
 
 //========================================
@@ -281,6 +297,20 @@ void UpdateMd_title(void)
 
 	UpdateUi_menu();
 	UpdateUi_titleLogo();
+
+	// テキスト(2D)の設定処理
+	Text2DSet text2DSet;
+	/* 文字列のポインタ */text2DSet.pString = "(C)2023 TENKA IPPIN INC.";
+	/* フォント番号		*/text2DSet.nFont = 0;
+	/* 表示形式			*/text2DSet.disp = TEXT_DISP_CENTER;
+	/* 位置				*/text2DSet.pos = D3DXVECTOR3(SCREEN_CENTER_X, 650.0f, 0.0f);
+	/* 向き				*/text2DSet.rot = INITD3DXVECTOR3;
+	/* 色				*/text2DSet.col = INITCOLOR;
+	/* 幅				*/text2DSet.fWidth = 30.0f;
+	/* 高さ				*/text2DSet.fHeight = 30.0f;
+	/* カメラ合わせ		*/text2DSet.bMatchCamera = false;
+	// テキスト(2D)の設定処理
+	SetText2D(text2DSet);
 }
 
 //========================================
