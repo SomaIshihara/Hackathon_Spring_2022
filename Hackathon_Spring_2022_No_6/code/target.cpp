@@ -7,6 +7,8 @@
 //  *** target.cpp ***
 //========================================
 #include "target.h"
+#include "assert.h"
+#include "_R.N.Lib\R.N.Lib.h"
 
 //****************************************
 // マクロ定義
@@ -20,12 +22,6 @@
 //****************************************
 // グローバル変数宣言
 //****************************************
-static LPD3DXMESH g_pMeshTarget[MAXTEX_TARGET_TYPE] = {};							// メッシュ(頂点情報)へのポインタ
-static LPD3DXBUFFER g_pBuffMatTarget[MAXTEX_TARGET_TYPE] = {};						// マテリアルへのポインタ
-static LPDIRECT3DTEXTURE9 g_pTextureTarget[MAXTEX_TARGET_TYPE][MAX_TEXTURE] = {};	// テクスチャへのポインタ
-static LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffTarget = NULL;								// 頂点バッファのポインタ
-static DWORD					g_dwNumMatTarget[MAXTEX_TARGET_TYPE] = {};			// マテリアルの数
-
 static Target g_aTarget[MAX_TARGET];		// アイテムの情報
 static Summon g_aSummon[MAX_SUMMON];		// 召喚の情報
 
@@ -40,10 +36,10 @@ static char g_aModelPath[TARGET_MAX][TXT_MAX] = {
 };
 
 // 移動速度
-static const float g_aItemSize[TARGET_MAX] = {
+static const float g_aItemSpeed[TARGET_MAX] = {
+	5.0f,
+	2.5f,
 	1.0f,
-	0.75f,
-	0.5f,
 };
 
 //========== *** 標的の情報を取得 ***
@@ -71,28 +67,7 @@ void InitTarget(void)
 
 		for (int nCntType = 0; nCntType < MAXTEX_TARGET_TYPE; nCntType++)
 		{
-			// Xファイルの読み込み
-			D3DXLoadMeshFromX(
-				g_aModelPath[nCntType],
-				D3DXMESH_SYSTEMMEM,
-				pDevice,
-				NULL,
-				&g_pBuffMatTarget[nCntType],
-				NULL,
-				&g_dwNumMatTarget[nCntType],
-				&g_pMeshTarget[nCntType]);
-
-			// マテリアル情報に対するポインタを取得
-			pMat = (D3DXMATERIAL*)g_pBuffMatTarget[nCntType]->GetBufferPointer();
-
-			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatTarget[nCntType]; nCntMat++)
-			{
-				if (pMat[nCntMat].pTextureFilename != NULL)
-				{
-					// テクスチャの読み込み
-					D3DXCreateTextureFromFile(pDevice, pMat[nCntMat].pTextureFilename, &g_pTextureTarget[nCntType][nCntMat]);
-				}
-			}
+			
 		}
 
 		// 標的の初期化処理
@@ -103,6 +78,8 @@ void InitTarget(void)
 			g_aTarget[nCntTarget].move = INITD3DXVECTOR3;
 			g_aTarget[nCntTarget].type = TARGET_A;
 			g_aTarget[nCntTarget].bUse = false;
+
+			InitParts3DInfo(&g_aTarget[nCntTarget].partsInfo, 0);
 		}
 }
 //========================================
@@ -111,37 +88,7 @@ void InitTarget(void)
 //========================================
 void UninitTarget(void)
 {
-	//メッシュの破棄
-	for (int nCntType = 0; nCntType < MAXTEX_TARGET_TYPE; nCntType++)
-	{
-		if (g_pMeshTarget[nCntType] != NULL)
-		{
-			g_pMeshTarget[nCntType]->Release();
-			g_pMeshTarget[nCntType] = NULL;
 
-		}
-	}
-
-	//頂点バッファの破棄
-	if (g_pVtxBuffTarget != NULL)
-	{
-		g_pVtxBuffTarget->Release();
-		g_pVtxBuffTarget = NULL;
-
-	}
-
-	//テクスチャの破棄
-	for (int nCntType = 0; nCntType < MAXTEX_TARGET_TYPE; nCntType++)
-	{
-		for (int nCntMat = 0; nCntMat < 16; nCntMat++)
-		{
-			if (g_pTextureTarget[nCntType][nCntMat] != NULL)
-			{
-				g_pTextureTarget[nCntType][nCntMat]->Release();
-				g_pTextureTarget[nCntType][nCntMat] = NULL;
-			}
-		}
-	}
 }
 //========================================
 // UpdateTarget関数 - 標的の更新処理 -
@@ -149,7 +96,18 @@ void UninitTarget(void)
 //========================================
 void UpdateTarget(void)
 {
+	for (int nCntTar = 0; nCntTar < MAX_TARGET; nCntTar++)
+	{
+		if (g_aTarget[nCntTar].bUse == true)
+		{
+			// 移動量を代入する
+			g_aTarget[nCntTar].pos = g_aTarget[nCntTar].move;
 
+			g_aTarget[nCntTar].partsInfo.pos = g_aTarget[nCntTar].pos;
+			g_aTarget[nCntTar].partsInfo.rot = g_aTarget[nCntTar].rot;
+			UpdateParts3DInfo(&g_aTarget[nCntTar].partsInfo);
+		}
+	}
 }
 //========================================
 // DrawTarget関数 - 標的の描画処理 -
@@ -157,55 +115,7 @@ void UpdateTarget(void)
 //========================================
 void DrawTarget(void)
 {
-	// デバイス取得
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
-	D3DXMATRIX mtxRot, mtxTrans;	// 計算用マトリックス
-	D3DMATERIAL9 matDef;			// 現在のマテリアルの保存用
-	D3DXMATERIAL *pMat;				// マテリアルデータへのポインタ
-	D3DXMATRIX mtxSelf;				// 本体のマトリックス
-
-	for (int nCntPlayer = 0; nCntPlayer < MAXTEX_TARGET_TYPE; nCntPlayer++)
-	{
-		// 現在のマテリアルを取得
-		pDevice->GetMaterial(&matDef);
-
-		// 本体のワールドマトリックスの初期化
-		D3DXMatrixIdentity(&mtxSelf);
-
-		// 本体の向きを反映
-		D3DXMatrixRotationYawPitchRoll(&mtxRot, g_aTarget[nCntPlayer].rot.y, g_aTarget[nCntPlayer].rot.x, g_aTarget[nCntPlayer].rot.z);
-		D3DXMatrixMultiply(&mtxSelf, &mtxSelf, &mtxRot);
-
-		// 本体の位置を反映
-		D3DXMatrixTranslation(&mtxTrans, g_aTarget[nCntPlayer].pos.x, g_aTarget[nCntPlayer].pos.y, g_aTarget[nCntPlayer].pos.z);
-		D3DXMatrixMultiply(&mtxSelf, &mtxSelf, &mtxTrans);
-
-		// 本体のワールドマトリックスの設定
-		pDevice->SetTransform(D3DTS_WORLD, &mtxSelf);
-		D3DXMATRIX	mtxParent;	// 親マトリックス
-
-		// マテリアルデータへのポインタを取得
-		pMat = (D3DXMATERIAL*)g_pBuffMatTarget[g_aTarget[nCntPlayer].type]->GetBufferPointer();
-
-		// ワールドマトリックスの設定
-		pDevice->SetTransform(D3DTS_WORLD, &g_aTarget[nCntPlayer].mtxWorld);
-
-		if (g_aTarget[nCntPlayer].bUse == true)
-		{
-			for (int nCntMat = 0; nCntMat < (int)g_dwNumMatTarget[g_aTarget[nCntPlayer].type]; nCntMat++)
-			{
-				// マテリアルの設定
-				pDevice->SetMaterial(&pMat[nCntMat].MatD3D);
-
-				// テクスチャの設定
-				pDevice->SetTexture(0, g_pTextureTarget[g_aTarget[nCntPlayer].type][nCntMat]);
-
-				// ポリゴン(パーツ)の描画
-				g_pMeshTarget[g_aTarget[nCntPlayer].type]->DrawSubset(nCntMat);
-
-			}
-		}
-	}
+	
 }
 //========================================
 // SetTarget関数 - 標的の設定処理 -
@@ -213,14 +123,95 @@ void DrawTarget(void)
 //========================================
 void SetTarget(int nPos, TARGET_ITEM type)
 {
-	for (int nCntItem = 0; nCntItem < MAX_TARGET; nCntItem++)
+	for (int nCntTar = 0; nCntTar < MAX_TARGET; nCntTar++)
 	{
-		if (g_aTarget[nCntItem].bUse == false)
+		if (g_aTarget[nCntTar].bUse == false)
 		{//使用されていないとき
-			g_aTarget[nCntItem].pos = g_aSummon[nPos].pos;					// 位置
-			g_aTarget[nCntItem].type = type;								// 種類の設定
-			g_aTarget[nCntItem].bUse = true;								// 使用フラグ
+			g_aTarget[nCntTar].pos = g_aSummon[nPos].pos;				// 位置
+			g_aTarget[nCntTar].type = type;								// 種類の設定
+			g_aTarget[nCntTar].bUse = true;								// 使用フラグ
+
+			// マップの中心から右の方で生成されると移動速度をマイナスに
+			if (g_aTarget[nCntTar].pos.x >= 640.0f)
+			{
+				g_aTarget[nCntTar].move.x = -g_aItemSpeed[type];
+			}
+			else
+			{
+				g_aTarget[nCntTar].move.x = g_aItemSpeed[type];
+			}
 			break;
 		}
 	}
+}
+//========================================
+// LoadSummon関数 - 位置の読み込み処理 -
+// Author:KEISUKE OOTONO
+//========================================
+void LoadSummon(void)
+{
+	int c = 0;	   //1文字ずつ確認する変数
+	int column = 1;//列数を数える変数
+	int row = 0;   //行数を数える変数
+
+	char aData[500];//つなげる文字数
+	FILE *pFile;
+
+	memset(aData, 0, sizeof(aData));
+
+	//ファイルを開く
+	pFile = fopen("data/CSV/PointData.csv", "r");
+
+	//ファイルから１文字ずつ読み込む
+	while (fgetc(pFile) != '\n');
+
+	while (c != EOF)
+	{
+		//１セル分の文字列を作る
+		while (1)
+		{
+			c = fgetc(pFile);
+
+			//末尾ならループを抜ける
+			if (c == EOF)
+				break;
+
+			//カンマか改行でなければ、文字としてつなげる
+			if (c != ',' && c != '\n')
+				strcat(aData, (const char*)&c);
+
+			//カンマが改行ならループ抜ける
+			else
+				break;
+		}
+
+		assert(row < MAX_SUMMON);
+
+		switch (column)
+		{
+			//atoi関数で数値として代入
+		case 1:	g_aSummon[row].pos.x = (float)(atoi(aData));	break;	// 1列目：X座標
+		case 2:	g_aSummon[row].pos.y = (float)(atoi(aData));	break;	// 2列目：Y座標
+		case 3:	g_aSummon[row].pos.z = (float)(atoi(aData));	break;	// 3列目：Z座標
+		}
+		//バッファを初期化
+		memset(aData, 0, sizeof(aData));
+
+		//列数を足す
+		column++;
+
+		//もし読み込んだ文字が改行だったら列数を初期化して行数を増やす
+		if (c == '\n')
+		{
+			column = 1;
+			row++;
+
+			if (row == MAX_SUMMON)
+			{// 最大値に達した時、処理を抜ける
+				break;
+			}
+		}
+	}
+	//ファイルを閉じる
+	fclose(pFile);
 }

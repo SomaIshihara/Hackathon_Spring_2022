@@ -42,6 +42,9 @@ typedef struct
 	float fSpeed;			// 移動速度
 
 	bool bUse;				// 使用フラグ
+
+	// 部品の情報
+	Parts3DInfo partsInfo;
 }Target;
 
 typedef struct
@@ -56,6 +59,8 @@ void InitTarget(void);
 void UninitTarget(void);
 void UpdateTarget(void);
 void DrawTarget(void);
+void LoadSummon(void);
 void SetTarget(int nPos, TARGET_ITEM type);
+
 Target *GetTarget(void);
 #endif
