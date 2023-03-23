@@ -1,6 +1,6 @@
 //==========================================
 //
-//プレイヤープログラム[player.cpp]
+//ブーメランプログラム[player.cpp]
 //Author:石原颯馬  （影関係：平澤詩苑）
 //
 //==========================================
@@ -19,7 +19,7 @@
 #define BOOMERANG_ADDROTFORCE		(0.001f)			//回転力増加・減少量
 #define BOOMERANG_ROTFORCE_MAX		(0.1f)				//最大
 #define BOOMERANG_STRAIGHT_END		(30)				//直線移動終了時間
-#define BOOMERANG_DESTROY_LINE		(-300.0f)			//ブーメランがどっか飛んでいく（消す）ライン
+#define BOOMERANG_DESTROY_LINE		(300.0f)			//ブーメランがどっか飛んでいく（消す）ライン
 
 #define FIX_ROT(x)				(fmodf(x + (D3DX_PI * 3), D3DX_PI * 2) - D3DX_PI)	//角度を-PI~PIに修正
 
@@ -139,7 +139,7 @@ void UpdateBoomerang(void)
 			g_aBoomerang[nCntBoomerang].partsInfo.rot.y = FIX_ROT(g_aBoomerang[nCntBoomerang].partsInfo.rot.y + ((2 * D3DX_PI) / BOOMERANG_ONE_ROTATE));
 
 			//画面外に出たら消す
-			if (g_aBoomerang[nCntBoomerang].pos.z < BOOMERANG_DESTROY_LINE)
+			if (fabs(g_aBoomerang[nCntBoomerang].pos.x) > BOOMERANG_DESTROY_LINE || g_aBoomerang[nCntBoomerang].pos.z < -BOOMERANG_DESTROY_LINE)
 			{
 				g_aBoomerang[nCntBoomerang].bUse = false;
 			}
@@ -227,11 +227,18 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 
 			if (fDistance < BOOMERANG_HIT_RADIUS + GetTargetType()->fWidth * 0.5f)
 			{//当たった
-				 //スコア足す
-				GetChr_player()->nScore += GetTargetType()->nScore;
+				if (GetTarget()->type == TARGET_D)
+				{
+					g_aBoomerang[nCntTarget].bUse = false;
+				}
+				else
+				{
+					//スコア足す
+					GetChr_player()->nScore += GetTargetType()->nScore;
 
-				//バルス
-				pTarget->bUse = false;
+					//バルス
+					pTarget->bUse = false;
+				}
 			}
 		}
 	}
