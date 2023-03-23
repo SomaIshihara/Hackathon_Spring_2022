@@ -43,9 +43,14 @@ typedef struct
 	int nCntFlame;			// フレーム数
 	int nPtn;				// パターン番号
 
+	int nCntMFLame;			// 移動用のフレーム数
+	int nCntMove;			// 移動時間
+	int nCntSwit;			// 切り替え回数
+
 	float fSpeed;			// 移動速度
 	float Tarpos;			// 目標位置
 
+	bool bMove;				// 移動フラグ
 	bool bRot;				// 方向フラグ
 	bool bUse;				// 使用フラグ
 

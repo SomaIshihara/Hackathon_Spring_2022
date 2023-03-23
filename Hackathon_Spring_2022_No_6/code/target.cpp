@@ -38,27 +38,27 @@ char g_aTexturePath1[MAXTEX_TARGET_TYPE][TXT_MAX] =
 {
 	"data//TEXTURE//Target//00.PNG",
 	"data//TEXTURE//Target//01.PNG",
-	"data//TEXTURE//Target//00.PNG",
+	"data//TEXTURE//Target//02.PNG",
 };
 
 // ˆÚ“®‘¬“x
 static const float g_aTargetSpeed[TARGET_MAX] = {
 	0.35f,
 	0.25f,
-	0.6f,
+	1.05f,
 };
 
 // ‘å‚«‚³
 static const float g_aTargetWidth[TARGET_MAX] = {
 	16,
 	16,
-	25,
+	32,
 };
 
 static const float g_aTargetHeight[TARGET_MAX] = {
 	16,
 	16,
-	25,
+	32,
 };
 
 // “GŽí—Þ
@@ -102,12 +102,16 @@ void InitTarget(void)
 		for (int nCntTarget = 0; nCntTarget < MAX_TARGET; nCntTarget++)
 		{
 			g_aTarget[nCntTarget].pos = INITD3DXVECTOR3;
-			g_aTarget[nCntTarget].nPtn = 0;
-			g_aTarget[nCntTarget].nCntFlame = 0;
 			g_aTarget[nCntTarget].Tarpos = 0.0f;
 			g_aTarget[nCntTarget].rot = D3DXVECTOR3(-D3DX_PI * 0.5f, 0.0f, 0.0f);
 			g_aTarget[nCntTarget].move = INITD3DXVECTOR3;
 			g_aTarget[nCntTarget].type = TARGET_A;
+			g_aTarget[nCntTarget].nPtn = 0;
+			g_aTarget[nCntTarget].nCntFlame = 0;
+			g_aTarget[nCntTarget].nCntMFLame = 0;
+			g_aTarget[nCntTarget].nCntMove = 0;
+			g_aTarget[nCntTarget].nCntSwit = 0;
+
 			g_aTarget[nCntTarget].bRot = false;
 			g_aTarget[nCntTarget].bUse = false;
 		}
@@ -129,6 +133,43 @@ void UpdateTarget(void)
 	{
 		if (g_aTarget[nCntTar].bUse == true)
 		{
+			// Še“G‚ÌˆÚ“®ˆ—
+			if (g_aTarget[nCntTar].type == TARGET_C)
+			{
+				if (g_aTarget[nCntTar].bMove == false)
+				{
+					g_aTarget[nCntTar].nCntMFLame++;
+					if ((g_aTarget[nCntTar].nCntMFLame % g_aTarget[nCntTar].nCntMove) == 0)
+					{
+						if (g_aTarget[nCntTar].bMove == false)
+						{
+							g_aTarget[nCntTar].nCntMove = 80;
+							g_aTarget[nCntTar].nCntSwit++;
+
+							if (g_aTarget[nCntTar].nCntSwit == 2)
+							{
+								g_aTarget[nCntTar].nCntSwit = 0;
+								g_aTarget[nCntTar].bMove = true;
+							}
+						}
+						if (g_aTarget[nCntTar].bRot == false)
+						{
+							g_aTarget[nCntTar].move.x = g_aTargetSpeed[g_aTarget[nCntTar].type];
+							g_aTarget[nCntTar].Tarpos = -g_aTarget[nCntTar].Tarpos;
+							g_aTarget[nCntTar].bRot = true;
+						}
+						else
+						{
+							g_aTarget[nCntTar].move.x = -g_aTargetSpeed[g_aTarget[nCntTar].type];
+							g_aTarget[nCntTar].Tarpos = -g_aTarget[nCntTar].Tarpos;
+							g_aTarget[nCntTar].bRot = false;
+						}
+					}
+				}
+				
+			}
+
+
 			// ˆÚ“®—Ê‚ð‘ã“ü‚·‚é
 			if (g_aTarget[nCntTar].Tarpos <= g_aTarget[nCntTar].pos.x && g_aTarget[nCntTar].bRot == true)
 			{
@@ -221,6 +262,7 @@ void SetTarget(int nPos, TARGET_ITEM type,int MType)
 				g_aTarget[nCntTar].move.x = g_aTargetSpeed[type];
 				g_aTarget[nCntTar].bRot = true;
 			}
+			g_aTarget[nCntTar].nCntMove = 160;
 			break;
 		}
 	}
