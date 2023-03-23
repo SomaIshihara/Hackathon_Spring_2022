@@ -287,7 +287,7 @@
     <ClInclude Include="code\boomerang.h">
       <Filter>ソース ファイル\Boomerang</Filter>
     </ClInclude>
-    <ClInclude Include="timer.h">
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\timer.h">
       <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,6 +9,7 @@
 #include "md_game.h"
 #include "../_R.N.Lib/R.N.Lib.h"
 #include "../boomerang.h"
+#include "../_R.N.Lib/Basis/2D/timer.h"
 
 //****************************************
 // マクロ定義
@@ -131,6 +132,8 @@ void InitMd_game(void)
 
 	// ブーメラン初期化
 	InitBoomerang();
+	//制限時間初期化
+	InitTimer();
 
 	//[仮]ブーメラン配置
 	SetBoomerang(INITD3DXVECTOR3);
@@ -159,6 +162,9 @@ void UpdateMd_game(void)
 
 	// ブーメラン更新処理
 	UpdateBoomerang();
+
+	// 制限時間更新処理
+	UpdateTimer();
 }
 
 //========================================

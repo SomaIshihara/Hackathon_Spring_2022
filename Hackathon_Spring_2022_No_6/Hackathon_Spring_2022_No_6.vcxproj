@@ -213,6 +213,7 @@
     <ClInclude Include="code\_R.N.Lib\Basis\2D\motion2D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\polygon2D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\text2D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\timer.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\3D\camera3D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\3D\draw3D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\3D\light.h" />
@@ -240,7 +241,6 @@
     <ClInclude Include="code\_R.N.Lib\Basis\Other\window.h" />
     <ClInclude Include="code\_R.N.Lib\R.N.Lib.h" />
     <ClInclude Include="code\_R.N.Lib\RNmain.h" />
-    <ClInclude Include="timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

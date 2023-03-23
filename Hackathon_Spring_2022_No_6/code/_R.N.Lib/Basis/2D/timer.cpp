@@ -5,19 +5,18 @@
 //
 //=======================================================================================================
 #include "code\_R.N.Lib\RNmain.h"
+#include "timer.h"
 #include "code\_R.N.Lib\Basis\2D\text2D.h"
-#include "code\_R.N.Lib\Basis\2D\timer.h"
-#include "code\main.h"
 
 //****************************************
 // マクロ定義
 //****************************************
-//最大桁数
-#define MAX_DEJIT_TIMER		(4)
 //制限時間の原点位置
-#define TIMER_ORIGIN_POS	(D3DXVECTOR3(SCREEN_WIDTH * 0.5f, 40.0f, 0.0f))
+#define TIMER_ORIGIN_POS	(D3DXVECTOR3(0.0f, 60.0f, 0.0f))
 //制限時間のUIサイズ
 #define TIMER_UI_SIZE		(60.0f)
+#define TIMER_UI_WIDTH		(16.0f)
+#define TIMER_UI_HEIGHT		(20.0f)
 
 //グローバル変数宣言
 int g_nGameTime = 0;	//制限時間
@@ -59,10 +58,10 @@ void UpdateTimer(void)
 	{
 		//制限時間減少
 		g_nGameTime--;
-	}
 
-	//UI設定
-	SetTimer();
+		//UI設定
+		SetTimer();
+	}
 }
 
 //========================================
@@ -72,7 +71,7 @@ void UpdateTimer(void)
 void SetTimer(void)
 {
 	//表示桁数
-	int nCntDejit = 1;
+	int nCntDejit = 0;
 
 	//制限時間保存
 	int nTempTimer = g_nGameTime;
@@ -80,30 +79,24 @@ void SetTimer(void)
 	//表示する桁数を計算する（最低１桁
 	do
 	{
-		//表示桁数を増やす
-		nCntDejit++;
-
 		//１桁減らす
 		nTempTimer /= 10;
 
-	} while (nTempTimer > 0);
+		//表示桁数を増やす
+		nCntDejit++;
 
-	//制限時間を文字列に
-	char cGameTimer[MAX_DEJIT_TIMER];
-
-	//制限時間を文字列に置き換え
-	snprintf(cGameTimer, nCntDejit, "%d", g_nGameTime);
+	} while (nTempTimer >= 0);
 
 	// テキスト(2D)の設定処理
 	Text2DSet text2DSet;
-	/* 文字列のポインタ */text2DSet.pString = cGameTimer;
+	/* 文字列のポインタ */snprintf(text2DSet.pString, nCntDejit, "%d", g_nGameTime);
 	/* フォント番号		*/text2DSet.nFont = 1;
 	/* 表示形式			*/text2DSet.disp = TEXT_DISP_CENTER;
 	/* 位置				*/text2DSet.pos = TIMER_ORIGIN_POS;
 	/* 向き				*/text2DSet.rot = INITD3DXVECTOR3;
 	/* 色				*/text2DSet.col = INITCOLOR;
-	/* 幅				*/text2DSet.fWidth = 
-	/* 高さ				*/text2DSet.fHeight = TIMER_UI_SIZE;
+	/* 幅				*/text2DSet.fWidth = TIMER_UI_WIDTH;
+	/* 高さ				*/text2DSet.fHeight = TIMER_UI_HEIGHT;
 	/* カメラ合わせ		*/text2DSet.bMatchCamera = false;
 	// テキスト(2D)の設定処理
 	SetText2D(text2DSet);
