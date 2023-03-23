@@ -227,7 +227,7 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 
 			if (fDistance < BOOMERANG_HIT_RADIUS + GetTargetType()->fWidth * 0.5f)
 			{//“–‚½‚Á‚½
-				if (GetTarget()->type == TARGET_D)
+				if (pTarget->type == TARGET_D)
 				{
 					g_aBoomerang[nCntTarget].bUse = false;
 				}
