@@ -3,7 +3,7 @@
 SOUND data\SOUND\BGM\TITLEbgm.wav -1 1.0 0	#[000]TITLE_BGM
 SOUND data\SOUND\BGM\GAMEbgm.wav  -1 1.0 0	#[001] GAME_BGM
 SOUND data\SOUND\SE\boomerang.wav  0 1.0 1	#[002]ƒu[ƒƒ‰ƒ“SE
-SOUND data\SOUND\SE\Choice00.wav   0 1.0 1	#[003]Œˆ’è‰¹SE
+SOUND data\SOUND\SE\Choice00.wav   0 1.0 1	#[003]‘I‘ğ‰¹SE
 SOUND data\SOUND\SE\Decide00.wav   0 1.0 1	#[004]Œˆ’è‰¹SE
 
 END
