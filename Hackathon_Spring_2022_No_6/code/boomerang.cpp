@@ -22,7 +22,21 @@
 #define BOOMERANG_STRAIGHT_END		(30)				//直線移動終了時間
 #define BOOMERANG_DESTROY_LINE		(300.0f)			//ブーメランがどっか飛んでいく（消す）ライン
 
+#define COMBOTEXT_POP_TIME			(60)				//コンボ表示時間
+#define COMBOTEXT_DEJIT				(8)					//コンボの表示文字数
+#define COMBOTEXT_SIZE_DEFAULT		(16.0f)				//コンボの文字サイズ（最初）
+#define COMBOTEXT_SIZE_ADD			(0.5f)				//コンボの文字サイズ（拡大量）
+
 #define FIX_ROT(x)				(fmodf(x + (D3DX_PI * 3), D3DX_PI * 2) - D3DX_PI)	//角度を-PI~PIに修正
+
+//コンボテキスト構造体
+typedef struct
+{
+	Text3DSet text3DSet;	//テキスト構造体
+	char c_aComboText[COMBOTEXT_DEJIT];
+	int nLife;				//表示時間
+	bool bUse;				//使用の有無
+} ComboText;
 
 //プロト
 void CollisionBoomerangEnemy(int nBoomerangNum);
@@ -30,6 +44,7 @@ void CollisionBoomerangPlayer(int nBoomerangNum);
 
 //グローバル
 Boomerang g_aBoomerang[MAX_USE_BOOMERANG] = {};
+ComboText g_aComboText[MAX_TARGET] = {};
 
 //========================
 //初期化処理
@@ -67,6 +82,7 @@ void UninitBoomerang(void)
 //========================
 void UpdateBoomerang(void)
 {
+	//ブーメランの処理
 	for (int nCntBoomerang = 0; nCntBoomerang < MAX_USE_BOOMERANG; nCntBoomerang++)
 	{
 		if (g_aBoomerang[nCntBoomerang].bUse == true)
@@ -143,11 +159,31 @@ void UpdateBoomerang(void)
 			if (fabs(g_aBoomerang[nCntBoomerang].pos.x) > BOOMERANG_DESTROY_LINE || g_aBoomerang[nCntBoomerang].pos.z < -BOOMERANG_DESTROY_LINE)
 			{
 				g_aBoomerang[nCntBoomerang].bUse = false;
+				PlaySound(8);
 			}
 			else
 			{
 				// 部品(3D)の更新処理
 				UpdateParts3DInfo(&g_aBoomerang[nCntBoomerang].partsInfo);
+			}
+		}
+	}
+
+	//コンボの処理
+	for (int nCntCombo = 0; nCntCombo < MAX_TARGET; nCntCombo++)
+	{
+		if (g_aComboText[nCntCombo].bUse == true)
+		{
+			//時間減らす
+			g_aComboText[nCntCombo].nLife--;
+
+			//文字大きくする
+			//g_aComboText[nCntCombo].text3DSet.fWidth += COMBOTEXT_SIZE_ADD;
+			//g_aComboText[nCntCombo].text3DSet.fHeight += COMBOTEXT_SIZE_ADD;
+
+			if (g_aComboText[nCntCombo].nLife < 0)
+			{
+				g_aComboText[nCntCombo].bUse = false;
 			}
 		}
 	}
@@ -158,7 +194,13 @@ void UpdateBoomerang(void)
 //========================
 void DrawBoomerang(void)
 {
-	
+	for (int nCntCombo = 0; nCntCombo < MAX_TARGET; nCntCombo++)
+	{
+		if (g_aComboText[nCntCombo].bUse == true)
+		{
+			SetText3D(g_aComboText[nCntCombo].text3DSet);
+		}
+	}
 }
 
 //========================
@@ -227,11 +269,12 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 		{
 			float fDistance = FindDistanceLookDown(pTarget->pos, g_aBoomerang[nBoomerangNum].pos);
 
-			if (fDistance < BOOMERANG_HIT_RADIUS + GetTargetType()->fWidth * 0.5f)
+			if (fDistance < BOOMERANG_HIT_RADIUS + (GetTargetType() + pTarget->type)->fWidth * 0.5f)
 			{//当たった
 				if (pTarget->type == TARGET_D)
 				{
 					g_aBoomerang[nBoomerangNum].bUse = false;
+					PlaySound(7);
 				}
 				else
 				{
@@ -239,10 +282,36 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 					g_aBoomerang[nBoomerangNum].nCombo++;
 
 					//スコア足す
-					GetChr_player()->nScore += GetTargetType()->nScore * g_aBoomerang[nBoomerangNum].nCombo;
+					GetChr_player()->nScore += (GetTargetType() + pTarget->type)->nScore * g_aBoomerang[nBoomerangNum].nCombo;
 
 					//バルス
 					pTarget->bUse = false;
+
+					for (int nCntTarget = 0; nCntTarget < MAX_TARGET; nCntTarget++)
+					{
+						if (g_aComboText[nCntTarget].bUse == false)
+						{
+							//コンボ設定
+							/* 文字列のポインタ */
+							snprintf(g_aComboText[nCntTarget].c_aComboText,
+								COMBOTEXT_DEJIT,
+								"%02dCOMBO", g_aBoomerang[nBoomerangNum].nCombo);
+							g_aComboText[nCntTarget].text3DSet.pString = &g_aComboText[nCntTarget].c_aComboText[0];
+							/* フォント番号		*/g_aComboText[nCntTarget].text3DSet.nFont = 0;
+							/* 表示形式			*/g_aComboText[nCntTarget].text3DSet.disp = TEXT_DISP_CENTER;
+							/* 位置				*/g_aComboText[nCntTarget].text3DSet.pos = pTarget->pos;
+							/* 向き				*/g_aComboText[nCntTarget].text3DSet.rot = D3DXVECTOR3(0.0f,D3DX_PI * -0.5f,0.0f);
+							/* 色				*/g_aComboText[nCntTarget].text3DSet.col = Color{ 255,255,255,255 };
+							/* 幅				*/g_aComboText[nCntTarget].text3DSet.fWidth = COMBOTEXT_SIZE_DEFAULT;
+							/* 高さ				*/g_aComboText[nCntTarget].text3DSet.fHeight = COMBOTEXT_SIZE_DEFAULT;
+							/* Zテスト			*/g_aComboText[nCntTarget].text3DSet.bZtest = false;
+							/* ライティング		*/g_aComboText[nCntTarget].text3DSet.bLighting = false;
+							/* ビルボード		*/g_aComboText[nCntTarget].text3DSet.bBillboard = true;
+							g_aComboText[nCntTarget].nLife = COMBOTEXT_POP_TIME;
+							g_aComboText[nCntTarget].bUse = true;
+							break;
+						}
+					}
 
 					//ヒットサウンド再生
 					PlaySound(5);
