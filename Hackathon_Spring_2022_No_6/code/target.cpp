@@ -23,9 +23,10 @@
 //****************************************
 // グローバル変数宣言
 //****************************************
-static Target g_aTarget[MAX_TARGET];		// アイテムの情報
-static Summon g_Summon[MAX_SUMMON];			// 召喚の情報
-static Point g_aPoint[MAX_POINT];			// 位置の情報
+static Target g_aTarget[MAX_TARGET];				// 標的の情報
+static TargetType g_TargetType[MAXTEX_TARGET_TYPE];	// 標的種類の情報
+static Summon g_Summon[MAX_SUMMON];					// 召喚の情報
+static Point g_aPoint[MAX_POINT];					// 位置の情報
 static int g_aTex1[MAXTEX_TARGET_TYPE];
 static int g_nGameTime;	//制限時間
 static int g_nCounterFrame;	//フレームカウンター
@@ -48,19 +49,6 @@ static const float g_aTargetSpeed[TARGET_MAX] = {
 	1.05f,
 };
 
-// 大きさ
-static const float g_aTargetWidth[TARGET_MAX] = {
-	16,
-	16,
-	32,
-};
-
-static const float g_aTargetHeight[TARGET_MAX] = {
-	16,
-	16,
-	32,
-};
-
 // 敵種類
 // チーム番号
 const TARGET_ITEM g_Target[TARGET_MAX] = {
@@ -73,6 +61,11 @@ const TARGET_ITEM g_Target[TARGET_MAX] = {
 Target *GetTarget(void)
 {
 	return &g_aTarget[0];
+}
+//========== *** 標的種類の情報を取得 ***
+TargetType *GetTargetType(void)
+{
+	return &g_TargetType[0];
 }
 
 //================================================================================
@@ -154,13 +147,13 @@ void UpdateTarget(void)
 						}
 						if (g_aTarget[nCntTar].bRot == false)
 						{
-							g_aTarget[nCntTar].move.x = g_aTargetSpeed[g_aTarget[nCntTar].type];
+							g_aTarget[nCntTar].move.x = g_TargetType[g_aTarget[nCntTar].type].fSpeed;
 							g_aTarget[nCntTar].Tarpos = -g_aTarget[nCntTar].Tarpos;
 							g_aTarget[nCntTar].bRot = true;
 						}
 						else
 						{
-							g_aTarget[nCntTar].move.x = -g_aTargetSpeed[g_aTarget[nCntTar].type];
+							g_aTarget[nCntTar].move.x = -g_TargetType[g_aTarget[nCntTar].type].fSpeed;
 							g_aTarget[nCntTar].Tarpos = -g_aTarget[nCntTar].Tarpos;
 							g_aTarget[nCntTar].bRot = false;
 						}
@@ -196,8 +189,8 @@ void UpdateTarget(void)
 			polygon3DSet.nPtn = g_aTarget[nCntTar].nPtn;
 			polygon3DSet.nPtnX = 2;
 			polygon3DSet.nPtnY = 1;
-			polygon3DSet.fWidth = g_aTargetWidth[g_aTarget[nCntTar].type];
-			polygon3DSet.fHeight = g_aTargetHeight[g_aTarget[nCntTar].type];
+			polygon3DSet.fWidth = g_TargetType[g_aTarget[nCntTar].type].fWidth;
+			polygon3DSet.fHeight = g_TargetType[g_aTarget[nCntTar].type].fHeight;
 			polygon3DSet.pos = g_aTarget[nCntTar].pos;
 			polygon3DSet.rot = g_aTarget[nCntTar].rot;
 			polygon3DSet.col = Color{ 255,255,255,255 };
@@ -407,6 +400,80 @@ void LoadSummon(void)
 			row++;
 
 			if (row == MAX_POINT)
+			{// 最大値に達した時、処理を抜ける
+				break;
+			}
+		}
+	}
+	//ファイルを閉じる
+	fclose(pFile);
+}
+//========================================
+// LoadTargetType関数 - 敵の情報読み込み処理 -
+// Author:KEISUKE OOTONO
+//========================================
+void LoadTargetType(void)
+{
+	int c = 0;	   //1文字ずつ確認する変数
+	int column = 1;//列数を数える変数
+	int row = 0;   //行数を数える変数
+
+	char aData[500];//つなげる文字数
+	FILE *pFile;
+
+	memset(aData, 0, sizeof(aData));
+
+	//ファイルを開く
+	pFile = fopen("data/CSV/TargetType.csv", "r");
+
+	//ファイルから１文字ずつ読み込む
+	while (fgetc(pFile) != '\n');
+
+	while (c != EOF)
+	{
+		//１セル分の文字列を作る
+		while (1)
+		{
+			c = fgetc(pFile);
+
+			//末尾ならループを抜ける
+			if (c == EOF)
+				break;
+
+			//カンマか改行でなければ、文字としてつなげる
+			if (c != ',' && c != '\n')
+				strcat(aData, (const char*)&c);
+
+			//カンマが改行ならループ抜ける
+			else
+				break;
+		}
+
+		assert(row < MAXTEX_TARGET_TYPE);
+
+		switch (column)
+		{
+			//atoi関数で数値として代入
+		case 1:	g_TargetType[row].nLife = atoi(aData);			break;	// 1列目：寿命
+		case 2:	g_TargetType[row].nScore = atoi(aData);			break;	// 2列目：スコア
+		case 3:	g_TargetType[row].fWidth = (float)(atoi(aData)); break;	// 3列目：幅
+		case 4:	g_TargetType[row].fHeight = (float)(atoi(aData)); break;	// 4列目：高さ
+		}
+		//バッファを初期化
+		memset(aData, 0, sizeof(aData));
+
+		//列数を足す
+		column++;
+
+		//もし読み込んだ文字が改行だったら列数を初期化して行数を増やす
+		if (c == '\n')
+		{
+			g_Summon[row].bUse = true;
+
+			column = 1;
+			row++;
+
+			if (row == MAXTEX_TARGET_TYPE)
 			{// 最大値に達した時、処理を抜ける
 				break;
 			}

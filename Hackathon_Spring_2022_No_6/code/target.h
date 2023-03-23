@@ -56,6 +56,17 @@ typedef struct
 
 }Target;
 
+// targetの情報構造体
+typedef struct
+{
+	int nLife;		// 寿命
+	int nScore;		// スコア
+
+	float fWidth;	// 幅
+	float fHeight;	// 高さ
+	float fSpeed;	// 移動速度
+}TargetType;
+
 typedef struct
 {
 	int nType; // 種類
@@ -77,7 +88,9 @@ void InitTarget(void);
 void UpdateTarget(void);
 void LoadSummon(void);
 void LoadTarget(void);
+void LoadTargetType(void);
 void SetTarget(int nPos, TARGET_ITEM type, int mType);
 
 Target *GetTarget(void);
+TargetType *GetTargetType(void);
 #endif
