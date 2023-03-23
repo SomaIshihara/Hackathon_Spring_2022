@@ -13,14 +13,31 @@
 #include "../target.h"
 #include "../chr_player.h"
 #include "../_R.N.Lib/Basis/2D/timer.h"
+
+#include "../UserInterface/ui_menu.h"
+#include "../UserInterface/ui_ranking-frame.h"
+#include "../System/sys_ranking.h"
 #include "../_R.N.Lib/Basis/2D/score.h"
 
 //****************************************
 // マクロ定義
 //****************************************
+#define MD_GAME_RESULT_MENU_POS D3DXVECTOR3(SCREEN_WIDTH*0.5f,SCREEN_HEIGHT+(PIXEL*-32),0.0f)
+#define MD_GAME_RANKING_POS D3DXVECTOR3(SCREEN_WIDTH*0.5f,(SCREEN_HEIGHT*0.5f)-PIXEL*8,0.0f)
 //========== *** 状態関連 ***
 // 初期の状態
 #define INIT_STATE (MD_GAME_STATE_NORMAL)
+
+//****************************************
+// 列挙型の定義
+//****************************************
+// ゲーム画面[00] のリザルトメニュー
+typedef enum
+{
+	MD_GAME_RESULT_MENU_RETRY,			// リトライ
+	MD_GAME_RESULT_MENU_BACK_TO_TITLE,	// タイトルに戻る
+	MD_GAME_RESULT_MENU_MAX,
+}MD_GAME_RESULT_MENU;
 
 //****************************************
 // プロトタイプ宣言
@@ -33,6 +50,13 @@ void InitParameterMd_game(Md_game *pMd);
 // グローバル変数宣言
 //****************************************
 Md_game g_md_game;	// MD:ゲームの情報
+
+					// MD:ゲーム画面[00] のリザルトメニュー設定情報
+Ui_menuSet g_aMd_gameResultMenuSet[MD_GAME_RESULT_MENU_MAX] =
+{
+	{ UI_MENU_TYPE_NORMAL,"RETRY"        ,true },
+	{ UI_MENU_TYPE_NORMAL,"BACK TO TITLE",true },
+};
 
 //================================================================================
 //----------|---------------------------------------------------------------------
@@ -57,6 +81,26 @@ void StartMd_gameState(void)
 	case MD_GAME_STATE_NORMAL:
 
 		break;
+	case /*/ ランキング /*/MD_GAME_STATE_RANKING: {
+		// UI:ランキングフレーム[00] の名前入力設定処理
+		SetNameEntryUi_rankingFrame(SetScore(GetChr_player()->nScore));
+
+		// UI:ランキングフレーム[00] の設定処理
+		SetUi_rankingFrame(MD_GAME_RANKING_POS);
+
+		break;
+	}
+	case /*/ リザルト /*/MD_GAME_STATE_RESULT: {
+		// UI:メニュー[00] の中心座標を設定
+		SetUi_menuPos(MD_GAME_RESULT_MENU_POS);
+
+		// UI:メニュー[00] の設定処理(リザルトメニュー)
+		SetUi_menu(
+			g_aMd_gameResultMenuSet,
+			MD_GAME_RESULT_MENU_MAX);
+
+		break;
+	}
 	}
 }
 
@@ -89,6 +133,39 @@ void UpdateMd_gameState(void)
 	case MD_GAME_STATE_NORMAL:
 
 		break;
+	case /*/ ランキング /*/MD_GAME_STATE_RANKING: {
+		if (GetUi_rankingFrame()->state == UI_RANKINGFRAME_STATE_POP)
+		{// UI:ランキングフレーム[00] の状態が出現の時、
+			SetStateMd_game(MD_GAME_STATE_RESULT);	// 状態をリザルトにする
+		}
+
+		break;
+	}
+	case /*/ リザルト /*/MD_GAME_STATE_RESULT: {
+		// リザルトメニューの選択処理
+		switch (Ui_menuInput(UI_MENU_INPUT_MODE_UP_AND_DOWN))
+		{
+		case /*/ リトライ /*/MD_GAME_RESULT_MENU_RETRY: {
+			// 画面をゲーム画面[00] に設定
+			SetFade();
+			pMd->mode = MODE_GAME;
+			break;
+		}
+		case /*/ タイトルに戻る /*/MD_GAME_RESULT_MENU_BACK_TO_TITLE: {
+			// 画面をタイトル画面[00] に設定
+			SetFade();
+			pMd->mode = MODE_TITLE;
+			break;
+		}
+		}
+
+		if (GetFadeSwap())
+		{// フェード切り替え時、
+			SetMode(pMd->mode);
+		}
+
+		break;
+	}
 	}
 }
 
@@ -119,7 +196,7 @@ void InitParameterMd_game(Md_game *pMd)
 // InitMd_game関数 - MD:ゲームの初期化処理 -
 // Author:RIKU NISHIMURA
 //========================================
-void InitMd_game(void) 
+void InitMd_game(void)
 {
 	// MD:ゲーム画面の情報のポインタ
 	Md_game *pMd = &g_md_game;
@@ -152,24 +229,27 @@ void InitMd_game(void)
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
 
-	//スコアUI設定
-	SetScoreUI();
+	InitUi_menu();			// メニュー
+	InitUi_rankingFrame();	// ランキング(UI)
+	InitSys_ranking();		// ランキング
 }
 
 //========================================
 // UninitMd_game関数 - MD:ゲームの終了処理 -
 // Author:RIKU NISHIMURA
 //========================================
-void UninitMd_game(void) 
+void UninitMd_game(void)
 {
-
+	UninitUi_menu();			// メニュー
+	UninitUi_rankingFrame();	// ランキング(UI)
+	UninitSys_ranking();		// ランキング
 }
 
 //========================================
 // UpdateMd_game関数 - MD:ゲームの更新処理 -
 // Author:RIKU NISHIMURA
 //========================================
-void UpdateMd_game(void) 
+void UpdateMd_game(void)
 {
 	// 状態に応じた更新処理
 	UpdateMd_gameState();
@@ -186,14 +266,20 @@ void UpdateMd_game(void)
 	// 敵 更新処理
 	UpdateTarget();
 
-	//制限時間更新処理
-	UpdateTimer();
+	if (GetMd_game()->state == MD_GAME_STATE_NORMAL) 
+	{
+		//制限時間更新処理
+		UpdateTimer();
+
+		SetScoreUI();	// スコアUI
+	}
 
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
 
-	//スコアUI設定
-	SetScoreUI();
+	UpdateUi_menu();			// メニュー
+	UpdateUi_rankingFrame();	// ランキング(UI)
+	UpdateSys_ranking();		// ランキング
 }
 
 //========================================
@@ -213,7 +299,7 @@ void DrawMd_game(void)
 // GetMd_game関数 - MD:ゲームの情報を取得 -
 // Author:RIKU NISHIMURA
 //========================================
-Md_game *GetMd_game(void) 
+Md_game *GetMd_game(void)
 {
 	return &g_md_game;
 }
@@ -233,7 +319,7 @@ void SetStateMd_game(MD_GAME_STATE state)
 
 	// 状態に応じた終了処理
 	EndMd_gameState();
-	
+
 	// 状態を代入
 	pMd->state = state;
 
