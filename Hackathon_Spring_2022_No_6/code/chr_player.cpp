@@ -76,6 +76,9 @@ Chr_player g_chr_player;
 //========================================
 void InitParameterChr_player(Chr_player *pChr)
 {
+	pChr->nBoomerang = MAX_USE_BOOMERANG;
+	pChr->nScore = 0;
+
 	// 部品管理のパラメーター初期化
 	InitParts3DInfo(&pChr->partsInfo, CHR_PLAYER_MODEL_SETUP);
 }

@@ -232,13 +232,13 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 				{
 					g_aBoomerang[nCntTarget].bUse = false;
 				}
-				else
+				else if(!pTarget->bDown)
 				{
 					//スコア足す
 					GetChr_player()->nScore += GetTargetType()->nScore;
 
 					//バルス
-					pTarget->bUse = false;
+					pTarget->bDown = true;
 
 					//ヒットサウンド再生
 					PlaySound(5);
