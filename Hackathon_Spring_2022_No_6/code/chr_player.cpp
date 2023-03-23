@@ -19,7 +19,9 @@
 // マクロ定義
 //****************************************
 // CHR:プレイヤーの初期向き
-#define CHR_PLAYER_INIT_ROT D3DXVECTOR3(0.0f,D3DX_PI,0.0f)
+#define CHR_PLAYER_INIT_ROT D3DXVECTOR3(0.0f,0.0f,0.0f)
+// CHR:プレイヤーの角度制限
+#define CHR_PLAYER_ROT_CONTROL (D3DX_PI*0.25f)
 // CHR:プレイヤーの注視点の相対位置の移動倍率
 #define CHR_PLAYER_RELATIVE_POS_R_MOVE_DIAMETER (0.25f)
 // CHR:プレイヤーのモデルのセットアップ番号
@@ -117,6 +119,25 @@ void UpdateChr_player(void)
 		return;
 	}
 
+	if (pChr->nBoomerang == 0)
+	{
+		bool bEnd = true;
+
+		for (int nCntBo = 0; nCntBo < MAX_USE_BOOMERANG; nCntBo++) 
+		{
+			if (GetBoomerang()[nCntBo].bUse) 
+			{
+				bEnd = false;
+			}
+		}
+
+		if (bEnd)
+		{
+			pChr->nBoomerang = 0;
+			SetStateMd_game(MD_GAME_STATE_RANKING);
+		}
+	}
+
 	// 移動
 	if (GetStick().aTplDiameter[STICK_TYPE_LEFT] > 0.01f)
 	{
@@ -167,6 +188,15 @@ void UpdateChr_player(void)
 
 		// 向きを制御
 		ControlAngle(&pChr->partsInfo.rot.y);
+
+		if (pChr->partsInfo.rot.y < - CHR_PLAYER_ROT_CONTROL) 
+		{
+			pChr->partsInfo.rot.y = - CHR_PLAYER_ROT_CONTROL;
+		}
+		else if (pChr->partsInfo.rot.y > CHR_PLAYER_ROT_CONTROL)
+		{
+			pChr->partsInfo.rot.y = CHR_PLAYER_ROT_CONTROL;
+		}
 	}
 
 	if ((GetButtonTrigger(BUTTON_RIGHT_TRIGGER) || GetButtonTrigger(BUTTON_RIGHT_SHOULDER)) && (pChr->nBoomerang > 0))

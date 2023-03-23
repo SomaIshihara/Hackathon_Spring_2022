@@ -9,6 +9,7 @@
 #include "boomerang.h"
 #include "target.h"
 #include "chr_player.h"
+#include "_R.N.Lib\Basis\Other\sound.h"
 
 //マクロ
 #define BOOMERANG_SETUP_NUM			(2)					//ブーメランセットアップ番号
@@ -179,6 +180,7 @@ void SetBoomerang(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 			g_aBoomerang[nCntBoomerang].nCounterStraight = 0;
 			g_aBoomerang[nCntBoomerang].fRotForce = 0.0f;
 			g_aBoomerang[nCntBoomerang].fRotTotal = 0.0f;
+			g_aBoomerang[nCntBoomerang].nCombo = 0;
 			g_aBoomerang[nCntBoomerang].bEndRotate = false;
 			g_aBoomerang[nCntBoomerang].bReturn = false;
 			
@@ -227,17 +229,23 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 
 			if (fDistance < BOOMERANG_HIT_RADIUS + GetTargetType()->fWidth * 0.5f)
 			{//当たった
-				if (GetTarget()->type == TARGET_D)
+				if (pTarget->type == TARGET_D)
 				{
-					g_aBoomerang[nCntTarget].bUse = false;
+					g_aBoomerang[nBoomerangNum].bUse = false;
 				}
 				else
 				{
+					//コンボ増やす
+					g_aBoomerang[nBoomerangNum].nCombo++;
+
 					//スコア足す
-					GetChr_player()->nScore += GetTargetType()->nScore;
+					GetChr_player()->nScore += GetTargetType()->nScore * g_aBoomerang[nBoomerangNum].nCombo;
 
 					//バルス
 					pTarget->bUse = false;
+
+					//ヒットサウンド再生
+					PlaySound(5);
 				}
 			}
 		}
