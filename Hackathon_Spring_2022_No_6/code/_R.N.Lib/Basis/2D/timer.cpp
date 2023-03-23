@@ -8,6 +8,7 @@
 #include "../../../main.h"
 #include "text2D.h"
 #include "timer.h"
+#include "../../../Mode/md_game.h"
 
 //****************************************
 // マクロ定義
@@ -22,11 +23,12 @@
 //グローバル変数宣言
 int g_nGameTime = 0;	//制限時間
 int g_nCounterFrame;	//フレームカウンター
+bool g_bEnd = false;
 
-						//========================================
-						// InitTimer関数 - 制限時間の初期化処理 -
-						// Author:SHION HIRASAWA
-						//========================================
+//========================================
+// InitTimer関数 - 制限時間の初期化処理 -
+// Author:SHION HIRASAWA
+//========================================
 void InitTimer(void)
 {
 	//制限時間初期化
@@ -37,6 +39,8 @@ void InitTimer(void)
 
 	//制限時間UI設定
 	SetTimer();
+
+	g_bEnd = false;
 }
 
 //========================================
@@ -54,11 +58,20 @@ void UninitTimer(void)
 //========================================
 void UpdateTimer(void)
 {
-	//1秒が経過した
-	if (++g_nCounterFrame % 60 == 0)
+	if (!g_bEnd)
 	{
-		//制限時間減少
-		g_nGameTime--;
+		//1秒が経過した
+		if (++g_nCounterFrame % 60 == 0)
+		{
+			//制限時間減少
+			g_nGameTime--;
+
+			if (g_nGameTime == 0) 
+			{
+				g_bEnd = true;
+				SetStateMd_game(MD_GAME_STATE_RANKING);
+			}
+		}
 	}
 
 	//UI設定
