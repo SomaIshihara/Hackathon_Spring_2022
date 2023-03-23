@@ -146,7 +146,7 @@ void InitMd_game(void)
 	InitChr_player();
 
 	//[仮]ブーメラン配置
-	SetBoomerang(INITD3DXVECTOR3);
+	SetBoomerang(INITD3DXVECTOR3,INITD3DXVECTOR3);
 
 	//制限時間設定
 	InitTimer();

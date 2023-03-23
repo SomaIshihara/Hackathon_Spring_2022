@@ -17,6 +17,9 @@
 // CHR:プレイヤーの情報構造体
 typedef struct
 {
+	// ブーメラン所持数
+	int nBoomerang = 3;
+
 	// 部品関連
 	Parts3DInfo partsInfo;	// 部品管理
 }Chr_player;
