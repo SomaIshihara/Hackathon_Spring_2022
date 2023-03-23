@@ -10,6 +10,7 @@
 #include "../_R.N.Lib/R.N.Lib.h"
 #include "../boomerang.h"
 #include "../target.h"
+#include "../chr_player.h"
 
 //****************************************
 // マクロ定義
@@ -128,13 +129,20 @@ void InitMd_game(void)
 
 	//カメラ初期化
 	InitCamera3D();
-	GetCamera3D()->posV = D3DXVECTOR3(0.0f, 180.0f, -100.0f);
+	{
+		int nDepth = 60;
+		GetCamera3D()->posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f + nDepth);
+		GetCamera3D()->posV = D3DXVECTOR3(0.0f, 140.0f, -140.0f + nDepth);
+	}
 
 	// ブーメラン初期化
 	InitBoomerang();
 
 	// 敵初期化
 	InitTarget();
+
+	// プレイヤー初期化
+	InitChr_player();
 
 	//[仮]ブーメラン配置
 	SetBoomerang(INITD3DXVECTOR3);
@@ -160,6 +168,9 @@ void UpdateMd_game(void)
 
 	//カメラ更新処理
 	UpdateCamera3D();
+
+	// プレイヤー更新
+	UpdateChr_player();
 
 	// ブーメラン更新処理
 	UpdateBoomerang();
