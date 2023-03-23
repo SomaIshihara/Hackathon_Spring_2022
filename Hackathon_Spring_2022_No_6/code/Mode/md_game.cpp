@@ -233,6 +233,7 @@ void InitMd_game(void)
 	InitUi_menu();			// メニュー
 	InitUi_rankingFrame();	// ランキング(UI)
 	InitSys_ranking();		// ランキング
+
 	//スコアUI設定
 	SetScoreUI();
 
@@ -272,20 +273,20 @@ void UpdateMd_game(void)
 	// 敵 更新処理
 	UpdateTarget();
 
-	if (GetMd_game()->state == MD_GAME_STATE_NORMAL) 
-	{
-		//制限時間更新処理
-		UpdateTimer();
-
-		SetScoreUI();	// スコアUI
-	}
-
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
 
 	UpdateUi_menu();			// メニュー
 	UpdateUi_rankingFrame();	// ランキング(UI)
 	UpdateSys_ranking();		// ランキング
+
+	if (GetMd_game()->state == MD_GAME_STATE_NORMAL)
+	{
+		//制限時間更新処理
+		UpdateTimer();
+
+		SetScoreUI();	// スコアUI
+	}
 }
 
 //========================================
