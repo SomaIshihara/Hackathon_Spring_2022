@@ -123,6 +123,12 @@ void UpdateChr_player(void)
 		// ˆÚ“®
 		pChr->partsInfo.pos.x += sinf(fAngle) * CHR_PLAYER_MOVE;
 		pChr->partsInfo.pos.z += cosf(fAngle) * CHR_PLAYER_MOVE;
+
+		D3DXVECTOR3 *pPos = &pChr->partsInfo.pos;
+		if (pPos->x <= CHR_PLAYER_MOVEWIDTH)
+		{
+			pPos->x = CHR_PLAYER_MOVEWIDTH;
+		}
 	}
 	else 
 	{
