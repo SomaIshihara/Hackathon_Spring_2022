@@ -19,11 +19,13 @@
 #define BOOMERANG_ADDROTFORCE		(0.001f)			//回転力増加・減少量
 #define BOOMERANG_ROTFORCE_MAX		(0.1f)				//最大
 #define BOOMERANG_STRAIGHT_END		(30)				//直線移動終了時間
+#define BOOMERANG_DESTROY_LINE		(-300.0f)			//ブーメランがどっか飛んでいく（消す）ライン
 
 #define FIX_ROT(x)				(fmodf(x + (D3DX_PI * 3), D3DX_PI * 2) - D3DX_PI)	//角度を-PI~PIに修正
 
 //プロト
 void CollisionBoomerangEnemy(int nBoomerangNum);
+void CollisionBoomerangPlayer(int nBoomerangNum);
 
 //グローバル
 Boomerang g_aBoomerang[MAX_USE_BOOMERANG] = {};
@@ -125,13 +127,19 @@ void UpdateBoomerang(void)
 
 			//[内部]当たり判定
 			CollisionBoomerangEnemy(nCntBoomerang);
+			
+			//帰ってきている時だけ回収処理を行う
+			if (g_aBoomerang[nCntBoomerang].bReturn)
+			{
+				CollisionBoomerangPlayer(nCntBoomerang);
+			}
 
 			//[見た目]ブーメランの回転処理
 			g_aBoomerang[nCntBoomerang].partsInfo.pos = g_aBoomerang[nCntBoomerang].pos;
 			g_aBoomerang[nCntBoomerang].partsInfo.rot.y = FIX_ROT(g_aBoomerang[nCntBoomerang].partsInfo.rot.y + ((2 * D3DX_PI) / BOOMERANG_ONE_ROTATE));
 
 			//画面外に出たら消す
-			if (fabs(g_aBoomerang[nCntBoomerang].pos.x) > 450.0f || fabs(g_aBoomerang[nCntBoomerang].pos.z) > 450.0f)
+			if (g_aBoomerang[nCntBoomerang].pos.z < BOOMERANG_DESTROY_LINE)
 			{
 				g_aBoomerang[nCntBoomerang].bUse = false;
 			}
@@ -226,5 +234,24 @@ void CollisionBoomerangEnemy(int nBoomerangNum)
 				pTarget->bUse = false;
 			}
 		}
+	}
+}
+
+//========================
+//ブーメランとプレイヤーの当たり判定
+//========================
+void CollisionBoomerangPlayer(int nBoomerangNum)
+{
+	Chr_player *pPlayer = GetChr_player();
+
+	float fDistance = FindDistanceLookDown(pPlayer->partsInfo.pos, g_aBoomerang[nBoomerangNum].pos);
+
+	if (fDistance < BOOMERANG_HIT_RADIUS + PLAYER_HIT_RADIUS)
+	{//当たった
+		//ブーメラン増やす
+		GetChr_player()->nBoomerang++;
+
+		//ブーメランバルス
+		g_aBoomerang[nBoomerangNum].bUse = false;
 	}
 }

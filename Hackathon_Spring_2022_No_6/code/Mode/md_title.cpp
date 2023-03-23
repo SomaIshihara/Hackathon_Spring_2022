@@ -11,17 +11,16 @@
 #include "../_R.N.Lib/R.N.Lib.h"
 #include "../UserInterface/ui_menu.h"
 #include "../UserInterface/ui_title-logo.h"
-#include "../../code/_R.N.Lib/Basis/Other/sound.h"
 
 //****************************************
 // マクロ定義
 //****************************************
 // タイトル画面[00] のメインメニューの位置
+#define MD_TITLE_MAIN_MENU_POS D3DXVECTOR3(SCREEN_WIDTH*0.5f,SCREEN_HEIGHT-PIXEL*64,0.0f)
 // タイトル画面[00] のランキングメニューの位置
+#define MD_TITLE_RANKING_MENU_POS D3DXVECTOR3(SCREEN_WIDTH*0.5f,SCREEN_HEIGHT-PIXEL*32,0.0f)
 // タイトル画面[00] のランキングの位置
-#define MD_TITLE_MAIN_MENU_POS		D3DXVECTOR3((PIXEL*80),SCREEN_HEIGHT-PIXEL*64,0.0f)
-#define MD_TITLE_RANKING_MENU_POS	D3DXVECTOR3((PIXEL*80),SCREEN_HEIGHT-PIXEL*32,0.0f)
-#define MD_TITLE_RANKING_POS			D3DXVECTOR3((PIXEL*80),SCREEN_HEIGHT*0.5f,0.0f)
+#define MD_TITLE_RANKING_POS D3DXVECTOR3(SCREEN_WIDTH*0.5f,SCREEN_HEIGHT*0.5f,0.0f)
 
 //========== *** 状態関連 ***
 // 初期の状態
@@ -60,7 +59,6 @@ Md_title g_md_title;	// MD:タイトルの情報
 Ui_menuSet g_aMd_titleMainMenuSet[MD_TITLE_MAIN_MENU_MAX] =
 {
 	{ UI_MENU_TYPE_NORMAL,"START"    ,false },
-	{ UI_MENU_TYPE_NORMAL,"RANKING"  ,true },
 	{ UI_MENU_TYPE_NORMAL,"QUIT"     ,false },
 };
 
@@ -159,12 +157,12 @@ void UpdateMd_titleState(void)
 			//PlaySound(MD_TITLE_DETERMINATION_SE);
 			break;
 		}
-		case /*/ ランキング /*/MD_TITLE_MAIN_MENU_RANKING: {
-			// UI:ランキングフレーム[00] の設定処理
-			//SetUi_rankingFrame(MD_TITLE_RANKING_POS);
+		//case /*/ ランキング /*/MD_TITLE_MAIN_MENU_RANKING: {
+		//	// UI:ランキングフレーム[00] の設定処理
+		//	//SetUi_rankingFrame(MD_TITLE_RANKING_POS);
 
-			break;
-		}
+		//	break;
+		//}
 		case /*/ 終了 /*/MD_TITLE_MAIN_MENU_EXIT: {
 			// ウインドウを破棄する
 			DestroyWindow(*GetWindowHandle());
@@ -250,8 +248,12 @@ void InitMd_title(void)
 	// マップ情報を読み込み
 	LoadMapData("data\\GAMEOBJECT\\3D\\MAP\\STAGE_000.txt");
 
-	//タイトルBGM再生
-	PlaySound(0);
+	//カメラ初期化
+	InitCamera3D();
+	{
+		GetCamera3D()->posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		GetCamera3D()->posV = D3DXVECTOR3(0.0f, 140.0f, -140.0f);
+	}
 }
 
 //========================================

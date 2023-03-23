@@ -40,13 +40,16 @@ char g_aTexturePath1[MAXTEX_TARGET_TYPE][TXT_MAX] =
 	"data//TEXTURE//Target//00.PNG",
 	"data//TEXTURE//Target//01.PNG",
 	"data//TEXTURE//Target//02.PNG",
+	"data//TEXTURE//Target//03.PNG",
+
 };
 
 // ˆÚ“®‘¬“x
 static const float g_aTargetSpeed[TARGET_MAX] = {
 	0.35f,
-	0.25f,
+	0.5f,
 	1.05f,
+	0.3f,
 };
 
 // “Gí—Ş
@@ -55,6 +58,7 @@ const TARGET_ITEM g_Target[TARGET_MAX] = {
 	{ TARGET_A },
 	{ TARGET_B },
 	{ TARGET_C },
+	{ TARGET_D },
 };
 
 //========== *** •W“I‚Ìî•ñ‚ğæ“¾ ***

@@ -10,6 +10,7 @@
 #define _CHR_PLAYER_H_	// 二重インクルード防止のマクロを定義する
 
 #include "_R.N.Lib/R.N.Lib.h"
+#include "boomerang.h"
 
 //マクロ
 #define PLAYER_HIT_RADIUS	(8.0f)	//プレイヤーの当たり判定の半径
@@ -21,9 +22,9 @@
 typedef struct
 {
 	// ブーメラン所持数
-	int nBoomerang = 3;
+	int nBoomerang = MAX_USE_BOOMERANG;
 	// スコア
-	int nScore = 1000;
+	int nScore = 0;
 
 	// 部品関連
 	Parts3DInfo partsInfo;	// 部品管理
