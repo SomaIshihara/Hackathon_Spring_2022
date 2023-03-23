@@ -9,9 +9,11 @@
 #include "md_game.h"
 #include "../_R.N.Lib/R.N.Lib.h"
 #include "../boomerang.h"
+#include "../_R.N.Lib/Basis/2D/boomeUI.h"
 #include "../target.h"
 #include "../chr_player.h"
 #include "../_R.N.Lib/Basis/2D/timer.h"
+#include "../_R.N.Lib/Basis/2D/score.h"
 
 //****************************************
 // マクロ定義
@@ -149,6 +151,12 @@ void InitMd_game(void)
 
 	//制限時間設定
 	InitTimer();
+
+	//ブーメランの所持数UI設定
+	SetBoomeUI();
+
+	//スコアUI設定
+	SetScoreUI();
 }
 
 //========================================
@@ -183,6 +191,12 @@ void UpdateMd_game(void)
 
 	//制限時間更新処理
 	UpdateTimer();
+
+	//ブーメランの所持数UI設定
+	SetBoomeUI();
+
+	//スコアUI設定
+	SetScoreUI();
 }
 
 //========================================
