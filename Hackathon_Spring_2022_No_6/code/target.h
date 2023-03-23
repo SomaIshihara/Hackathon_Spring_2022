@@ -56,6 +56,7 @@ typedef struct
 	int nType; // 種類
 	int nPoint;// 出現位置
 	int nTime; // 出現時間
+	int nMTyoe;// 移動方向
 
 	bool bUse; // 使用フラグ
 }Summon;
@@ -71,7 +72,7 @@ void InitTarget(void);
 void UpdateTarget(void);
 void LoadSummon(void);
 void LoadTarget(void);
-void SetTarget(int nPos, TARGET_ITEM type);
+void SetTarget(int nPos, TARGET_ITEM type, int mType);
 
 Target *GetTarget(void);
 #endif
