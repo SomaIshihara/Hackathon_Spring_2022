@@ -172,6 +172,7 @@
     <ClCompile Include="code\_R.N.Lib\Basis\2D\fade.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\motion2D.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\polygon2D.cpp" />
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\score.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\2D\text2D.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\3D\camera3D.cpp" />
     <ClCompile Include="code\_R.N.Lib\Basis\3D\draw3D.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="code\_R.N.Lib\Basis\2D\fade.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\motion2D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\polygon2D.h" />
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\score.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\text2D.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\2D\timer.h" />
     <ClInclude Include="code\_R.N.Lib\Basis\3D\camera3D.h" />

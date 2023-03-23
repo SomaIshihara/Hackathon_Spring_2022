@@ -171,6 +171,9 @@
     <ClCompile Include="code\_R.N.Lib\Basis\2D\boomeUI.cpp">
       <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClCompile>
+    <ClCompile Include="code\_R.N.Lib\Basis\2D\score.cpp">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\main.h">
@@ -300,6 +303,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="code\_R.N.Lib\Basis\2D\boomeUI.h">
+      <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="code\_R.N.Lib\Basis\2D\score.h">
       <Filter>ソース ファイル\_R.N.Lib\Basis\2D</Filter>
     </ClInclude>
   </ItemGroup>

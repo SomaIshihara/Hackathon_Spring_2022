@@ -16,7 +16,7 @@
 //UIサイズ
 #define BOOME_UI_SIZE		(60.0f)
 //UI位置
-#define BOOME_UI_POS		(D3DXVECTOR3(100.0f, 30.0f, 0.0f))
+#define BOOME_UI_POS		(D3DXVECTOR3(100.0f, 680.0f, 0.0f))
 //表示するUIの文字数
 #define BOOME_UI_NUM_TXT	(5)
 

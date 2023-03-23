@@ -13,6 +13,7 @@
 #include "../target.h"
 #include "../chr_player.h"
 #include "../_R.N.Lib/Basis/2D/timer.h"
+#include "../_R.N.Lib/Basis/2D/score.h"
 
 //****************************************
 // マクロ定義
@@ -153,6 +154,9 @@ void InitMd_game(void)
 
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
+
+	//スコアUI設定
+	SetScoreUI();
 }
 
 //========================================
@@ -190,6 +194,9 @@ void UpdateMd_game(void)
 
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
+
+	//スコアUI設定
+	SetScoreUI();
 }
 
 //========================================
