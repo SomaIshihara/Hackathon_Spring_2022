@@ -19,33 +19,30 @@
 #define TIMER_UI_SIZE		(60.0f)
 
 //グローバル変数宣言
-int g_nGameTime = 0;	//制限時間
-int g_nCounterFrame;	//フレームカウンター
-bool g_bEnd = false;
 
 //========================================
-// InitTimer関数 - 制限時間の初期化処理 -
+// InitCloud関数 - 制限時間の初期化処理 -
 // Author:SHION HIRASAWA
 //========================================
-void InitTimer(void)
+void InitCloud(void)
 {
 
 }
 
 //========================================
-// UninitTimer関数 - 制限時間の終了処理 -
+// UninitCloud関数 - 制限時間の終了処理 -
 // Author:SHION HIRASAWA
 //========================================
-void UninitTimer(void)
+void UninitCloud(void)
 {
 
 }
 
 //========================================
-// UpdateTimer関数 - 制限時間の更新処理 -
+// UpdateCloud関数 - 制限時間の更新処理 -
 // Author:SHION HIRASAWA
 //========================================
-void UpdateTimer(void)
+void UpdateCloud(void)
 {
 
 }
