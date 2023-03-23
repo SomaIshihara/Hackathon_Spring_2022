@@ -147,13 +147,13 @@ void UpdateTarget(void)
 						}
 						if (g_aTarget[nCntTar].bRot == false)
 						{
-							g_aTarget[nCntTar].move.x = g_TargetType[g_aTarget[nCntTar].type].fSpeed;
+							g_aTarget[nCntTar].move.x = g_aTargetSpeed[g_aTarget[nCntTar].type];
 							g_aTarget[nCntTar].Tarpos = -g_aTarget[nCntTar].Tarpos;
 							g_aTarget[nCntTar].bRot = true;
 						}
 						else
 						{
-							g_aTarget[nCntTar].move.x = -g_TargetType[g_aTarget[nCntTar].type].fSpeed;
+							g_aTarget[nCntTar].move.x = -g_aTargetSpeed[g_aTarget[nCntTar].type];
 							g_aTarget[nCntTar].Tarpos = -g_aTarget[nCntTar].Tarpos;
 							g_aTarget[nCntTar].bRot = false;
 						}
