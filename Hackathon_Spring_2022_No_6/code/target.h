@@ -8,6 +8,8 @@
 //========================================
 #ifndef _TARGET_H_	// このマクロ定義がされていなかった時
 #define _TARGET_H_	// 二重インクルード防止のマクロを定義する
+#include "_R.N.Lib\Basis\Other\window.h"
+#include "_R.N.Lib\RNmain.h"
 #include "main.h"
 //****************************************
 // マクロ定義
@@ -37,11 +39,8 @@ typedef struct
 	D3DXMATRIX mtxWorld;	// ワールドマトリックス
 	TARGET_ITEM type;		// 種類
 
-	int nSummon;			// 標的の配置場所
-
 	float fSpeed;			// 移動速度
 
-	bool bSet;				// 再配置するフラグ
 	bool bUse;				// 使用フラグ
 }Target;
 
@@ -57,6 +56,6 @@ void InitTarget(void);
 void UninitTarget(void);
 void UpdateTarget(void);
 void DrawTarget(void);
-void SetTarget(void);
+void SetTarget(int nPos, TARGET_ITEM type);
 Target *GetTarget(void);
 #endif
