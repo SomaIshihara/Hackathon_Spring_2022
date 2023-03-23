@@ -19,12 +19,14 @@
 #include "../System/sys_ranking.h"
 #include "../_R.N.Lib/Basis/2D/score.h"
 #include "../../code/_R.N.Lib/Basis/Other/sound.h"
+#include "../cloud.h"
 
 //****************************************
 // マクロ定義
 //****************************************
 #define MD_GAME_RESULT_MENU_POS D3DXVECTOR3(SCREEN_WIDTH*0.5f,SCREEN_HEIGHT+(PIXEL*-32),0.0f)
 #define MD_GAME_RANKING_POS D3DXVECTOR3(SCREEN_WIDTH*0.5f,(SCREEN_HEIGHT*0.5f)-PIXEL*8,0.0f)
+#define MAX_TYPE	(1)
 //========== *** 状態関連 ***
 // 初期の状態
 #define INIT_STATE (MD_GAME_STATE_NORMAL)
@@ -52,7 +54,14 @@ void InitParameterMd_game(Md_game *pMd);
 //****************************************
 Md_game g_md_game;	// MD:ゲームの情報
 
-					// MD:ゲーム画面[00] のリザルトメニュー設定情報
+static int g_aTex2[MAX_TYPE];
+
+// テクスチャパス
+char g_aTexturePath2[MAX_TYPE][TXT_MAX] =
+{
+	"data//TEXTURE//UserInterface//guid.PNG",
+};
+// MD:ゲーム画面[00] のリザルトメニュー設定情報
 Ui_menuSet g_aMd_gameResultMenuSet[MD_GAME_RESULT_MENU_MAX] =
 {
 	{ UI_MENU_TYPE_NORMAL,"RETRY"        ,true },
@@ -202,6 +211,9 @@ void InitMd_game(void)
 	// MD:ゲーム画面の情報のポインタ
 	Md_game *pMd = &g_md_game;
 
+	g_aTex2[0] = LoadTexture(g_aTexturePath2[0]);
+
+
 	// 敵の出現位置の読み込み処理
 	LoadSummon();
 
@@ -246,6 +258,9 @@ void InitMd_game(void)
 	//スコアUI設定
 	SetScoreUI();
 
+	//雲設定
+	InitCloud();
+
 	//ゲームBGM再生
 	PlaySound(1);
 }
@@ -282,6 +297,9 @@ void UpdateMd_game(void)
 	// 敵 更新処理
 	UpdateTarget();
 
+	//雲の更新処理
+	UpdateCloud();
+
 	//ブーメランの所持数UI設定
 	SetBoomeUI();
 
@@ -296,6 +314,20 @@ void UpdateMd_game(void)
 
 		SetScoreUI();	// スコアUI
 	}
+
+	// ポリゴン(3D)の設定情報
+	Polygon3DSet polygon3DSet;
+	polygon3DSet.nTex = g_aTex2[0];
+	polygon3DSet.nPtn = 0;
+	polygon3DSet.nPtnX = 1;
+	polygon3DSet.nPtnY = 1;
+	polygon3DSet.fWidth = 80;
+	polygon3DSet.fHeight = 80;
+	polygon3DSet.pos = D3DXVECTOR3(-110.0f, -10.0f, 30.0f);
+	polygon3DSet.rot = D3DXVECTOR3(-D3DX_PI * 0.25f, 0.0f, 0.0f);
+	polygon3DSet.col = Color{ 255,255,255,255 };
+	// ポリゴン(3D)の設定処理
+	SetPolygon3D(polygon3DSet);
 }
 
 //========================================
